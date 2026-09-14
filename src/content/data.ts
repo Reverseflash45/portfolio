@@ -38,6 +38,10 @@ export const loader = {
 
 export const hero = {
   greeting: { id: "Halo, saya", en: "Hi, I'm" } as T,
+  headline: {
+    id: ["Mengubah Ide", "Jadi Aplikasi"],
+    en: ["Turning Ideas", "Into Applications"],
+  },
   status: {
     id: "Terbuka untuk magang & proyek freelance",
     en: "Open to internships & freelance work",
@@ -56,7 +60,9 @@ export const hero = {
 
 export const about = {
   title: { id: "Tentang", en: "About" } as T,
+  heading: { id: "Halo, saya", en: "Hi, I'm" } as T,
   ctaProjects: { id: "Lihat Portofolio", en: "View Portfolio" } as T,
+  ctaResume: { id: "Lihat CV", en: "View Resume" } as T,
   body: {
     id: [
       "Saya Rafi, mahasiswa D4 Teknik Informatika Fakultas Vokasi Universitas Airlangga angkatan 2024. Saya terbiasa bekerja dengan PHP, Python, Dart, dan Go, serta framework seperti Laravel dan Flutter.",
@@ -157,6 +163,7 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Tracking",
+      image: "", // /public/projects/…png
       desc: {
         id: "Aplikasi produktivitas pribadi yang menyatukan jadwal kuliah, tugas, workout, dan keuangan dalam satu app. Ada impor KRS/KHS lewat OCR, deteksi jadwal bentrok, penghitung repetisi latihan pakai kamera (ML Kit pose detection), pelacakan lari GPS, pembacaan struk otomatis, dan mode luring penuh. Saat ini 27 modul fitur, 31 tabel basis data, dan 950 test otomatis.",
         en: "A personal productivity app that unifies class schedules, assignments, workouts, and finances. Includes OCR import of academic records, schedule-clash detection, camera-based rep counting (ML Kit pose detection), GPS run tracking, automatic receipt reading, and full offline support. Currently 27 feature modules, 31 database tables, and 950 automated tests.",
@@ -170,6 +177,7 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Superduperweb",
+      image: "", // /public/projects/…png
       desc: {
         id: "Web jasa pembuatan aplikasi: sisi publik berfungsi sebagai etalase dan alur closing (layanan, paket harga, portofolio, form brief) sementara panel admin dipakai untuk operasional — brief masuk, data klien, proyek, pembayaran, dan biaya. Tiap proyek mendapat tautan invoice bertoken sehingga klien bisa melihat status, membayar via QRIS atau transfer, dan mengunggah bukti tanpa perlu akun. Hanya pembayaran terverifikasi yang dihitung sebagai omzet, dan margin per proyek dihitung otomatis.",
         en: "A web-development services site: the public side works as a storefront and closing funnel (services, pricing, portfolio, brief form) while the admin panel runs operations — incoming briefs, clients, projects, payments, and costs. Each project gets a tokenised invoice link so clients can check status, pay by QRIS or transfer, and upload proof without an account. Only verified payments count towards revenue, and per-project margin is computed automatically.",
@@ -182,6 +190,7 @@ export const projects = {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
       title: "WTOOLS",
+      image: "", // /public/projects/…png
       desc: {
         id: "Proyek akhir Workshop UI: situs kebugaran berisi katalog produk, artikel, panduan gerakan latihan, dan panel admin. Dibangun dari desain Figma sendiri lalu diimplementasikan penuh menjadi antarmuka web.",
         en: "Final project for a UI Workshop course: a fitness site with a product catalogue, articles, exercise guides, and an admin panel. Designed in Figma and then implemented as a full web interface.",
@@ -194,6 +203,7 @@ export const projects = {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
       title: "RSHP — Rumah Sakit Hewan Pendidikan",
+      image: "", // /public/projects/rshp.png
       desc: {
         id: "Aplikasi web manajemen rumah sakit hewan pendidikan: pendataan pasien, rekam medis, jadwal pemeriksaan, serta pencatatan transaksi dokter dan perawat.",
         en: "A web application for veterinary teaching hospital management: patient records, medical history, examination scheduling, and doctor/nurse transaction records.",
@@ -209,6 +219,7 @@ export const projects = {
         id: "Analisis Sentimen Berita Saham",
         en: "Stock News Sentiment Analysis",
       },
+      image: "", // /public/projects/sentimen.png
       desc: {
         id: "Sistem klasifikasi sentimen berita emiten berbahasa Indonesia menggunakan model IndoBERT yang di-fine-tune.",
         en: "A sentiment classification system for Indonesian stock-issuer news using a fine-tuned IndoBERT model.",
@@ -223,6 +234,7 @@ export const projects = {
 export type Experience = {
   role: T;
   org: string;
+  logo?: string;
   period: string;
   kind: "org" | "award";
   desc: T;
@@ -240,6 +252,7 @@ export const experience = {
       kind: "org",
       role: { id: "Anggota", en: "Member" },
       org: "HIMA Sarjana Terapan Teknik Informatika — Kabinet Selaras, Fakultas Vokasi UNAIR",
+      logo: "", // /logos/hima.png
       period: "2025",
       desc: {
         id: "Anggota pengurus Himpunan Mahasiswa Sarjana Terapan Teknik Informatika periode 2025.",
@@ -250,6 +263,7 @@ export const experience = {
       kind: "org",
       role: { id: "Panitia", en: "Committee Member" },
       org: "PIMNAS x Airlangga Esports Championship — UKM E-Sports UNAIR",
+      logo: "", // /logos/ukm-esports.png
       period: "Okt 2024",
       desc: {
         id: "Panitia turnamen esports tingkat universitas yang diselenggarakan di WTC War Arena Surabaya.",
@@ -260,6 +274,7 @@ export const experience = {
       kind: "org",
       role: { id: "Pengurus OSIS — Sie Kesegaran Jasmani", en: "Student Council — Physical Fitness Division" },
       org: "SMA Negeri 1 Kota Kediri",
+      logo: "", // /logos/sman1.png
       period: "2021 — 2022",
       desc: {
         id: "Merencanakan dan menjalankan program kerja divisi serta kepanitiaan acara sekolah.",
@@ -301,6 +316,7 @@ export const education = {
   schools: [
     {
       school: "Universitas Airlangga",
+      logo: "", // taruh /public/logos/unair.png lalu isi: "/logos/unair.png"
       degree: {
         id: "D4 Teknik Informatika — Fakultas Vokasi",
         en: "D4 Informatics Engineering — Vocational Faculty",
@@ -313,6 +329,7 @@ export const education = {
     },
     {
       school: "SMA Negeri 1 Kota Kediri",
+      logo: "", // /logos/sman1.png
       degree: { id: "MIPA", en: "Natural Sciences" } as T,
       period: "2021 — 2024",
       note: {
@@ -322,6 +339,7 @@ export const education = {
     },
     {
       school: "SMP Negeri 4 Kota Kediri",
+      logo: "", // /logos/smpn4.png
       degree: { id: "—", en: "—" } as T,
       period: "2018 — 2021",
       note: {
@@ -472,16 +490,51 @@ export const contact = {
   cta: { id: "Kirim Email", en: "Send an Email" } as T,
 };
 
+export const gallery = {
+  title: { id: "Galeri", en: "Gallery" } as T,
+  subtitle: {
+    id: "Kegiatan, kompetisi, dan kepanitiaan.",
+    en: "Activities, competitions, and committee work.",
+  } as T,
+  empty: {
+    id: "Foto kegiatan akan tampil di sini",
+    en: "Activity photos will appear here",
+  } as T,
+  // taruh file di /public/gallery/ lalu isi: { src: "/gallery/1.jpg", caption: {...} }
+  items: [] as { src: string; caption: T }[],
+};
+
+export const contactForm = {
+  formTitle: { id: "Kirim Pesan", en: "Send a Message" } as T,
+  name: { id: "Nama", en: "Name" } as T,
+  namePh: { id: "Nama kamu", en: "Your name" } as T,
+  email: { id: "Email", en: "Email" } as T,
+  emailPh: { id: "email@kamu.com", en: "you@email.com" } as T,
+  message: { id: "Pesan", en: "Message" } as T,
+  messagePh: { id: "Tulis pesan di sini…", en: "Write your message here…" } as T,
+  submit: { id: "Kirim", en: "Send" } as T,
+  // isi dengan endpoint Formspree, mis. "https://formspree.io/f/xxxxxxx"
+  endpoint: "",
+  disabledNote: {
+    id: "Form belum aktif — hubungkan endpoint Formspree di data.ts. Sementara pakai tombol email.",
+    en: "Form not active yet — connect a Formspree endpoint in data.ts. Use the email button for now.",
+  } as T,
+  findMe: { id: "Temukan Saya", en: "Find Me" } as T,
+};
+
 export const nav = {
   about: { id: "Tentang", en: "About" } as T,
   projects: { id: "Proyek", en: "Projects" } as T,
   portfolio: { id: "Portofolio", en: "Portfolio" } as T,
+  gallery: { id: "Galeri", en: "Gallery" } as T,
   experience: { id: "Pengalaman", en: "Experience" } as T,
   education: { id: "Pendidikan", en: "Education" } as T,
   contact: { id: "Kontak", en: "Contact" } as T,
 };
 
 export const misc = {
+  slotCv: { id: "belum ada", en: "not added" } as T,
+  slotImage: { id: "slot gambar", en: "image slot" } as T,
   downloadCV: { id: "Unduh CV", en: "Download CV" } as T,
   scroll: { id: "Gulir", en: "Scroll" } as T,
   rights: { id: "Dibuat dengan Next.js", en: "Built with Next.js" } as T,

@@ -61,7 +61,7 @@ export default function Stats() {
   ];
 
   return (
-    <div className="mx-auto grid w-full max-w-5xl gap-4 px-6 sm:grid-cols-3">
+    <div className="mx-auto grid w-full max-w-6xl gap-4 px-6 pb-4 sm:grid-cols-3">
       {items.map((s) => (
         <div
           key={s.label}

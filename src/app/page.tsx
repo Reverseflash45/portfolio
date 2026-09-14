@@ -8,6 +8,7 @@ import Stats from "@/components/Stats";
 import About from "@/components/About";
 import PortfolioTabs from "@/components/PortfolioTabs";
 import EduExp from "@/components/EduExp";
+import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -19,10 +20,11 @@ export default function Home() {
       <ScrollProgress />
       <Nav />
       <Hero />
-      <Stats />
       <About />
-      <PortfolioTabs />
       <EduExp />
+      <Stats />
+      <PortfolioTabs />
+      <Gallery />
       <Contact />
     </main>
   );

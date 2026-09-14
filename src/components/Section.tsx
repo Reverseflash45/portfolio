@@ -9,26 +9,34 @@ export default function Section({
   title,
   subtitle,
   children,
+  wide = false,
 }: {
   id: string;
   title: T;
   subtitle?: T;
   children: React.ReactNode;
+  wide?: boolean;
 }) {
   const { t } = useLang();
   return (
-    <section id={id} className="scroll-mt-24 border-t border-border px-6 py-20 md:py-28">
-      <div className="mx-auto w-full max-w-4xl">
+    <section
+      id={id}
+      className="scroll-mt-28 border-t border-border/60 px-6 pb-20 pt-24 md:pb-28 md:pt-28"
+    >
+      <div className={`mx-auto w-full ${wide ? "max-w-6xl" : "max-w-5xl"}`}>
         <Reveal>
-          <div className="mb-10 md:mb-14">
-            <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-8 bg-accent" />
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+          <div className="mb-12 text-center md:mb-16">
+            <div className="mb-4 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-accent/60" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
                 {id}
               </span>
+              <span className="h-px w-8 bg-accent/60" />
             </div>
-            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{t(title)}</h2>
-            {subtitle && <p className="mt-2 text-sm text-muted">{t(subtitle)}</p>}
+            <h2 className="text-3xl font-semibold tracking-tight md:text-5xl">{t(title)}</h2>
+            {subtitle && (
+              <p className="mx-auto mt-3 max-w-xl text-sm text-muted">{t(subtitle)}</p>
+            )}
           </div>
         </Reveal>
         {children}

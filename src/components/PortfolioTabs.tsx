@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useLang } from "@/lib/i18n";
-import { portfolioSection, projects, education, techStack } from "@/content/data";
+import { portfolioSection, projects, education, techStack, misc } from "@/content/data";
 import Section from "./Section";
 import Reveal from "./Reveal";
 import CertCard from "./CertCard";
@@ -36,7 +36,7 @@ export default function PortfolioTabs() {
   const shown = tab === "awards" ? awards : certs;
 
   return (
-    <Section id="portfolio" title={portfolioSection.title}>
+    <Section id="portfolio" title={portfolioSection.title} wide>
       <Reveal>
         <div className="mb-10 grid grid-cols-2 gap-1 rounded-2xl border border-border bg-surface/60 p-1.5 backdrop-blur sm:grid-cols-4">
           {TABS.map((tb) => {
@@ -45,12 +45,14 @@ export default function PortfolioTabs() {
               <button
                 key={tb.key}
                 onClick={() => setTab(tb.key)}
-                className={`relative flex flex-col items-center gap-1.5 rounded-xl px-3 py-3.5 transition-colors ${
-                  on ? "bg-accent/10 text-accent" : "text-muted hover:text-fg"
+                className={`relative flex flex-col items-center gap-2 rounded-xl px-3 py-5 transition-colors ${
+                  on
+                    ? "bg-accent/12 text-accent shadow-[inset_0_0_0_1px_rgba(94,234,212,0.35)]"
+                    : "text-muted hover:bg-surface hover:text-fg"
                 }`}
               >
-                <span className="font-mono text-sm">{tb.icon}</span>
-                <span className="text-xs font-medium">
+                <span className="font-mono text-base">{tb.icon}</span>
+                <span className="text-sm font-medium">
                   {t(portfolioSection.tabs[tb.key])}
                 </span>
                 {on && (
@@ -69,7 +71,35 @@ export default function PortfolioTabs() {
         <div className="grid gap-5 sm:grid-cols-2">
           {projects.items.map((p, i) => (
             <Reveal key={i} delay={(i % 2) * 70}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface/70 p-5 backdrop-blur transition-colors hover:border-accent/40">
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/70 backdrop-blur transition-colors hover:border-accent/40">
+                {p.image ? (
+                  <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border bg-bg">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.image}
+                      alt={t(p.title)}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                ) : (
+                  <div className="relative grid aspect-[16/10] w-full place-items-center overflow-hidden border-b border-dashed border-border bg-bg">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(to right, #e9eaec 1px, transparent 1px), linear-gradient(to bottom, #e9eaec 1px, transparent 1px)",
+                        backgroundSize: "20px 20px",
+                      }}
+                    />
+                    <span className="relative font-mono text-[11px] uppercase tracking-[0.2em] text-border">
+                      {t(misc.slotImage)}
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex flex-1 flex-col p-5">
                 <span
                   className={`mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] ${
                     p.kind === "solo"
@@ -116,6 +146,7 @@ export default function PortfolioTabs() {
                     )}
                   </div>
                 )}
+                </div>
               </article>
             </Reveal>
           ))}
