@@ -4,6 +4,13 @@ import { useLang } from "@/lib/i18n";
 import { contact, contactForm, profile, misc } from "@/content/data";
 import Section from "./Section";
 import Reveal from "./Reveal";
+import BrandIcon from "./BrandIcon";
+
+const SLUG: Record<string, string> = {
+  GitHub: "github",
+  LinkedIn: "linkedin",
+  Instagram: "instagram",
+};
 
 const SUB: Record<string, string> = {
   GitHub: "Reverseflash45",
@@ -107,8 +114,8 @@ export default function Contact() {
                     rel="noreferrer"
                     className="group flex items-center gap-4 rounded-xl border border-border bg-bg px-4 py-3.5 transition-colors hover:border-accent/50"
                   >
-                    <span className="grid h-10 w-10 place-items-center rounded-lg border border-border font-mono text-xs text-muted transition-colors group-hover:border-accent group-hover:text-accent">
-                      {s.label.slice(0, 2)}
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-border transition-colors group-hover:border-accent">
+                      <BrandIcon slug={SLUG[s.label]} name={s.label} className="h-5 w-5" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-sm font-medium">{s.label}</span>

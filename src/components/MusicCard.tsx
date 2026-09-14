@@ -21,7 +21,7 @@ export default function MusicCard() {
           </div>
         </div>
         <a
-          href={`https://music.youtube.com/playlist?list=${music.playlistId}`}
+          href={`https://open.spotify.com/playlist/${music.playlistId}`}
           target="_blank"
           rel="noreferrer"
           aria-label={t(music.openLabel)}
@@ -34,11 +34,10 @@ export default function MusicCard() {
 
       <iframe
         title={t(music.title)}
-        src={`https://www.youtube.com/embed/videoseries?list=${music.playlistId}`}
-        allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
-        allowFullScreen
+        src={`https://open.spotify.com/embed/playlist/${music.playlistId}?theme=0`}
+        allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        className="aspect-video w-full border-0"
+        className="h-[380px] w-full border-0"
       />
     </div>
   );

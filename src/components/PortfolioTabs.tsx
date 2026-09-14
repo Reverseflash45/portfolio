@@ -7,6 +7,7 @@ import Section from "./Section";
 import Reveal from "./Reveal";
 import CertCard from "./CertCard";
 import CertLightbox from "./CertLightbox";
+import BrandIcon from "./BrandIcon";
 
 type Tab = "projects" | "certificates" | "awards" | "stack";
 
@@ -171,13 +172,11 @@ export default function PortfolioTabs() {
                 className="group flex h-full flex-col items-center justify-center gap-2.5 rounded-xl border border-border bg-surface/70 px-3 py-5 text-center backdrop-blur transition-colors hover:border-accent/40"
                 style={{ ["--tc" as string]: s.color }}
               >
-                <span
-                  aria-hidden
-                  className="h-8 w-8 rounded-lg transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    background: `radial-gradient(circle at 35% 30%, ${s.color} 0%, transparent 72%)`,
-                    boxShadow: `inset 0 0 0 1px ${s.color}55`,
-                  }}
+                <BrandIcon
+                  slug={(s as { slug?: string }).slug}
+                  name={s.name}
+                  color={s.color}
+                  className="h-8 w-8 transition-transform duration-300 group-hover:scale-110"
                 />
                 <span className="text-xs font-medium leading-snug">{s.name}</span>
               </div>

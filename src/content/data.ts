@@ -96,24 +96,24 @@ export const skills = {
 };
 
 export const techStack = [
-  { name: "Flutter", color: "#54c5f8" },
-  { name: "Dart", color: "#2bb7f6" },
-  { name: "Laravel", color: "#ff2d20" },
-  { name: "PHP", color: "#8892bf" },
-  { name: "Python", color: "#ffd43b" },
-  { name: "Go", color: "#00add8" },
-  { name: "JavaScript", color: "#f7df1e" },
-  { name: "TypeScript", color: "#3178c6" },
-  { name: "Next.js", color: "#e9eaec" },
-  { name: "Tailwind CSS", color: "#38bdf8" },
-  { name: "Supabase", color: "#3ecf8e" },
-  { name: "MySQL", color: "#00758f" },
+  { name: "Flutter", slug: "flutter", color: "#54c5f8" },
+  { name: "Dart", slug: "dart", color: "#2bb7f6" },
+  { name: "Laravel", slug: "laravel", color: "#ff2d20" },
+  { name: "PHP", slug: "php", color: "#8892bf" },
+  { name: "Python", slug: "python", color: "#ffd43b" },
+  { name: "Go", slug: "go", color: "#00add8" },
+  { name: "JavaScript", slug: "javascript", color: "#f7df1e" },
+  { name: "TypeScript", slug: "typescript", color: "#3178c6" },
+  { name: "Next.js", slug: "nextdotjs", color: "#e9eaec" },
+  { name: "Tailwind CSS", slug: "tailwindcss", color: "#38bdf8" },
+  { name: "Supabase", slug: "supabase", color: "#3ecf8e" },
+  { name: "MySQL", slug: "mysql", color: "#00758f" },
   { name: "IndoBERT", color: "#ffb454" },
-  { name: "Hugging Face", color: "#ffd21e" },
+  { name: "Hugging Face", slug: "huggingface", color: "#ffd21e" },
   { name: "ML Kit", color: "#4285f4" },
-  { name: "Figma", color: "#f24e1e" },
-  { name: "Git", color: "#f05032" },
-  { name: "C++", color: "#649ad2" },
+  { name: "Figma", slug: "figma", color: "#f24e1e" },
+  { name: "Git", slug: "git", color: "#f05032" },
+  { name: "C++", slug: "cplusplus", color: "#649ad2" },
 ];
 
 export const portfolioSection = {
@@ -316,7 +316,7 @@ export const education = {
   schools: [
     {
       school: "Universitas Airlangga",
-      logo: "", // taruh /public/logos/unair.png lalu isi: "/logos/unair.png"
+      logo: "/logos/unair.png",
       degree: {
         id: "D4 Teknik Informatika — Fakultas Vokasi",
         en: "D4 Informatics Engineering — Vocational Faculty",
@@ -534,9 +534,9 @@ export const contactForm = {
 export const music = {
   title: { id: "Sedang Diputar", en: "On Repeat" } as T,
   note: { id: "Playlist yang nemenin ngoding", en: "The playlist I code to" } as T,
-  // playlist ID dari YouTube Music / YouTube — kosongkan untuk menyembunyikan kartu
-  playlistId: "PL68GJpnxZ0o_o5s5ijhjBhs27sa7bcjUi",
-  openLabel: { id: "Buka di YouTube Music", en: "Open in YouTube Music" } as T,
+  // ID playlist Spotify — kosongkan untuk menyembunyikan kartu
+  playlistId: "0QX37pbRhabukh9MzfEpoq",
+  openLabel: { id: "Buka di Spotify", en: "Open in Spotify" } as T,
 };
 
 export const nav = {
