@@ -85,6 +85,7 @@ export type Project = {
   tags: string[];
   repo?: string;
   demo?: string;
+  apk?: string;
   image?: string; // contoh: "/projects/rshp.png"
 };
 
@@ -98,6 +99,7 @@ export const projects = {
     solo: { id: "Proyek Mandiri", en: "Personal Project" } as T,
     course: { id: "Proyek Kuliah", en: "Coursework" } as T,
   },
+  apkLabel: { id: "Unduh APK", en: "Download APK" } as T,
   items: [
     {
       kind: "solo",
@@ -110,6 +112,7 @@ export const projects = {
       tags: ["Flutter", "Dart", "Supabase", "ML Kit", "OCR", "Edge Functions"],
       repo: "https://github.com/Reverseflash45/Tracking",
       demo: "",
+      apk: "https://github.com/Reverseflash45/Tracking/releases/latest",
     },
     {
       kind: "solo",

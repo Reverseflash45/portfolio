@@ -47,7 +47,7 @@ export default function Projects() {
                   ))}
                 </ul>
 
-                {(p.repo || p.demo) && (
+                {(p.repo || p.demo || p.apk) && (
                   <div className="mt-4 flex gap-4 font-mono text-xs">
                     {p.repo && (
                       <a href={p.repo} target="_blank" rel="noreferrer" className="text-accent hover:underline">
@@ -57,6 +57,11 @@ export default function Projects() {
                     {p.demo && (
                       <a href={p.demo} target="_blank" rel="noreferrer" className="text-accent hover:underline">
                         Demo ↗
+                      </a>
+                    )}
+                    {p.apk && (
+                      <a href={p.apk} target="_blank" rel="noreferrer" className="text-accent hover:underline">
+                        {t(projects.apkLabel)} ↓
                       </a>
                     )}
                   </div>
