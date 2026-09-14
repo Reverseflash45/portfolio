@@ -18,7 +18,6 @@ export const profile = {
   location: { id: "Kediri, Jawa Timur", en: "Kediri, East Java" } as T,
   email: "rffernanditoo@gmail.com",
   photo: "/rafi-cutout.png",
-  photoAlt: "/rafi-hero-alt.png", // muncul saat kursor mendekat; kosongkan untuk menonaktifkan // ganti file di /public/profile.jpg kalau mau foto lain
   cv: "", // taruh /public/cv.pdf lalu isi: "/cv.pdf"
   socials: [
     { label: "GitHub", url: "https://github.com/Reverseflash45" },

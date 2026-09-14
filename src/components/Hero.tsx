@@ -87,7 +87,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <HeroFigure base={profile.photo} alt={profile.photoAlt} name={profile.name} />
+        <HeroFigure base={profile.photo} name={profile.name} />
       </div>
     </section>
   );
