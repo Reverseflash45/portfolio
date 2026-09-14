@@ -29,6 +29,12 @@ export const profile = {
   ],
 };
 
+export const loader = {
+  line1: { id: "Selamat datang di", en: "Welcome to my" } as T,
+  line2: { id: "Portofolio Saya", en: "Portfolio Website" } as T,
+  loading: { id: "Memuat", en: "Loading" } as T,
+};
+
 export const hero = {
   greeting: { id: "Halo, saya", en: "Hi, I'm" } as T,
   status: {
@@ -39,6 +45,10 @@ export const hero = {
     id: "Mahasiswa Teknik Informatika Universitas Airlangga. Membangun aplikasi web dan mobile, sambil ngoprek machine learning untuk bahasa Indonesia.",
     en: "Informatics Engineering student at Universitas Airlangga. I build web and mobile applications, and tinker with machine learning for the Indonesian language.",
   } as T,
+  roles: {
+    id: ["ML Enthusiast", "Mobile Developer", "Web Developer", "Mahasiswa D4 Teknik Informatika"],
+    en: ["ML Enthusiast", "Mobile Developer", "Web Developer", "Informatics Engineering Student"],
+  },
   ctaPrimary: { id: "Lihat Proyek", en: "View Projects" } as T,
   ctaSecondary: { id: "Hubungi Saya", en: "Get in Touch" } as T,
 };

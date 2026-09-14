@@ -16,8 +16,9 @@ html {
   background: var(--color-bg);
 }
 
+/* latar dipindah ke <html> supaya canvas bintang (z-index negatif) terlihat */
 body {
-  background: var(--color-bg);
+  background: transparent;
   color: var(--color-fg);
   -webkit-font-smoothing: antialiased;
 }
@@ -40,4 +41,211 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ============================================================
+   Custom cursor
+   ============================================================ */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  pointer-events: none;
+  border-radius: 9999px;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--color-accent);
+}
+
+.cursor-ring {
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 1px solid color-mix(in oklab, var(--color-accent) 55%, transparent);
+  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease,
+    background-color 0.22s ease, border-color 0.22s ease;
+}
+
+.cursor-ring.is-hot {
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  background: color-mix(in oklab, var(--color-accent) 12%, transparent);
+  border-color: var(--color-accent);
+}
+
+/* ============================================================
+   Typing caret
+   ============================================================ */
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: var(--color-accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ============================================================
+   Flash photo effect
+   ============================================================ */
+.flashwrap { --flash-a: #f5d547; --flash-b: #e0343f; }
+
+.flashglow {
+  position: absolute;
+  inset: -14%;
+  border-radius: 1.5rem;
+  opacity: 0;
+  filter: blur(26px);
+  transition: opacity 0.35s ease;
+  background: radial-gradient(circle at 50% 45%, var(--flash-b) 0%, transparent 70%);
+}
+.flashwrap.is-hot .flashglow { opacity: 0.55; }
+
+.flashimg {
+  transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.flashwrap.is-hot .flashimg {
+  transform: scale(1.06);
+  filter: contrast(1.45) saturate(0.12) brightness(0.78);
+}
+
+.flashtone {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  mix-blend-mode: hard-light;
+  transition: opacity 0.4s ease;
+  background: linear-gradient(
+    150deg,
+    rgba(245, 213, 71, 0.45) 0%,
+    rgba(224, 52, 63, 0.9) 55%,
+    rgba(96, 8, 22, 0.95) 100%
+  );
+}
+.flashwrap.is-hot .flashtone { opacity: 0.9; }
+
+/* vignette gelap di tepi supaya subjek tetap menonjol */
+.flashvig {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    115% 95% at 50% 40%,
+    transparent 30%,
+    rgba(40, 0, 8, 0.55) 78%,
+    rgba(18, 0, 4, 0.8) 100%
+  );
+}
+.flashwrap.is-hot .flashvig { opacity: 1; }
+
+.speedlines {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: repeating-linear-gradient(
+    100deg,
+    transparent 0 9px,
+    rgba(255, 238, 170, 0.5) 9px 10px,
+    transparent 10px 22px
+  );
+  mask-image: linear-gradient(100deg, transparent 0%, #000 45%, transparent 100%);
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, #000 45%, transparent 100%);
+}
+.flashwrap.is-hot .speedlines {
+  opacity: 0.75;
+  animation: speed-sweep 0.65s linear infinite;
+}
+
+@keyframes speed-sweep {
+  from { background-position: 0 0; }
+  to { background-position: 44px 0; }
+}
+
+.bolts {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bolt {
+  fill: none;
+  stroke-linejoin: miter;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+}
+
+.bolt.core {
+  stroke: #fffdf0;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 3px #ffe680);
+}
+
+.bolt.glow {
+  stroke: #ffc93d;
+  stroke-width: 5;
+  opacity: 0.5;
+  filter: blur(3px) drop-shadow(0 0 8px #ff5a3d);
+}
+
+.boltg { opacity: 0; }
+
+.flashwrap.is-hot .boltg {
+  animation: bolt-strike 1.15s cubic-bezier(0.3, 0.85, 0.2, 1) infinite;
+}
+.flashwrap.is-hot .boltg .bolt {
+  animation: bolt-draw 1.15s cubic-bezier(0.2, 0.9, 0.15, 1) infinite;
+}
+.flashwrap.is-hot .g2,
+.flashwrap.is-hot .g2 .bolt { animation-delay: 0.3s; }
+.flashwrap.is-hot .g3,
+.flashwrap.is-hot .g3 .bolt { animation-delay: 0.62s; }
+
+@keyframes bolt-draw {
+  0%   { stroke-dashoffset: 260; }
+  38%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes bolt-strike {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  30%  { opacity: 1; }
+  38%  { opacity: 0.2; }
+  46%  { opacity: 1; }
+  60%  { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flashwrap.is-hot .boltg,
+  .flashwrap.is-hot .boltg .bolt,
+  .flashwrap.is-hot .speedlines,
+  .caret { animation: none; }
+  .flashwrap.is-hot .boltg { opacity: 0.9; }
+  .flashwrap.is-hot .bolt { stroke-dashoffset: 0; }
 }

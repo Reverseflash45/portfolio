@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useLang } from "@/lib/i18n";
 import { hero, profile, misc } from "@/content/data";
+import Typing from "./Typing";
+import FlashPhoto from "./FlashPhoto";
 
 export default function Hero() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
 
   return (
     <section id="top" className="relative overflow-hidden px-6 pb-24 pt-36 md:pb-32 md:pt-44">
@@ -41,7 +42,9 @@ export default function Hero() {
           <h1 className="bg-gradient-to-br from-fg via-fg to-muted bg-clip-text text-4xl font-semibold leading-[1.05] tracking-tight text-transparent md:text-6xl">
             {profile.name}
           </h1>
-          <p className="mt-4 text-base text-muted md:text-lg">{t(profile.role)}</p>
+          <p className="mt-4 text-base text-muted md:text-lg">
+            <Typing words={hero.roles[lang]} className="text-accent" />
+          </p>
           <p className="mt-6 text-sm leading-relaxed text-muted md:text-base">
             {t(hero.tagline)}
           </p>
@@ -85,25 +88,11 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative shrink-0">
-          <div className="relative flex h-40 w-40 items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface md:h-52 md:w-52">
-            {profile.photo ? (
-              <Image
-                src={profile.photo}
-                alt={profile.name}
-                fill
-                sizes="208px"
-                className="object-cover"
-                priority
-              />
-            ) : (
-              <span className="font-mono text-5xl text-border select-none md:text-6xl">
-                {profile.name.charAt(0).toUpperCase()}
-              </span>
-            )}
-          </div>
-        </div>
-
+        <FlashPhoto
+          src={profile.photo}
+          alt={profile.name}
+          fallbackChar={profile.name.charAt(0).toUpperCase()}
+        />
       </div>
     </section>
   );

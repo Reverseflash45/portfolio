@@ -44,68 +44,83 @@ export default function Nav() {
   }, []);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "border-b border-border bg-bg/80 backdrop-blur-md" : "border-b border-transparent"
-      }`}
-    >
-      <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-4">
-        <a href="#top" className="font-mono text-sm font-medium tracking-tight">
-          {profile.nickname.toLowerCase()}
-          <span className="text-accent">.</span>
-        </a>
+    <>
+      {/* brand + kontrol, pojok atas */}
+      <div className="fixed inset-x-0 top-0 z-50 px-6 py-4">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
+          <a
+            href="#top"
+            className="font-mono text-sm font-medium tracking-tight text-fg mix-blend-difference"
+          >
+            {profile.nickname.toLowerCase()}
+            <span className="text-accent">.</span>
+          </a>
 
-        <nav className="hidden items-center gap-7 md:flex">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className={`relative text-sm transition-colors hover:text-fg ${
-                active === l.href.slice(1) ? "text-fg" : "text-muted"
-              }`}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLang(lang === "id" ? "en" : "id")}
+              className="rounded-full border border-border bg-bg/70 px-3 py-1 font-mono text-xs text-muted backdrop-blur transition-colors hover:border-accent hover:text-accent"
+              aria-label="Switch language"
             >
-              {t(l.label)}
-              <span
-                className={`absolute -bottom-1.5 left-0 h-px bg-accent transition-all duration-300 ${
-                  active === l.href.slice(1) ? "w-full" : "w-0"
-                }`}
-              />
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setLang(lang === "id" ? "en" : "id")}
-            className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-accent"
-            aria-label="Switch language"
-          >
-            {lang === "id" ? "ID" : "EN"}
-          </button>
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden rounded-full border border-border px-3 py-1 font-mono text-xs text-muted"
-            aria-label="Menu"
-          >
-            {open ? "✕" : "☰"}
-          </button>
+              {lang === "id" ? "ID" : "EN"}
+            </button>
+            <button
+              onClick={() => setOpen((v) => !v)}
+              className="rounded-full border border-border bg-bg/70 px-3 py-1 font-mono text-xs text-muted backdrop-blur md:hidden"
+              aria-label="Menu"
+            >
+              {open ? "\u2715" : "\u2630"}
+            </button>
+          </div>
         </div>
       </div>
 
+      {/* pill nav mengapung di tengah atas */}
+      <nav
+        className={`fixed left-1/2 top-4 z-40 hidden -translate-x-1/2 items-center gap-1 rounded-full border p-1 backdrop-blur-xl transition-all duration-300 md:flex ${
+          scrolled
+            ? "border-border bg-surface/80 shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
+            : "border-border/60 bg-surface/50"
+        }`}
+      >
+        {links.map((l) => {
+          const isActive = active === l.href.slice(1);
+          return (
+            <a
+              key={l.href}
+              href={l.href}
+              className={`relative rounded-full px-5 py-2 text-sm transition-colors ${
+                isActive ? "text-bg" : "text-muted hover:text-fg"
+              }`}
+            >
+              {isActive && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full bg-accent transition-all duration-300"
+                />
+              )}
+              <span className="relative">{t(l.label)}</span>
+            </a>
+          );
+        })}
+      </nav>
+
       {open && (
-        <nav className="border-t border-border bg-bg px-6 py-4 md:hidden">
+        <nav className="fixed inset-x-0 top-14 z-40 mx-6 rounded-xl border border-border bg-surface/95 p-3 backdrop-blur-xl md:hidden">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="block py-2 text-sm text-muted hover:text-fg"
+              className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
+                active === l.href.slice(1) ? "bg-accent/10 text-accent" : "text-muted"
+              }`}
             >
               {t(l.label)}
             </a>
           ))}
         </nav>
       )}
-    </header>
+    </>
   );
 }
