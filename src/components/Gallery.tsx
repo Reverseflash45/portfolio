@@ -6,20 +6,23 @@ import { gallery, misc } from "@/content/data";
 import Section from "./Section";
 import Reveal from "./Reveal";
 
-/** Carousel coverflow 3D: bisa digeser dengan kursor/sentuhan, dan looping. */
+/** Carousel coverflow 3D: digeser dengan kursor/sentuhan, melingkar tanpa ujung. */
 export default function Gallery() {
   const { t } = useLang();
   const items = gallery.items.length ? gallery.items : Array.from({ length: 5 }, () => null);
   const n = items.length;
 
   const [i, setI] = useState(0);
-  const [drag, setDrag] = useState(0);
-  const down = useRef<{ x: number; w: number } | null>(null);
+  const [drag, setDrag] = useState(0); // dalam satuan slot, bukan piksel
+  const [grabbing, setGrabbing] = useState(false);
+  const start = useRef<{ x: number; slot: number } | null>(null);
   const moved = useRef(false);
+  const track = useRef<HTMLDivElement>(null);
 
-  const go = useCallback((d: number) => setI((v) => (v + d + n * 10) % n), [n]);
+  const norm = useCallback((v: number) => ((v % n) + n) % n, [n]);
+  const go = useCallback((d: number) => setI((v) => norm(v + d)), [norm]);
 
-  // jarak melingkar terpendek, dihitung SETELAH drag ikut ditambahkan —
+  // jarak melingkar terpendek, dihitung SETELAH geseran ikut ditambahkan —
   // kalau di-wrap sebelum drag, kartu yang masuk dari sisi berlawanan ikut terpotong
   const wrapOff = (idx: number, extra: number) => {
     let d = idx - i + extra;
@@ -28,31 +31,38 @@ export default function Gallery() {
     return d;
   };
 
+  // lebar satu slot = jarak antar kartu di layar (persen translate x lebar kartu)
+  const slotPx = () => {
+    const card = track.current?.querySelector("button");
+    const w = card?.clientWidth ?? 320;
+    return w * 0.56;
+  };
+
   const onDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    down.current = { x: e.clientX, w: e.currentTarget.clientWidth };
+    start.current = { x: e.clientX, slot: slotPx() };
     moved.current = false;
+    setGrabbing(true);
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!down.current) return;
-    const dx = e.clientX - down.current.x;
+    if (!start.current) return;
+    const dx = e.clientX - start.current.x;
     if (Math.abs(dx) > 5) moved.current = true;
-    setDrag(dx);
+    setDrag(dx / start.current.slot);
   };
 
   const onUp = () => {
-    if (!down.current) return;
-    const dx = drag;
-    const threshold = Math.min(90, down.current.w * 0.08);
-    if (dx <= -threshold) go(1);
-    else if (dx >= threshold) go(-1);
-    down.current = null;
+    if (!start.current) return;
+    // kartu yang terlihat di tengah saat ini adalah (i - drag) — pakai itu
+    // supaya lepasan mendarat tepat di foto yang sedang dilihat
+    let slots = Math.round(drag);
+    if (slots === 0 && Math.abs(drag) > 0.22) slots = Math.sign(drag);
+    if (slots !== 0) setI((v) => norm(v - slots));
+    start.current = null;
+    setGrabbing(false);
     setDrag(0);
   };
-
-  // geser 1 slot penuh kira-kira 260px
-  const dragSlots = drag / 260;
 
   return (
     <Section id="gallery" title={gallery.title} subtitle={gallery.subtitle} wide>
@@ -62,14 +72,18 @@ export default function Gallery() {
           onPointerMove={onMove}
           onPointerUp={onUp}
           onPointerCancel={onUp}
-          className={`relative touch-pan-y select-none ${down.current ? "cursor-grabbing" : "cursor-grab"}`}
-          style={{ perspective: "1400px" }}
+          className={`relative touch-pan-y select-none ${grabbing ? "cursor-grabbing" : "cursor-grab"}`}
+          style={{ perspective: "1500px" }}
         >
-          <div className="relative mx-auto flex h-[clamp(15rem,34vw,25rem)] items-center justify-center overflow-hidden">
+          <div
+            ref={track}
+            className="relative mx-auto flex h-[clamp(16rem,38vw,28rem)] items-center justify-center"
+            style={{ transformStyle: "preserve-3d" }}
+          >
             {items.map((it, idx) => {
-              const off = wrapOff(idx, dragSlots);
+              const off = wrapOff(idx, drag);
               const abs = Math.abs(off);
-              if (abs > 2.6) return null;
+              if (abs > 2.4) return null;
               return (
                 <button
                   key={idx}
@@ -77,16 +91,18 @@ export default function Gallery() {
                     if (!moved.current) setI(idx);
                   }}
                   aria-label={`Slide ${idx + 1}`}
-                  className="absolute h-full w-[clamp(13rem,28vw,22rem)] overflow-hidden rounded-2xl border border-border bg-surface"
+                  className="absolute h-full w-[clamp(13rem,29vw,24rem)] overflow-hidden rounded-2xl border border-border bg-surface"
                   style={{
-                    transform: `translateX(${off * 58}%) rotateY(${off * -26}deg) scale(${Math.max(
-                      0.6,
-                      1 - abs * 0.12
+                    transform: `translateX(${off * 56}%) rotateY(${off * -22}deg) scale(${Math.max(
+                      0.7,
+                      1 - abs * 0.1
                     )})`,
-                    zIndex: 10 - Math.round(abs),
+                    zIndex: 20 - Math.round(abs * 4),
                     opacity: Math.max(0, 1 - abs * 0.3),
-                    boxShadow: abs < 0.35 ? "0 24px 60px rgba(0,0,0,0.55)" : "none",
-                    transition: down.current ? "none" : "transform 0.5s ease-out, opacity 0.5s ease-out",
+                    boxShadow: abs < 0.4 ? "0 30px 70px rgba(0,0,0,0.6)" : "none",
+                    transition: grabbing
+                      ? "none"
+                      : "transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.55s ease-out",
                   }}
                 >
                   {it ? (
