@@ -19,11 +19,12 @@ export default function Gallery() {
 
   const go = useCallback((d: number) => setI((v) => (v + d + n * 10) % n), [n]);
 
-  // jarak terpendek melingkar: -n/2 .. n/2, supaya kartu bisa muncul dari dua sisi
-  const wrapOff = (idx: number) => {
-    let d = idx - i;
-    if (d > n / 2) d -= n;
-    if (d < -n / 2) d += n;
+  // jarak melingkar terpendek, dihitung SETELAH drag ikut ditambahkan —
+  // kalau di-wrap sebelum drag, kartu yang masuk dari sisi berlawanan ikut terpotong
+  const wrapOff = (idx: number, extra: number) => {
+    let d = idx - i + extra;
+    while (d > n / 2) d -= n;
+    while (d < -n / 2) d += n;
     return d;
   };
 
@@ -66,7 +67,7 @@ export default function Gallery() {
         >
           <div className="relative mx-auto flex h-[clamp(15rem,34vw,25rem)] items-center justify-center overflow-hidden">
             {items.map((it, idx) => {
-              const off = wrapOff(idx) + dragSlots;
+              const off = wrapOff(idx, dragSlots);
               const abs = Math.abs(off);
               if (abs > 2.6) return null;
               return (
@@ -89,21 +90,14 @@ export default function Gallery() {
                   }}
                 >
                   {it ? (
-                    <>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={it.src}
-                        alt={t(it.caption)}
-                        loading="lazy"
-                        draggable={false}
-                        className="pointer-events-none h-full w-full object-cover"
-                      />
-                      {abs < 0.35 && (
-                        <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 to-transparent p-4 text-left text-xs text-fg">
-                          {t(it.caption)}
-                        </span>
-                      )}
-                    </>
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={it.src}
+                      alt={t(it.caption)}
+                      loading="lazy"
+                      draggable={false}
+                      className="pointer-events-none h-full w-full object-cover"
+                    />
                   ) : (
                     <span className="grid h-full w-full place-items-center border border-dashed border-border bg-bg">
                       <span className="px-4 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-border">
