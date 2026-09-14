@@ -104,3 +104,47 @@ body {
   50%, 100% { opacity: 0; }
 }
 
+
+/* ============================================================
+   Hero figure — reveal mengikuti kursor
+   ============================================================ */
+.revealwrap {
+  --mx: 50%;
+  --my: 50%;
+  --mr: 0%;
+}
+
+.figbase,
+.figreveal {
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55));
+}
+
+.figreveal {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  /* lingkaran lembut di sekitar kursor; radius 0 saat kursor keluar */
+  /* catatan: radius `circle` tidak menerima persen — pakai `ellipse` */
+  mask-image: radial-gradient(
+    ellipse var(--mr) var(--mr) at var(--mx) var(--my),
+    #000 0%,
+    #000 58%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse var(--mr) var(--mr) at var(--mx) var(--my),
+    #000 0%,
+    #000 58%,
+    transparent 100%
+  );
+  transition: opacity 0.2s ease, mask-image 0.12s linear, -webkit-mask-image 0.12s linear;
+}
+
+.figreveal.is-on { opacity: 1; }
+
+@media (hover: none) {
+  .figreveal { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figreveal { transition: opacity 0.2s ease; }
+}
