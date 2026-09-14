@@ -6,8 +6,7 @@ import { nav, profile } from "@/content/data";
 
 const links = [
   { href: "#about", label: nav.about },
-  { href: "#projects", label: nav.projects },
-  { href: "#experience", label: nav.experience },
+  { href: "#portfolio", label: nav.portfolio },
   { href: "#education", label: nav.education },
   { href: "#contact", label: nav.contact },
 ];

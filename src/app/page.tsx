@@ -4,10 +4,10 @@ import Starfield from "@/components/Starfield";
 import Cursor from "@/components/Cursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
+import Stats from "@/components/Stats";
 import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Experience from "@/components/Experience";
-import Education from "@/components/Education";
+import PortfolioTabs from "@/components/PortfolioTabs";
+import EduExp from "@/components/EduExp";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -19,10 +19,10 @@ export default function Home() {
       <ScrollProgress />
       <Nav />
       <Hero />
+      <Stats />
       <About />
-      <Projects />
-      <Experience />
-      <Education />
+      <PortfolioTabs />
+      <EduExp />
       <Contact />
     </main>
   );

@@ -17,7 +17,8 @@ export const profile = {
   } as T,
   location: { id: "Kediri, Jawa Timur", en: "Kediri, East Java" } as T,
   email: "rffernanditoo@gmail.com",
-  photo: "/profile.jpg", // ganti file di /public/profile.jpg kalau mau foto lain
+  photo: "/rafi-cutout.png",
+  photoAlt: "/rafi-hero-alt.png", // muncul saat kursor mendekat; kosongkan untuk menonaktifkan // ganti file di /public/profile.jpg kalau mau foto lain
   cv: "", // taruh /public/cv.pdf lalu isi: "/cv.pdf"
   socials: [
     { label: "GitHub", url: "https://github.com/Reverseflash45" },
@@ -55,6 +56,7 @@ export const hero = {
 
 export const about = {
   title: { id: "Tentang", en: "About" } as T,
+  ctaProjects: { id: "Lihat Portofolio", en: "View Portfolio" } as T,
   body: {
     id: [
       "Saya Rafi, mahasiswa D4 Teknik Informatika Fakultas Vokasi Universitas Airlangga angkatan 2024. Saya terbiasa bekerja dengan PHP, Python, Dart, dan Go, serta framework seperti Laravel dan Flutter.",
@@ -85,6 +87,46 @@ export const skills = {
       items: ["IndoBERT", "Hugging Face", "scikit-learn", "Pandas", "NLP"],
     },
   ],
+};
+
+export const techStack = [
+  { name: "Flutter", color: "#54c5f8" },
+  { name: "Dart", color: "#2bb7f6" },
+  { name: "Laravel", color: "#ff2d20" },
+  { name: "PHP", color: "#8892bf" },
+  { name: "Python", color: "#ffd43b" },
+  { name: "Go", color: "#00add8" },
+  { name: "JavaScript", color: "#f7df1e" },
+  { name: "TypeScript", color: "#3178c6" },
+  { name: "Next.js", color: "#e9eaec" },
+  { name: "Tailwind CSS", color: "#38bdf8" },
+  { name: "Supabase", color: "#3ecf8e" },
+  { name: "MySQL", color: "#00758f" },
+  { name: "IndoBERT", color: "#ffb454" },
+  { name: "Hugging Face", color: "#ffd21e" },
+  { name: "ML Kit", color: "#4285f4" },
+  { name: "Figma", color: "#f24e1e" },
+  { name: "Git", color: "#f05032" },
+  { name: "C++", color: "#649ad2" },
+];
+
+export const portfolioSection = {
+  title: { id: "Portofolio", en: "Portfolio" } as T,
+  tabs: {
+    projects: { id: "Proyek", en: "Projects" } as T,
+    certificates: { id: "Sertifikat", en: "Certificates" } as T,
+    awards: { id: "Prestasi", en: "Awards" } as T,
+    stack: { id: "Tech Stack", en: "Tech Stack" } as T,
+  },
+};
+
+export const stats = {
+  projects: { id: "Proyek", en: "Projects" } as T,
+  projectsNote: { id: "Dibangun sendiri & tugas kuliah", en: "Built solo & for coursework" } as T,
+  certificates: { id: "Sertifikat", en: "Certificates" } as T,
+  certificatesNote: { id: "Kursus & kepanitiaan", en: "Courses & committees" } as T,
+  awards: { id: "Prestasi", en: "Awards" } as T,
+  awardsNote: { id: "Kompetisi tingkat nasional", en: "National-level competitions" } as T,
 };
 
 export type Project = {
@@ -254,7 +296,8 @@ export const experience = {
 };
 
 export const education = {
-  title: { id: "Pendidikan & Sertifikat", en: "Education & Certificates" } as T,
+  title: { id: "Pendidikan & Pengalaman", en: "Education & Experience" } as T,
+  eduLabel: { id: "Pendidikan", en: "Education" } as T,
   schools: [
     {
       school: "Universitas Airlangga",
@@ -432,6 +475,7 @@ export const contact = {
 export const nav = {
   about: { id: "Tentang", en: "About" } as T,
   projects: { id: "Proyek", en: "Projects" } as T,
+  portfolio: { id: "Portofolio", en: "Portfolio" } as T,
   experience: { id: "Pengalaman", en: "Experience" } as T,
   education: { id: "Pendidikan", en: "Education" } as T,
   contact: { id: "Kontak", en: "Contact" } as T,

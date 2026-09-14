@@ -249,3 +249,76 @@ body {
   .flashwrap.is-hot .boltg { opacity: 0.9; }
   .flashwrap.is-hot .bolt { stroke-dashoffset: 0; }
 }
+
+/* ============================================================
+   Hero figure (foto transparan + swap figur)
+   ============================================================ */
+.figwrap { cursor: pointer; }
+
+.figglow {
+  position: absolute;
+  inset: 8% 10% 6% 10%;
+  border-radius: 9999px;
+  opacity: 0.25;
+  filter: blur(52px);
+  transition: opacity 0.45s ease, background 0.45s ease;
+  background: radial-gradient(circle at 50% 55%, var(--color-accent) 0%, transparent 68%);
+}
+.figwrap.is-hot .figglow {
+  opacity: 0.6;
+  background: radial-gradient(circle at 50% 55%, #e0343f 0%, transparent 70%);
+}
+
+.figimg {
+  filter: drop-shadow(0 26px 44px rgba(0, 0, 0, 0.6));
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.figwrap.is-hot .figimg { transform: scale(1.03); }
+
+.figspeed {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  background: repeating-linear-gradient(
+    100deg,
+    transparent 0 14px,
+    rgba(255, 224, 130, 0.4) 14px 15px,
+    transparent 15px 34px
+  );
+  mask-image: radial-gradient(65% 60% at 50% 50%, #000 20%, transparent 85%);
+  -webkit-mask-image: radial-gradient(65% 60% at 50% 50%, #000 20%, transparent 85%);
+}
+.figwrap.is-hot .figspeed {
+  opacity: 0.8;
+  animation: speed-sweep 0.6s linear infinite;
+}
+
+.figbolts {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.figbolts .boltg { opacity: 0; }
+.figwrap.is-hot .figbolts .boltg {
+  animation: bolt-strike 1.15s cubic-bezier(0.3, 0.85, 0.2, 1) infinite;
+}
+.figwrap.is-hot .figbolts .boltg .bolt {
+  animation: bolt-draw 1.15s cubic-bezier(0.2, 0.9, 0.15, 1) infinite;
+}
+.figwrap.is-hot .figbolts .g2,
+.figwrap.is-hot .figbolts .g2 .bolt { animation-delay: 0.3s; }
+.figwrap.is-hot .figbolts .g3,
+.figwrap.is-hot .figbolts .g3 .bolt { animation-delay: 0.62s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .figwrap.is-hot .figspeed,
+  .figwrap.is-hot .figbolts .boltg,
+  .figwrap.is-hot .figbolts .boltg .bolt { animation: none; }
+  .figwrap.is-hot .figbolts .boltg { opacity: 0.85; }
+  .figwrap.is-hot .figbolts .bolt { stroke-dashoffset: 0; }
+}
