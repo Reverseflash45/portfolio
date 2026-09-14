@@ -65,13 +65,12 @@ export default function Stats() {
       {items.map((s) => (
         <div
           key={s.label}
-          className="group relative overflow-hidden rounded-2xl border border-border bg-surface/70 p-6 backdrop-blur transition-colors hover:border-accent/40"
+          className="statcard group relative overflow-hidden rounded-2xl border border-border bg-surface/70 p-6 backdrop-blur transition-colors hover:border-accent/25"
+          style={{ ["--sc" as string]: s.color }}
         >
-          <span
-            aria-hidden
-            className="absolute inset-x-0 bottom-0 h-px opacity-70"
-            style={{ background: `linear-gradient(to right, transparent, ${s.color}, transparent)` }}
-          />
+          {/* dua garis cahaya yang saling mengejar di tepi atas & bawah */}
+          <span aria-hidden className="statline top" />
+          <span aria-hidden className="statline bottom" />
           <div className="flex items-start justify-between">
             <span
               className="grid h-11 w-11 place-items-center rounded-xl border border-border font-mono text-sm"

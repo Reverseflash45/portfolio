@@ -19,7 +19,7 @@ export const profile = {
   email: "rffernanditoo@gmail.com",
   photo: "/rafi-cutout.png",
   photoAlt: "/rafi-hero-alt.png", // tersingkap di sekitar kursor; kosongkan untuk menonaktifkan
-  cv: "", // taruh /public/cv.pdf lalu isi: "/cv.pdf"
+  cv: "/cv-rafi-fernandito-setiawan.pdf",
   socials: [
     { label: "GitHub", url: "https://github.com/Reverseflash45" },
     {
@@ -163,7 +163,7 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Tracking",
-      image: "", // /public/projects/…png
+      image: "/projects/tracking.jpg",
       desc: {
         id: "Aplikasi produktivitas pribadi yang menyatukan jadwal kuliah, tugas, workout, dan keuangan dalam satu app. Ada impor KRS/KHS lewat OCR, deteksi jadwal bentrok, penghitung repetisi latihan pakai kamera (ML Kit pose detection), pelacakan lari GPS, pembacaan struk otomatis, dan mode luring penuh. Saat ini 27 modul fitur, 31 tabel basis data, dan 950 test otomatis.",
         en: "A personal productivity app that unifies class schedules, assignments, workouts, and finances. Includes OCR import of academic records, schedule-clash detection, camera-based rep counting (ML Kit pose detection), GPS run tracking, automatic receipt reading, and full offline support. Currently 27 feature modules, 31 database tables, and 950 automated tests.",
@@ -177,7 +177,7 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Superduperweb",
-      image: "", // /public/projects/…png
+      image: "/projects/superduperweb.jpg",
       desc: {
         id: "Web jasa pembuatan aplikasi: sisi publik berfungsi sebagai etalase dan alur closing (layanan, paket harga, portofolio, form brief) sementara panel admin dipakai untuk operasional — brief masuk, data klien, proyek, pembayaran, dan biaya. Tiap proyek mendapat tautan invoice bertoken sehingga klien bisa melihat status, membayar via QRIS atau transfer, dan mengunggah bukti tanpa perlu akun. Hanya pembayaran terverifikasi yang dihitung sebagai omzet, dan margin per proyek dihitung otomatis.",
         en: "A web-development services site: the public side works as a storefront and closing funnel (services, pricing, portfolio, brief form) while the admin panel runs operations — incoming briefs, clients, projects, payments, and costs. Each project gets a tokenised invoice link so clients can check status, pay by QRIS or transfer, and upload proof without an account. Only verified payments count towards revenue, and per-project margin is computed automatically.",
@@ -190,7 +190,7 @@ export const projects = {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
       title: "WTOOLS",
-      image: "", // /public/projects/…png
+      image: "/projects/wtools.jpg",
       desc: {
         id: "Proyek akhir Workshop UI: situs kebugaran berisi katalog produk, artikel, panduan gerakan latihan, dan panel admin. Dibangun dari desain Figma sendiri lalu diimplementasikan penuh menjadi antarmuka web.",
         en: "Final project for a UI Workshop course: a fitness site with a product catalogue, articles, exercise guides, and an admin panel. Designed in Figma and then implemented as a full web interface.",
@@ -252,7 +252,7 @@ export const experience = {
       kind: "org",
       role: { id: "Anggota", en: "Member" },
       org: "HIMA Sarjana Terapan Teknik Informatika — Kabinet Selaras, Fakultas Vokasi UNAIR",
-      logo: "", // /logos/hima.png
+      logo: "/logos/hima.png",
       period: "2025",
       desc: {
         id: "Anggota pengurus Himpunan Mahasiswa Sarjana Terapan Teknik Informatika periode 2025.",
@@ -263,7 +263,7 @@ export const experience = {
       kind: "org",
       role: { id: "Panitia", en: "Committee Member" },
       org: "PIMNAS x Airlangga Esports Championship — UKM E-Sports UNAIR",
-      logo: "", // /logos/ukm-esports.png
+      logo: "/logos/ukm-esports.png",
       period: "Okt 2024",
       desc: {
         id: "Panitia turnamen esports tingkat universitas yang diselenggarakan di WTC War Arena Surabaya.",
@@ -274,7 +274,7 @@ export const experience = {
       kind: "org",
       role: { id: "Pengurus OSIS — Sie Kesegaran Jasmani", en: "Student Council — Physical Fitness Division" },
       org: "SMA Negeri 1 Kota Kediri",
-      logo: "", // /logos/sman1.png
+      logo: "/logos/sman1.png",
       period: "2021 — 2022",
       desc: {
         id: "Merencanakan dan menjalankan program kerja divisi serta kepanitiaan acara sekolah.",
@@ -329,7 +329,7 @@ export const education = {
     },
     {
       school: "SMA Negeri 1 Kota Kediri",
-      logo: "", // /logos/sman1.png
+      logo: "/logos/sman1.png",
       degree: { id: "MIPA", en: "Natural Sciences" } as T,
       period: "2021 — 2024",
       note: {
@@ -339,7 +339,7 @@ export const education = {
     },
     {
       school: "SMP Negeri 4 Kota Kediri",
-      logo: "", // /logos/smpn4.png
+      logo: "/logos/smpn4.png",
       degree: { id: "—", en: "—" } as T,
       period: "2018 — 2021",
       note: {
@@ -501,7 +501,16 @@ export const gallery = {
     en: "Activity photos will appear here",
   } as T,
   // taruh file di /public/gallery/ lalu isi: { src: "/gallery/1.jpg", caption: {...} }
-  items: [] as { src: string; caption: T }[],
+  items: [
+    { src: "/gallery/lapangan.jpg", caption: { id: "Angkatan Teknik Informatika, Fakultas Vokasi UNAIR", en: "Informatics Engineering cohort, UNAIR Vocational Faculty" } },
+    { src: "/gallery/tifl-basket.jpg", caption: { id: "TIFL — Teknik Informatika League", en: "TIFL — Informatics Engineering League" } },
+    { src: "/gallery/ftmm.jpg", caption: { id: "Kunjungan ke FTMM Universitas Airlangga", en: "Visit to UNAIR Faculty of Advanced Technology" } },
+    { src: "/gallery/haram-manja.jpg", caption: { id: "Kaderisasi Himpunan Mahasiswa Teknik Informatika", en: "Informatics Engineering student association training" } },
+    { src: "/gallery/joglo.jpg", caption: { id: "Kegiatan angkatan di pendopo", en: "Cohort activity at the pavilion" } },
+    { src: "/gallery/malam-pink.jpg", caption: { id: "Malam keakraban angkatan", en: "Cohort get-together night" } },
+    { src: "/gallery/gedung-putih.jpg", caption: { id: "Kegiatan kampus bersama teman seangkatan", en: "Campus activity with coursemates" } },
+    { src: "/gallery/kampus-kecil.jpg", caption: { id: "Kegiatan kelompok di kampus", en: "Group activity on campus" } },
+  ] as { src: string; caption: T }[],
 };
 
 export const contactForm = {
@@ -520,6 +529,14 @@ export const contactForm = {
     en: "Form not active yet — connect a Formspree endpoint in data.ts. Use the email button for now.",
   } as T,
   findMe: { id: "Temukan Saya", en: "Find Me" } as T,
+};
+
+export const music = {
+  title: { id: "Sedang Diputar", en: "On Repeat" } as T,
+  note: { id: "Playlist yang nemenin ngoding", en: "The playlist I code to" } as T,
+  // playlist ID dari YouTube Music / YouTube — kosongkan untuk menyembunyikan kartu
+  playlistId: "PL68GJpnxZ0o_o5s5ijhjBhs27sa7bcjUi",
+  openLabel: { id: "Buka di YouTube Music", en: "Open in YouTube Music" } as T,
 };
 
 export const nav = {

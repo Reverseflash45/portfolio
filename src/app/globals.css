@@ -117,6 +117,15 @@ body {
 .figbase,
 .figreveal {
   filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55));
+  /* bagian bawah memudar agar menyatu dengan latar */
+  mask-image: linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%);
+}
+
+/* lapisan reveal butuh dua mask: fade bawah + lingkaran kursor */
+.figreveal {
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
 }
 
 .figreveal {
@@ -124,18 +133,12 @@ body {
   transition: opacity 0.2s ease;
   /* lingkaran lembut di sekitar kursor; radius 0 saat kursor keluar */
   /* catatan: radius `circle` tidak menerima persen — pakai `ellipse` */
-  mask-image: radial-gradient(
-    ellipse var(--mr) var(--mr) at var(--mx) var(--my),
-    #000 0%,
-    #000 58%,
-    transparent 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse var(--mr) var(--mr) at var(--mx) var(--my),
-    #000 0%,
-    #000 58%,
-    transparent 100%
-  );
+  mask-image:
+    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 58%, transparent 100%);
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 58%, transparent 100%);
   transition: opacity 0.2s ease, mask-image 0.12s linear, -webkit-mask-image 0.12s linear;
 }
 
@@ -147,4 +150,50 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .figreveal { transition: opacity 0.2s ease; }
+}
+
+/* ============================================================
+   Kartu statistik — dua garis cahaya mengelilingi tepi
+   ============================================================ */
+.statcard {
+  --sc: var(--color-accent);
+  --speed: 4.2s;
+}
+.statcard:hover { --speed: 1.1s; }
+
+.statline {
+  position: absolute;
+  height: 1px;
+  width: 45%;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.statline.top {
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, transparent, var(--sc), transparent);
+  animation: statline-right var(--speed) linear infinite;
+}
+
+.statline.bottom {
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(to left, transparent, var(--sc), transparent);
+  animation: statline-left var(--speed) linear infinite;
+}
+
+@keyframes statline-right {
+  from { transform: translateX(-110%); }
+  to   { transform: translateX(330%); }
+}
+@keyframes statline-left {
+  from { transform: translateX(110%); }
+  to   { transform: translateX(-330%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statline { animation: none; opacity: 0.45; }
+  .statline.top { left: 0; width: 100%; }
+  .statline.bottom { right: 0; width: 100%; }
 }

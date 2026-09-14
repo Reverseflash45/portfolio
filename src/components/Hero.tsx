@@ -3,7 +3,7 @@
 import { useLang } from "@/lib/i18n";
 import { hero, profile } from "@/content/data";
 import Typing from "./Typing";
-import HeroFigure from "./HeroFigure";
+import MusicCard from "./MusicCard";
 
 const ICON: Record<string, string> = {
   GitHub:
@@ -97,7 +97,7 @@ export default function Hero() {
         </div>
 
         <div className="flex justify-center md:justify-end">
-          <HeroFigure base={profile.photo} alt={profile.photoAlt} name={profile.name} />
+          <MusicCard />
         </div>
       </div>
     </section>
