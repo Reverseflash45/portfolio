@@ -115,7 +115,7 @@ export default function Contact() {
                     className="group flex items-center gap-4 rounded-xl border border-border bg-bg px-4 py-3.5 transition-colors hover:border-accent/50"
                   >
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-border transition-colors group-hover:border-accent">
-                      <BrandIcon slug={SLUG[s.label]} name={s.label} className="h-5 w-5" />
+                      <BrandIcon slug={SLUG[s.label]} name={s.label} color="#8b8f99" className="h-5 w-5" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-sm font-medium">{s.label}</span>

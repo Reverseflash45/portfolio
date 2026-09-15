@@ -11,14 +11,14 @@ export default function About() {
 
   return (
     <Section id="about" title={about.title} wide>
-      <div className="grid items-center gap-10 md:grid-cols-[0.9fr_1.1fr_0.9fr] md:gap-4">
+      <div className="grid items-center gap-7 md:grid-cols-[0.9fr_1.1fr_0.9fr] md:gap-4">
         {/* kiri: nama besar + tombol */}
         <Reveal>
           <div className="text-center md:text-left">
-            <p className="text-3xl font-semibold leading-tight tracking-tight text-accent md:text-4xl">
+            <p className="text-2xl font-semibold leading-tight tracking-tight text-accent sm:text-3xl md:text-4xl">
               {t(about.heading)}
             </p>
-            <p className="mt-1 text-3xl font-semibold leading-[1.05] tracking-tight md:text-5xl">
+            <p className="mt-1 text-[1.65rem] font-semibold leading-[1.1] tracking-tight sm:text-3xl md:text-5xl">
               {profile.name}
             </p>
 
@@ -49,7 +49,7 @@ export default function About() {
             base={profile.photo}
             alt={profile.photoAlt}
             name={profile.name}
-            className="mx-auto w-[min(86vw,420px)] md:w-[460px]"
+            className="mx-auto w-[min(80vw,360px)] md:w-[460px]"
           />
         </Reveal>
 

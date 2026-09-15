@@ -40,7 +40,7 @@ export default function BrandIcon({
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`https://cdn.simpleicons.org/${slug}${color ? `/${color.replace("#", "")}` : ""}`}
+      src={`https://cdn.simpleicons.org/${slug}/${(color ?? "#e9eaec").replace("#", "")}`}
       alt=""
       aria-hidden
       loading="lazy"

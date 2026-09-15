@@ -35,9 +35,10 @@ export default function MusicCard() {
       <iframe
         title={t(music.title)}
         src={`https://open.spotify.com/embed/playlist/${music.playlistId}?theme=0`}
+        style={{ colorScheme: "normal" }}
         allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        className="h-[380px] w-full border-0"
+        className="h-[152px] w-full border-0 sm:h-[352px]"
       />
     </div>
   );

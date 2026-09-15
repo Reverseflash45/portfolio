@@ -77,7 +77,7 @@ export default function Gallery() {
         >
           <div
             ref={track}
-            className="relative mx-auto flex h-[clamp(16rem,38vw,28rem)] items-center justify-center"
+            className="relative mx-auto flex h-[clamp(14rem,38vw,28rem)] items-center justify-center overflow-hidden"
             style={{ transformStyle: "preserve-3d" }}
           >
             {items.map((it, idx) => {
@@ -91,7 +91,7 @@ export default function Gallery() {
                     if (!moved.current) setI(idx);
                   }}
                   aria-label={`Slide ${idx + 1}`}
-                  className="absolute h-full w-[clamp(13rem,29vw,24rem)] overflow-hidden rounded-2xl border border-border bg-surface"
+                  className="absolute h-full w-[min(64vw,24rem)] overflow-hidden rounded-2xl border border-border bg-surface sm:w-[clamp(13rem,29vw,24rem)]"
                   style={{
                     transform: `translateX(${off * 56}%) rotateY(${off * -22}deg) scale(${Math.max(
                       0.7,
