@@ -17,8 +17,8 @@ export const profile = {
   } as T,
   location: { id: "Kediri, Jawa Timur", en: "Kediri, East Java" } as T,
   email: "rffernanditoo@gmail.com",
-  photo: "/rafi-cutout.png",
-  photoAlt: "/rafi-hero-alt.png", // tersingkap di sekitar kursor; kosongkan untuk menonaktifkan
+  photo: "/rafi-cutout.webp",
+  photoAlt: "/rafi-hero-alt.webp", // tersingkap di sekitar kursor; kosongkan untuk menonaktifkan
   cv: "/cv-rafi-fernandito-setiawan.pdf",
   socials: [
     { label: "GitHub", url: "https://github.com/Reverseflash45" },
@@ -535,7 +535,7 @@ export const music = {
   title: { id: "Sedang Diputar", en: "On Repeat" } as T,
   note: { id: "Playlist yang nemenin ngoding", en: "The playlist I code to" } as T,
   // ID playlist Spotify — kosongkan untuk menyembunyikan kartu
-  playlistId: "0QX37pbRhabukh9MzfEpoq",
+  playlistId: "7kEKyigwb24IphyH9ZN2MV",
   openLabel: { id: "Buka di Spotify", en: "Open in Spotify" } as T,
 };
 
