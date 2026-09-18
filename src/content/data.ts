@@ -163,7 +163,7 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Tracking",
-      image: "/projects/tracking.jpg",
+      image: "/projects/tracking.webp",
       desc: {
         id: "Aplikasi produktivitas pribadi yang menyatukan jadwal kuliah, tugas, workout, dan keuangan dalam satu app. Ada impor KRS/KHS lewat OCR, deteksi jadwal bentrok, penghitung repetisi latihan pakai kamera (ML Kit pose detection), pelacakan lari GPS, pembacaan struk otomatis, dan mode luring penuh. Saat ini 27 modul fitur, 31 tabel basis data, dan 950 test otomatis.",
         en: "A personal productivity app that unifies class schedules, assignments, workouts, and finances. Includes OCR import of academic records, schedule-clash detection, camera-based rep counting (ML Kit pose detection), GPS run tracking, automatic receipt reading, and full offline support. Currently 27 feature modules, 31 database tables, and 950 automated tests.",
@@ -177,7 +177,7 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Superduperweb",
-      image: "/projects/superduperweb.jpg",
+      image: "/projects/superduperweb.webp",
       desc: {
         id: "Web jasa pembuatan aplikasi: sisi publik berfungsi sebagai etalase dan alur closing (layanan, paket harga, portofolio, form brief) sementara panel admin dipakai untuk operasional — brief masuk, data klien, proyek, pembayaran, dan biaya. Tiap proyek mendapat tautan invoice bertoken sehingga klien bisa melihat status, membayar via QRIS atau transfer, dan mengunggah bukti tanpa perlu akun. Hanya pembayaran terverifikasi yang dihitung sebagai omzet, dan margin per proyek dihitung otomatis.",
         en: "A web-development services site: the public side works as a storefront and closing funnel (services, pricing, portfolio, brief form) while the admin panel runs operations — incoming briefs, clients, projects, payments, and costs. Each project gets a tokenised invoice link so clients can check status, pay by QRIS or transfer, and upload proof without an account. Only verified payments count towards revenue, and per-project margin is computed automatically.",
@@ -190,7 +190,7 @@ export const projects = {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
       title: "WTOOLS",
-      image: "/projects/wtools.jpg",
+      image: "/projects/wtools.webp",
       desc: {
         id: "Proyek akhir Workshop UI: situs kebugaran berisi katalog produk, artikel, panduan gerakan latihan, dan panel admin. Dibangun dari desain Figma sendiri lalu diimplementasikan penuh menjadi antarmuka web.",
         en: "Final project for a UI Workshop course: a fitness site with a product catalogue, articles, exercise guides, and an admin panel. Designed in Figma and then implemented as a full web interface.",
@@ -203,7 +203,7 @@ export const projects = {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
       title: "RSHP — Rumah Sakit Hewan Pendidikan",
-      image: "", // /public/projects/rshp.png
+      image: "/projects/rshp.webp",
       desc: {
         id: "Aplikasi web manajemen rumah sakit hewan pendidikan: pendataan pasien, rekam medis, jadwal pemeriksaan, serta pencatatan transaksi dokter dan perawat.",
         en: "A web application for veterinary teaching hospital management: patient records, medical history, examination scheduling, and doctor/nurse transaction records.",
@@ -219,7 +219,7 @@ export const projects = {
         id: "Analisis Sentimen Berita Saham",
         en: "Stock News Sentiment Analysis",
       },
-      image: "", // /public/projects/sentimen.png
+      image: "/projects/sentimen.webp",
       desc: {
         id: "Sistem klasifikasi sentimen berita emiten berbahasa Indonesia menggunakan model IndoBERT yang di-fine-tune.",
         en: "A sentiment classification system for Indonesian stock-issuer news using a fine-tuned IndoBERT model.",
