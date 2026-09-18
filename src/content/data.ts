@@ -527,7 +527,7 @@ export const contactForm = {
   //   Formspree   https://formspree.io/f/xxxxxxxx
   //   Web3Forms   https://api.web3forms.com/submit   (+ isi accessKey di bawah)
   // Dikosongkan = form dinonaktifkan, pengunjung diarahkan ke tombol email.
-  endpoint: "",
+  endpoint: "https://formspree.io/f/mgavvrqo",
   // Hanya untuk Web3Forms. Formspree tidak memerlukannya.
   accessKey: "",
 
