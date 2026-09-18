@@ -19,11 +19,14 @@ export default function Home() {
       <Cursor />
       <ScrollProgress />
       <Nav />
+      {/* Urutan bagian harus sama dengan urutan tautan di Nav.tsx.
+          Karya ditaruh sebelum pendidikan: itu yang paling ingin dilihat
+          pengunjung, dan pendidikan menjadi pendukungnya. */}
       <Hero />
       <About />
-      <EduExp />
       <Stats />
       <PortfolioTabs />
+      <EduExp />
       <Gallery />
       <Contact />
     </main>

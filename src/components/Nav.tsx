@@ -45,9 +45,14 @@ export default function Nav() {
 
   return (
     <>
-      {/* brand + kontrol, pojok atas */}
-      <div className="fixed inset-x-0 top-0 z-50 px-6 py-4">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
+      {/* Brand + kontrol, pojok atas.
+          pointer-events-none WAJIB di pembungkus: elemen ini selebar layar dan
+          berada di z-50, tepat menutupi pill nav (z-40) yang mengapung di tengah
+          atas. Tanpa ini seluruh tautan nav tidak bisa diklik — dan karena
+          pembungkusnya tak terlihat, gejalanya tampak seperti tombol rusak.
+          Anaknya dikembalikan ke pointer-events-auto supaya tetap bisa diklik. */}
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-6 py-4">
+        <div className="pointer-events-auto mx-auto flex w-full max-w-6xl items-center justify-between">
           <a
             href="#top"
             className="font-mono text-sm font-medium tracking-tight text-fg mix-blend-difference"
