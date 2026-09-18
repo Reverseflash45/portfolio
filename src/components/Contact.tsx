@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { useLang } from "@/lib/i18n";
 import { contact, contactForm, profile, misc } from "@/content/data";
+import Komentar from "./Komentar";
 import Section from "./Section";
 import Reveal from "./Reveal";
 import BrandIcon from "./BrandIcon";
@@ -199,6 +200,8 @@ export default function Contact() {
             </div>
           </Reveal>
         </div>
+
+        <Komentar />
       </Section>
 
       <footer className="border-t border-border px-6 py-8">

@@ -527,7 +527,7 @@ export const contactForm = {
   //   Formspree   https://formspree.io/f/xxxxxxxx
   //   Web3Forms   https://api.web3forms.com/submit   (+ isi accessKey di bawah)
   // Dikosongkan = form dinonaktifkan, pengunjung diarahkan ke tombol email.
-  endpoint: "https://formspree.io/f/mgavvrqo",
+  endpoint: "",
   // Hanya untuk Web3Forms. Formspree tidak memerlukannya.
   accessKey: "",
 
@@ -549,6 +549,38 @@ export const contactForm = {
     en: "Form not active yet — connect an endpoint in data.ts. Use the email button below for now.",
   } as T,
   findMe: { id: "Temukan Saya", en: "Find Me" } as T,
+};
+
+export const komentarTeks = {
+  judul: { id: "Komentar", en: "Comments" } as T,
+  catatan: {
+    id: "Tinggalkan pesan singkat. Komentar langsung tampil dan bisa dilihat siapa saja.",
+    en: "Leave a short note. Comments appear immediately and are visible to everyone.",
+  } as T,
+  nama: { id: "Nama", en: "Name" } as T,
+  namaPh: { id: "Nama kamu", en: "Your name" } as T,
+  isi: { id: "Komentar", en: "Comment" } as T,
+  isiPh: { id: "Tulis komentar di sini…", en: "Write your comment here…" } as T,
+  kirim: { id: "Kirim Komentar", en: "Post Comment" } as T,
+  mengirim: { id: "Mengirim…", en: "Posting…" } as T,
+  memuat: { id: "Memuat komentar…", en: "Loading comments…" } as T,
+  kosong: {
+    id: "Belum ada komentar. Jadi yang pertama.",
+    en: "No comments yet. Be the first.",
+  } as T,
+  terkirim: { id: "Komentar terkirim.", en: "Comment posted." } as T,
+  gagal: {
+    id: "Gagal mengirim komentar. Coba lagi sebentar lagi.",
+    en: "Failed to post. Please try again shortly.",
+  } as T,
+  kurang: {
+    id: "Nama dan komentar wajib diisi.",
+    en: "Name and comment are required.",
+  } as T,
+  terlaluCepat: {
+    id: "Tunggu sebentar sebelum mengirim komentar lagi.",
+    en: "Please wait a moment before posting again.",
+  } as T,
 };
 
 export const music = {
