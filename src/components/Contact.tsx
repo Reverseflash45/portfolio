@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { useLang } from "@/lib/i18n";
 import { contact, contactForm, profile, misc } from "@/content/data";
 import Section from "./Section";
@@ -18,9 +20,49 @@ const SUB: Record<string, string> = {
   Instagram: "@raffstw",
 };
 
+type Status = "diam" | "mengirim" | "terkirim" | "gagal" | "kurang";
+
 export default function Contact() {
   const { t } = useLang();
   const live = Boolean(contactForm.endpoint);
+  const [status, setStatus] = useState<Status>("diam");
+
+  /* Dikirim lewat fetch, bukan POST biasa: POST biasa melempar pengunjung ke
+     halaman terima kasih milik penyedia form dan mereka harus menekan tombol
+     kembali. Di sini mereka tetap di halaman ini dan langsung melihat hasilnya. */
+  async function kirim(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!live || status === "mengirim") return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    // perangkap spam: kolom tersembunyi yang hanya diisi robot
+    if ((data.get("_gotcha") as string)?.trim()) {
+      setStatus("terkirim");
+      form.reset();
+      return;
+    }
+    if (!["name", "email", "message"].every((k) => (data.get(k) as string)?.trim())) {
+      setStatus("kurang");
+      return;
+    }
+    if (contactForm.accessKey) data.set("access_key", contactForm.accessKey);
+
+    setStatus("mengirim");
+    try {
+      const r = await fetch(contactForm.endpoint, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (!r.ok) throw new Error(String(r.status));
+      setStatus("terkirim");
+      form.reset();
+    } catch {
+      setStatus("gagal");
+    }
+  }
 
   return (
     <>
@@ -32,12 +74,16 @@ export default function Contact() {
               <h3 className="text-xl font-semibold tracking-tight">{t(contactForm.formTitle)}</h3>
               <p className="mt-1.5 text-sm text-muted">{t(contact.body)}</p>
 
-              <form
-                action={contactForm.endpoint || undefined}
-                method={live ? "POST" : undefined}
-                onSubmit={live ? undefined : (e) => e.preventDefault()}
-                className="mt-6 space-y-4"
-              >
+              <form onSubmit={kirim} noValidate className="mt-6 space-y-4">
+                {/* perangkap spam — disembunyikan dari mata dan pembaca layar */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
                 <div>
                   <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
                     {t(contactForm.name)}
@@ -73,21 +119,39 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={!live}
+                  disabled={!live || status === "mengirim"}
                   className={`w-full rounded-xl px-5 py-3 text-sm font-medium transition-opacity ${
                     live
                       ? "bg-accent text-bg hover:opacity-85"
                       : "cursor-not-allowed border border-dashed border-border text-muted"
                   }`}
                 >
-                  {t(contactForm.submit)}
+                  {status === "mengirim" ? t(contactForm.sending) : t(contactForm.submit)}
                 </button>
 
-                {!live && (
-                  <p className="text-[11px] leading-relaxed text-muted/80">
-                    {t(contactForm.disabledNote)}
-                  </p>
-                )}
+                {/* satu tempat untuk semua pesan, dengan peran ARIA yang benar
+                    supaya pembaca layar ikut mengumumkannya */}
+                <p
+                  role="status"
+                  aria-live="polite"
+                  className={`text-[11px] leading-relaxed ${
+                    status === "terkirim"
+                      ? "text-accent"
+                      : status === "gagal" || status === "kurang"
+                        ? "text-red-400"
+                        : "text-muted/80"
+                  }`}
+                >
+                  {!live
+                    ? t(contactForm.disabledNote)
+                    : status === "terkirim"
+                      ? t(contactForm.sent)
+                      : status === "gagal"
+                        ? t(contactForm.failed)
+                        : status === "kurang"
+                          ? t(contactForm.required)
+                          : ""}
+                </p>
               </form>
 
               <a

@@ -522,11 +522,31 @@ export const contactForm = {
   message: { id: "Pesan", en: "Message" } as T,
   messagePh: { id: "Tulis pesan di sini…", en: "Write your message here…" } as T,
   submit: { id: "Kirim", en: "Send" } as T,
-  // isi dengan endpoint Formspree, mis. "https://formspree.io/f/xxxxxxx"
-  endpoint: "",
+
+  // Endpoint penerima form. Isi salah satu, lalu deploy ulang:
+  //   Formspree   https://formspree.io/f/xxxxxxxx
+  //   Web3Forms   https://api.web3forms.com/submit   (+ isi accessKey di bawah)
+  // Dikosongkan = form dinonaktifkan, pengunjung diarahkan ke tombol email.
+  endpoint: "https://formspree.io/f/mgavvrqo",
+  // Hanya untuk Web3Forms. Formspree tidak memerlukannya.
+  accessKey: "",
+
+  sending: { id: "Mengirim…", en: "Sending…" } as T,
+  sent: {
+    id: "Pesan terkirim. Terima kasih — saya balas lewat email.",
+    en: "Message sent. Thank you — I will reply by email.",
+  } as T,
+  failed: {
+    id: "Gagal mengirim. Coba lagi, atau pakai tombol email di bawah.",
+    en: "Failed to send. Please try again, or use the email button below.",
+  } as T,
+  required: {
+    id: "Nama, email, dan pesan wajib diisi.",
+    en: "Name, email, and message are required.",
+  } as T,
   disabledNote: {
-    id: "Form belum aktif — hubungkan endpoint Formspree di data.ts. Sementara pakai tombol email.",
-    en: "Form not active yet — connect a Formspree endpoint in data.ts. Use the email button for now.",
+    id: "Form belum aktif — hubungkan endpoint di data.ts. Sementara pakai tombol email di bawah.",
+    en: "Form not active yet — connect an endpoint in data.ts. Use the email button below for now.",
   } as T,
   findMe: { id: "Temukan Saya", en: "Find Me" } as T,
 };
