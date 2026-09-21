@@ -391,6 +391,21 @@ export const education = {
       date: "2025-12",
     },
     {
+      kind: "committee",
+      name: {
+        id: "Panitia Teknik Informatika Sports League (TISL)",
+        en: "Committee, Informatics Engineering Sports League (TISL)",
+      } as T,
+      issuer: "HIMA D4 Teknik Informatika, Universitas Airlangga",
+      detail: {
+        id: "Liga olahraga Teknik Informatika · 27 April, 3, 4, dan 11 Mei 2025",
+        en: "Informatics Engineering sports league · 27 April and 3, 4, 11 May 2025",
+      } as T,
+      year: "2025",
+      image: "/certs/panitia-tisl.jpg",
+      date: "2025-05",
+    },
+    {
       kind: "award",
       name: { id: "Medali Perunggu Bidang Matematika", en: "Bronze Medal in Mathematics" } as T,
       issuer: "Advanced Pateron Olympiad — Pateron Indonesia",
