@@ -6,6 +6,11 @@ import { useState } from "react";
  * Logo merek dari simple-icons CDN (dimuat oleh browser pengunjung).
  * Kalau gagal dimuat, jatuh ke inisial supaya tidak ada kotak kosong.
  */
+
+// Merek yang tidak tersedia di simple-icons — pakai file lokal, warna aslinya.
+const LOKAL: Record<string, string> = {
+  LinkedIn: "/logos/linkedin.png",
+};
 export default function BrandIcon({
   slug,
   name,
@@ -18,6 +23,13 @@ export default function BrandIcon({
   className?: string;
 }) {
   const [failed, setFailed] = useState(false);
+
+  if (LOKAL[name]) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={LOKAL[name]} alt="" aria-hidden className={`${className} rounded-[3px] object-contain`} />
+    );
+  }
 
   if (!slug || failed) {
     return (
