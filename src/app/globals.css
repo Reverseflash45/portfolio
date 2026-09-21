@@ -159,10 +159,11 @@ body {
   -webkit-mask-composite: source-in;
 }
 
-/* Layar sentuh: geser mendatar atau tahan untuk menyingkap; geser vertikal
-   tetap menggulir halaman supaya foto besar tidak menjebak scroll. */
+/* Layar sentuh: tahan lalu geser ke arah mana pun untuk menyingkap (lihat
+   RevealPhoto.tsx); sapuan cepat tetap menggulir. Tidak memakai touch-action
+   pan-y karena itu menyerahkan geser vertikal ke browser tanpa syarat. */
 .revealwrap {
-  touch-action: pan-y;
+  touch-action: manipulation;
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;

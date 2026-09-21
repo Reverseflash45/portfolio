@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * Foto transparan. Saat kursor bergerak di atasnya — atau jari menekan dan
+ * Foto transparan. Saat kursor bergerak di atasnya — atau jari menahan lalu
  * menggeser di layar sentuh — gambar alternatif tersingkap hanya di area
  * sekitar titik itu (mask radial mengikuti pointer).
  * Bagian bawah foto dibuat memudar agar menyatu dengan latar.
@@ -30,22 +30,92 @@ export default function RevealPhoto({
     el.style.setProperty("--mr", `${r}%`);
   }, []);
 
-  const ikuti = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
-      const el = wrap.current;
-      if (!el) return;
-      const b = el.getBoundingClientRect();
-      // jari menutupi titik sentuhnya sendiri, jadi lingkarannya dibuat lebih besar
-      const r = e.pointerType === "mouse" ? 24 : 32;
-      setVars(((e.clientX - b.left) / b.width) * 100, ((e.clientY - b.top) / b.height) * 100, r);
-    },
-    [setVars]
-  );
-
   const padam = useCallback(() => {
     setOn(false);
     setVars(50, 50, 0);
   }, [setVars]);
+
+  const ikuti = useCallback(
+    (x: number, y: number, r: number) => {
+      const el = wrap.current;
+      if (!el) return;
+      const b = el.getBoundingClientRect();
+      setVars(((x - b.left) / b.width) * 100, ((y - b.top) / b.height) * 100, r);
+    },
+    [setVars]
+  );
+
+  /* Layar sentuh. Menggeser foto dan menggulir halaman memakai gerakan yang
+     sama, jadi keduanya dibedakan lewat waktu: jari yang ditahan sebentar
+     sebelum bergerak menyingkap foto dan mengunci gulir; sapuan cepat tetap
+     menggulir halaman. Listener dipasang manual karena React memasang
+     touchmove sebagai passive, sehingga preventDefault diabaikan. */
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el || !altSrc) return;
+
+    const TAHAN_MS = 150;
+    const AMBANG_GESER = 10; // px; bergerak lebih jauh sebelum TAHAN_MS = menggulir
+    const RADIUS_JARI = 32; // jari menutupi titiknya sendiri, jadi lingkarannya lebih besar
+
+    let timer: number | undefined;
+    let aktif = false;
+    let awalX = 0;
+    let awalY = 0;
+    let kiniX = 0;
+    let kiniY = 0;
+
+    const batalTimer = () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      timer = undefined;
+    };
+
+    const mulai = (e: TouchEvent) => {
+      batalTimer();
+      if (e.touches.length !== 1) return;
+      awalX = kiniX = e.touches[0].clientX;
+      awalY = kiniY = e.touches[0].clientY;
+      timer = window.setTimeout(() => {
+        timer = undefined;
+        aktif = true;
+        ikuti(kiniX, kiniY, RADIUS_JARI);
+        setOn(true);
+      }, TAHAN_MS);
+    };
+
+    const gerak = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      kiniX = t.clientX;
+      kiniY = t.clientY;
+      if (aktif) {
+        if (e.cancelable) e.preventDefault();
+        ikuti(kiniX, kiniY, RADIUS_JARI);
+      } else if (Math.hypot(kiniX - awalX, kiniY - awalY) > AMBANG_GESER) {
+        batalTimer();
+      }
+    };
+
+    const selesai = () => {
+      batalTimer();
+      if (aktif) {
+        aktif = false;
+        padam();
+      }
+    };
+
+    el.addEventListener("touchstart", mulai, { passive: true });
+    el.addEventListener("touchmove", gerak, { passive: false });
+    el.addEventListener("touchend", selesai);
+    el.addEventListener("touchcancel", selesai);
+    return () => {
+      batalTimer();
+      el.removeEventListener("touchstart", mulai);
+      el.removeEventListener("touchmove", gerak);
+      el.removeEventListener("touchend", selesai);
+      el.removeEventListener("touchcancel", selesai);
+    };
+  }, [altSrc, ikuti, padam]);
 
   return (
     <div
@@ -54,20 +124,12 @@ export default function RevealPhoto({
       onPointerEnter={(e) => {
         if (e.pointerType === "mouse") setOn(true);
       }}
-      onPointerDown={(e) => {
-        if (e.pointerType === "mouse") return;
-        ikuti(e);
-        setOn(true);
-      }}
       onPointerMove={(e) => {
-        if (e.pointerType === "mouse" || on) ikuti(e);
+        if (e.pointerType === "mouse") ikuti(e.clientX, e.clientY, 24);
       }}
-      onPointerUp={(e) => {
-        if (e.pointerType !== "mouse") padam();
+      onPointerLeave={(e) => {
+        if (e.pointerType === "mouse") padam();
       }}
-      // browser mengambil alih sentuhan untuk menggulir halaman
-      onPointerCancel={padam}
-      onPointerLeave={padam}
       onContextMenu={(e) => {
         // tahan lama di ponsel memunculkan menu "simpan gambar"
         if (on) e.preventDefault();
