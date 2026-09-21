@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * Foto transparan. Saat kursor bergerak di atasnya — atau jari menahan lalu
- * menggeser di layar sentuh — gambar alternatif tersingkap hanya di area
+ * Foto transparan. Saat kursor bergerak di atasnya — atau di layar sentuh,
+ * jari mengetuk, atau menahan lalu menggeser — gambar alternatif tersingkap hanya di area
  * sekitar titik itu (mask radial mengikuti pointer).
  * Bagian bawah foto dibuat memudar agar menyatu dengan latar.
  */
@@ -115,9 +115,12 @@ export default function RevealPhoto({
     const TAHAN_MS = 150;
     const AMBANG_GESER = 10; // px; bergerak lebih jauh sebelum TAHAN_MS = menggulir
     const RADIUS_JARI = 32; // jari menutupi titiknya sendiri, jadi lingkarannya lebih besar
+    const LAMA_KETUK_MS = 1400; // ketukan singkat: tersingkap sebentar lalu menutup sendiri
 
     let timer: number | undefined;
+    let timerKetuk: number | undefined;
     let aktif = false;
+    let tergeser = false;
     let awalX = 0;
     let awalY = 0;
     let kiniX = 0;
@@ -130,6 +133,9 @@ export default function RevealPhoto({
 
     const mulai = (e: TouchEvent) => {
       batalTimer();
+      if (timerKetuk !== undefined) window.clearTimeout(timerKetuk);
+      timerKetuk = undefined;
+      tergeser = false;
       if (e.touches.length !== 1) return;
       awalX = kiniX = e.touches[0].clientX;
       awalY = kiniY = e.touches[0].clientY;
@@ -150,15 +156,26 @@ export default function RevealPhoto({
         if (e.cancelable) e.preventDefault();
         ikuti(kiniX, kiniY, RADIUS_JARI);
       } else if (Math.hypot(kiniX - awalX, kiniY - awalY) > AMBANG_GESER) {
+        tergeser = true;
         batalTimer();
       }
     };
 
-    const selesai = () => {
+    const selesai = (e: TouchEvent) => {
+      const ketukan = timer !== undefined && !tergeser && e.type === "touchend";
       batalTimer();
       if (aktif) {
         aktif = false;
         padam();
+      } else if (ketukan) {
+        // Ketukan tanpa geser tidak pernah mencapai TAHAN_MS; tanpa ini foto
+        // tidak bereaksi sama sekali dan fiturnya terasa rusak.
+        ikuti(kiniX, kiniY, RADIUS_JARI);
+        setOn(true);
+        timerKetuk = window.setTimeout(() => {
+          timerKetuk = undefined;
+          padam();
+        }, LAMA_KETUK_MS);
       }
     };
 
@@ -168,6 +185,7 @@ export default function RevealPhoto({
     el.addEventListener("touchcancel", selesai);
     return () => {
       batalTimer();
+      if (timerKetuk !== undefined) window.clearTimeout(timerKetuk);
       el.removeEventListener("touchstart", mulai);
       el.removeEventListener("touchmove", gerak);
       el.removeEventListener("touchend", selesai);
