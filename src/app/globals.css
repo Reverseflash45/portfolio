@@ -144,8 +144,13 @@ body {
 
 .figreveal.is-on { opacity: 1; }
 
-@media (hover: none) {
-  .figreveal { display: none; }
+/* Layar sentuh: geser mendatar atau tahan untuk menyingkap; geser vertikal
+   tetap menggulir halaman supaya foto besar tidak menjebak scroll. */
+.revealwrap {
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

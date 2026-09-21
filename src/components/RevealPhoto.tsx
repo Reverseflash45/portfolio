@@ -3,8 +3,9 @@
 import { useCallback, useRef, useState } from "react";
 
 /**
- * Foto transparan. Saat kursor bergerak di atasnya, gambar alternatif
- * tersingkap hanya di area sekitar kursor (mask radial mengikuti pointer).
+ * Foto transparan. Saat kursor bergerak di atasnya — atau jari menekan dan
+ * menggeser di layar sentuh — gambar alternatif tersingkap hanya di area
+ * sekitar titik itu (mask radial mengikuti pointer).
  * Bagian bawah foto dibuat memudar agar menyatu dengan latar.
  */
 export default function RevealPhoto({
@@ -29,25 +30,47 @@ export default function RevealPhoto({
     el.style.setProperty("--mr", `${r}%`);
   }, []);
 
-  const onMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+  const ikuti = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
       const el = wrap.current;
       if (!el) return;
       const b = el.getBoundingClientRect();
-      setVars(((e.clientX - b.left) / b.width) * 100, ((e.clientY - b.top) / b.height) * 100, 24);
+      // jari menutupi titik sentuhnya sendiri, jadi lingkarannya dibuat lebih besar
+      const r = e.pointerType === "mouse" ? 24 : 32;
+      setVars(((e.clientX - b.left) / b.width) * 100, ((e.clientY - b.top) / b.height) * 100, r);
     },
     [setVars]
   );
+
+  const padam = useCallback(() => {
+    setOn(false);
+    setVars(50, 50, 0);
+  }, [setVars]);
 
   return (
     <div
       ref={wrap}
       data-cursor="hot"
-      onMouseMove={onMove}
-      onMouseEnter={() => setOn(true)}
-      onMouseLeave={() => {
-        setOn(false);
-        setVars(50, 50, 0);
+      onPointerEnter={(e) => {
+        if (e.pointerType === "mouse") setOn(true);
+      }}
+      onPointerDown={(e) => {
+        if (e.pointerType === "mouse") return;
+        ikuti(e);
+        setOn(true);
+      }}
+      onPointerMove={(e) => {
+        if (e.pointerType === "mouse" || on) ikuti(e);
+      }}
+      onPointerUp={(e) => {
+        if (e.pointerType !== "mouse") padam();
+      }}
+      // browser mengambil alih sentuhan untuk menggulir halaman
+      onPointerCancel={padam}
+      onPointerLeave={padam}
+      onContextMenu={(e) => {
+        // tahan lama di ponsel memunculkan menu "simpan gambar"
+        if (on) e.preventDefault();
       }}
       aria-label={name}
       className={`revealwrap relative ${className}`}
@@ -59,7 +82,7 @@ export default function RevealPhoto({
       />
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={base} alt={name} className="figbase relative w-full object-contain" />
+      <img src={base} alt={name} draggable={false} className="figbase relative w-full object-contain" />
 
       {altSrc && (
         // eslint-disable-next-line @next/next/no-img-element
@@ -67,6 +90,7 @@ export default function RevealPhoto({
           src={altSrc}
           alt=""
           aria-hidden
+          draggable={false}
           className={`figreveal absolute inset-0 h-full w-full object-contain ${on ? "is-on" : ""}`}
         />
       )}
