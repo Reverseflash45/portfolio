@@ -129,9 +129,8 @@ body {
 }
 
 .figreveal {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  /* lingkaran lembut di sekitar kursor; radius 0 saat kursor keluar */
+  /* lingkaran lembut di sekitar kursor; radius 0 = tersembunyi sepenuhnya.
+     Buka-tutupnya dianimasikan lewat --mr di RevealPhoto.tsx, bukan opacity. */
   /* catatan: radius `circle` tidak menerima persen — pakai `ellipse` */
   mask-image:
     linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
@@ -139,10 +138,7 @@ body {
   -webkit-mask-image:
     linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
     radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 58%, transparent 100%);
-  transition: opacity 0.2s ease, mask-image 0.12s linear, -webkit-mask-image 0.12s linear;
 }
-
-.figreveal.is-on { opacity: 1; }
 
 /* Foto dasar dilubangi tepat di lingkaran yang sama (kebalikan mask di atas).
    Gambar alternatif transparan di sekeliling helm; tanpa lubang ini telinga
@@ -169,9 +165,6 @@ body {
   -webkit-touch-callout: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .figreveal { transition: opacity 0.2s ease; }
-}
 
 /* ============================================================
    Kartu statistik — dua garis cahaya mengelilingi tepi

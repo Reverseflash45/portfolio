@@ -30,19 +30,77 @@ export default function RevealPhoto({
     el.style.setProperty("--mr", `${r}%`);
   }, []);
 
+  /* Lingkaran tidak langsung ditempel ke pointer: posisi menyusul dengan
+     sedikit lag, dan radius memakai pegas teredam sehingga mekar dengan
+     pantulan kecil saat dibuka dan mengecil di tempat saat ditutup. */
+  const anim = useRef({ x: 50, y: 50, r: 0, v: 0, tx: 50, ty: 50, tr: 0, raf: 0 });
+
+  const jalan = useCallback(() => {
+    const a = anim.current;
+    if (a.raf) return;
+    const langkah = () => {
+      a.x += (a.tx - a.x) * 0.22;
+      a.y += (a.ty - a.y) * 0.22;
+      a.v = (a.v + (a.tr - a.r) * 0.16) * 0.6;
+      a.r = Math.max(0, a.r + a.v);
+      const diam =
+        Math.abs(a.tx - a.x) < 0.05 &&
+        Math.abs(a.ty - a.y) < 0.05 &&
+        Math.abs(a.tr - a.r) < 0.05 &&
+        Math.abs(a.v) < 0.05;
+      if (diam) {
+        a.x = a.tx;
+        a.y = a.ty;
+        a.r = a.tr;
+        a.v = 0;
+        a.raf = 0;
+        setVars(a.x, a.y, a.r);
+        return;
+      }
+      setVars(a.x, a.y, a.r);
+      a.raf = requestAnimationFrame(langkah);
+    };
+    a.raf = requestAnimationFrame(langkah);
+  }, [setVars]);
+
+  useEffect(() => () => cancelAnimationFrame(anim.current.raf), []);
+
+  const tuju = useCallback(
+    (x: number, y: number, r: number) => {
+      const a = anim.current;
+      // baru dibuka: mekar dari titik pointer, bukan meluncur dari posisi lama
+      if (a.tr === 0 && a.r < 0.5) {
+        a.x = x;
+        a.y = y;
+      }
+      a.tx = x;
+      a.ty = y;
+      a.tr = r;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        cancelAnimationFrame(a.raf);
+        Object.assign(a, { x, y, r, v: 0, raf: 0 });
+        setVars(x, y, r);
+        return;
+      }
+      jalan();
+    },
+    [jalan, setVars]
+  );
+
   const padam = useCallback(() => {
     setOn(false);
-    setVars(50, 50, 0);
-  }, [setVars]);
+    const a = anim.current;
+    tuju(a.tx, a.ty, 0);
+  }, [tuju]);
 
   const ikuti = useCallback(
     (x: number, y: number, r: number) => {
       const el = wrap.current;
       if (!el) return;
       const b = el.getBoundingClientRect();
-      setVars(((x - b.left) / b.width) * 100, ((y - b.top) / b.height) * 100, r);
+      tuju(((x - b.left) / b.width) * 100, ((y - b.top) / b.height) * 100, r);
     },
-    [setVars]
+    [tuju]
   );
 
   /* Layar sentuh. Menggeser foto dan menggulir halaman memakai gerakan yang
@@ -153,7 +211,7 @@ export default function RevealPhoto({
           alt=""
           aria-hidden
           draggable={false}
-          className={`figreveal absolute inset-0 h-full w-full object-contain ${on ? "is-on" : ""}`}
+          className="figreveal absolute inset-0 h-full w-full object-contain"
         />
       )}
     </div>
