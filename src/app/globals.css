@@ -144,6 +144,21 @@ body {
 
 .figreveal.is-on { opacity: 1; }
 
+/* Foto dasar dilubangi tepat di lingkaran yang sama (kebalikan mask di atas).
+   Gambar alternatif transparan di sekeliling helm; tanpa lubang ini telinga
+   dan rambut dari foto dasar tetap terlihat di celahnya. Saat --mr = 0,
+   gradiennya berukuran nol sehingga foto dasar tampil utuh. */
+.figbase {
+  mask-image:
+    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 58%, #000 100%);
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 58%, #000 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
 /* Layar sentuh: geser mendatar atau tahan untuk menyingkap; geser vertikal
    tetap menggulir halaman supaya foto besar tidak menjebak scroll. */
 .revealwrap {
