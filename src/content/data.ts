@@ -256,7 +256,7 @@ export const projects = {
       },
       tags: ["Python", "FastAPI", "SQLAlchemy", "NLP", "IndoBERT"],
       repo: "https://github.com/Reverseflash45/sentimen-emiten",
-      demo: "",
+      demo: "https://sentimen-emiten.vercel.app",
     },
   ] as Project[],
 };
