@@ -517,6 +517,11 @@ export const gallery = {
 
 export const contactForm = {
   formTitle: { id: "Kirim Pesan", en: "Send a Message" } as T,
+  labelPrivat: { id: "Privat", en: "Private" } as T,
+  privateNote: {
+    id: "Pesan masuk langsung ke email saya dan tidak tampil di halaman ini.",
+    en: "Messages go straight to my inbox and never appear on this page.",
+  } as T,
   name: { id: "Nama", en: "Name" } as T,
   namePh: { id: "Nama kamu", en: "Your name" } as T,
   email: { id: "Email", en: "Email" } as T,
@@ -554,21 +559,22 @@ export const contactForm = {
 };
 
 export const komentarTeks = {
-  judul: { id: "Komentar", en: "Comments" } as T,
+  judul: { id: "Buku Tamu", en: "Guestbook" } as T,
+  labelPublik: { id: "Publik", en: "Public" } as T,
   catatan: {
-    id: "Tinggalkan pesan singkat. Komentar langsung tampil dan bisa dilihat siapa saja.",
-    en: "Leave a short note. Comments appear immediately and are visible to everyone.",
+    id: "Sapaan singkat yang langsung tampil di halaman ini dan bisa dibaca siapa saja. Untuk pesan pribadi, pakai Kirim Pesan di atas.",
+    en: "A short note that appears on this page right away for anyone to read. For a private message, use Send a Message above.",
   } as T,
   nama: { id: "Nama", en: "Name" } as T,
   namaPh: { id: "Nama kamu", en: "Your name" } as T,
   isi: { id: "Komentar", en: "Comment" } as T,
   isiPh: { id: "Tulis komentar di sini…", en: "Write your comment here…" } as T,
-  kirim: { id: "Kirim Komentar", en: "Post Comment" } as T,
+  kirim: { id: "Tulis di Buku Tamu", en: "Sign the Guestbook" } as T,
   mengirim: { id: "Mengirim…", en: "Posting…" } as T,
   memuat: { id: "Memuat komentar…", en: "Loading comments…" } as T,
   kosong: {
-    id: "Belum ada komentar. Jadi yang pertama.",
-    en: "No comments yet. Be the first.",
+    id: "Buku tamu masih kosong. Jadi yang pertama.",
+    en: "The guestbook is empty. Be the first to sign it.",
   } as T,
   terkirim: { id: "Komentar terkirim.", en: "Comment posted." } as T,
   gagal: {

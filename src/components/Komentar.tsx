@@ -48,6 +48,15 @@ function jarakWaktu(iso: string, lang: "id" | "en") {
 
 type Status = "diam" | "mengirim" | "terkirim" | "gagal" | "kurang" | "terlalu-cepat";
 
+function IkonPublik() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18" />
+    </svg>
+  );
+}
+
 export default function Komentar() {
   const { lang, t } = useLang();
   const [daftar, setDaftar] = useState<Baris[] | null>(null);
@@ -126,73 +135,87 @@ export default function Komentar() {
 
   return (
     <Reveal>
-      <div className="mt-6 rounded-2xl border border-border bg-surface/70 p-6 backdrop-blur md:p-7">
-        <div className="flex items-baseline gap-2">
+      <div className="mt-12 border-t border-border/60 pt-10">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <h3 className="text-xl font-semibold tracking-tight">{t(komentarTeks.judul)}</h3>
-          {daftar && (
-            <span className="font-mono text-sm text-muted">({daftar.length})</span>
-          )}
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-accent">
+            <IkonPublik />
+            {t(komentarTeks.labelPublik)}
+          </span>
+          {daftar && <span className="font-mono text-sm text-muted">({daftar.length})</span>}
         </div>
-        <p className="mt-1.5 text-sm text-muted">{t(komentarTeks.catatan)}</p>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+          {t(komentarTeks.catatan)}
+        </p>
 
-        <form onSubmit={kirim} noValidate className="mt-6 space-y-4">
-          <div>
-            <label
-              htmlFor="k-nama"
-              className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
-            >
-              {t(komentarTeks.nama)}
-            </label>
-            <input
-              id="k-nama"
-              value={nama}
-              maxLength={MAKS_NAMA}
-              onChange={(e) => setNama(e.target.value)}
-              placeholder={t(komentarTeks.namaPh)}
-              className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg outline-none transition-colors placeholder:text-muted/70 focus:border-accent/60"
-            />
+        {/* Sengaja dibuat lebih ringan daripada form kontak — latar lebih redup,
+            kolom sebaris, tombol bergaris saja — supaya tidak terbaca sebagai
+            form kedua yang sejenis. */}
+        <form
+          onSubmit={kirim}
+          noValidate
+          className="mt-6 rounded-2xl border border-border/70 bg-surface/30 p-4 md:p-5"
+        >
+          <div className="grid gap-3 md:grid-cols-[minmax(0,13rem)_1fr]">
+            <div>
+              <label
+                htmlFor="k-nama"
+                className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
+              >
+                {t(komentarTeks.nama)}
+              </label>
+              <input
+                id="k-nama"
+                value={nama}
+                maxLength={MAKS_NAMA}
+                onChange={(e) => setNama(e.target.value)}
+                placeholder={t(komentarTeks.namaPh)}
+                className="w-full rounded-xl border border-border bg-bg px-4 py-2.5 text-sm text-fg outline-none transition-colors placeholder:text-muted/70 focus:border-accent/60"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="k-isi"
+                className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
+              >
+                {t(komentarTeks.isi)}
+              </label>
+              <textarea
+                id="k-isi"
+                value={isi}
+                rows={2}
+                maxLength={MAKS_ISI}
+                onChange={(e) => setIsi(e.target.value)}
+                placeholder={t(komentarTeks.isiPh)}
+                className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-2.5 text-sm text-fg outline-none transition-colors placeholder:text-muted/70 focus:border-accent/60"
+              />
+            </div>
           </div>
-          <div>
-            <label
-              htmlFor="k-isi"
-              className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
+
+          <div className="mt-3 flex flex-wrap items-center justify-end gap-x-4 gap-y-2">
+            <p
+              role="status"
+              aria-live="polite"
+              className={`mr-auto text-[11px] leading-relaxed ${
+                status === "terkirim" ? "text-accent" : "text-red-400"
+              }`}
             >
-              {t(komentarTeks.isi)}
-            </label>
-            <textarea
-              id="k-isi"
-              value={isi}
-              rows={3}
-              maxLength={MAKS_ISI}
-              onChange={(e) => setIsi(e.target.value)}
-              placeholder={t(komentarTeks.isiPh)}
-              className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg outline-none transition-colors placeholder:text-muted/70 focus:border-accent/60"
-            />
-            <p className="mt-1 text-right font-mono text-[11px] text-muted/70">
-              {isi.length}/{MAKS_ISI}
+              {pesan}
             </p>
+            <span className="font-mono text-[11px] text-muted/70">
+              {isi.length}/{MAKS_ISI}
+            </span>
+            <button
+              type="submit"
+              disabled={status === "mengirim"}
+              className="rounded-xl border border-accent/45 px-5 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent/10 disabled:opacity-60"
+            >
+              {status === "mengirim" ? t(komentarTeks.mengirim) : t(komentarTeks.kirim)}
+            </button>
           </div>
-
-          <button
-            type="submit"
-            disabled={status === "mengirim"}
-            className="w-full rounded-xl bg-accent px-5 py-3 text-sm font-medium text-bg transition-opacity hover:opacity-85 disabled:opacity-60"
-          >
-            {status === "mengirim" ? t(komentarTeks.mengirim) : t(komentarTeks.kirim)}
-          </button>
-
-          <p
-            role="status"
-            aria-live="polite"
-            className={`text-[11px] leading-relaxed ${
-              status === "terkirim" ? "text-accent" : "text-red-400"
-            }`}
-          >
-            {pesan}
-          </p>
         </form>
 
-        <div className="mt-7 space-y-5 border-t border-border/60 pt-6">
+        <div className="mt-8 space-y-5">
           {daftar === null && (
             <p className="text-sm text-muted">{t(komentarTeks.memuat)}</p>
           )}

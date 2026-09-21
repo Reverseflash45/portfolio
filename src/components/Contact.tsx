@@ -23,6 +23,15 @@ const SUB: Record<string, string> = {
 
 type Status = "diam" | "mengirim" | "terkirim" | "gagal" | "kurang";
 
+function IkonGembok() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="4" y="10" width="16" height="11" rx="2" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+    </svg>
+  );
+}
+
 export default function Contact() {
   const { t } = useLang();
   const live = Boolean(contactForm.endpoint);
@@ -72,8 +81,17 @@ export default function Contact() {
           {/* form */}
           <Reveal>
             <div className="rounded-2xl border border-border bg-surface/70 p-6 backdrop-blur md:p-7">
-              <h3 className="text-xl font-semibold tracking-tight">{t(contactForm.formTitle)}</h3>
-              <p className="mt-1.5 text-sm text-muted">{t(contact.body)}</p>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <h3 className="text-xl font-semibold tracking-tight">{t(contactForm.formTitle)}</h3>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-bg px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                  <IkonGembok />
+                  {t(contactForm.labelPrivat)}
+                </span>
+              </div>
+              <p className="mt-2 text-sm text-muted">{t(contact.body)}</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted/80">
+                {t(contactForm.privateNote)}
+              </p>
 
               <form onSubmit={kirim} noValidate className="mt-6 space-y-4">
                 {/* perangkap spam — disembunyikan dari mata dan pembaca layar */}
