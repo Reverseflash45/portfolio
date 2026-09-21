@@ -288,6 +288,7 @@ export const experience = {
         en: "Bronze Medal in Mathematics — National Level",
       },
       org: "Advanced Pateron Olympiad, Pateron Indonesia",
+      logo: "/logos/pateron.png",
       period: "2022",
       desc: {
         id: "Peringkat 7 dari 246 peserta jenjang SMA/SMK/MA dalam Kompetisi Sains Tingkat Nasional.",
@@ -301,6 +302,7 @@ export const experience = {
         en: "Finalist — 14th Indonesian Realistic Reasoning Mathematics Competition (KMNR)",
       },
       org: "Klinik Pendidikan MIPA",
+      logo: "/logos/kpm.png",
       period: "2019",
       desc: {
         id: "Lolos babak semifinal hingga final tingkat nasional; sertifikat digunakan sebagai jalur prestasi masuk SMA Negeri 1 Kota Kediri.",
