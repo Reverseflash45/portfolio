@@ -188,7 +188,7 @@ export const projects = {
       },
       tags: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
       repo: "https://github.com/Reverseflash45/pendekin",
-      demo: "https://pendekin-nu.vercel.app",
+      demo: "https://pendek.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -202,6 +202,19 @@ export const projects = {
       tags: ["Laravel", "PHP", "MySQL", "Midtrans/QRIS", "Blade"],
       repo: "https://github.com/Reverseflash45/Superduperweb",
       demo: "",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: { id: "Portofolio Pribadi", en: "Personal Portfolio" },
+      image: "/projects/portfolio.webp",
+      desc: {
+        id: "Situs yang sedang kamu buka: portofolio dwibahasa (ID/EN) dengan buku tamu publik lewat Supabase (RLS: publik hanya bisa membaca dan menulis, tidak bisa mengubah atau menghapus), form kontak privat, galeri sertifikat dengan lightbox, pemutar Spotify, dan foto interaktif yang tersingkap mengikuti kursor atau jari. Semua konten diatur dari satu file data, di-deploy ke Vercel dengan domain sendiri.",
+        en: "The site you're on: a bilingual (ID/EN) portfolio with a public guestbook on Supabase (RLS: the public can only read and post, never edit or delete), a private contact form, a certificate gallery with a lightbox, a Spotify player, and an interactive photo revealed under the cursor or finger. All content lives in a single data file, deployed on Vercel with a custom domain.",
+      },
+      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"],
+      repo: "https://github.com/Reverseflash45/portfolio",
+      demo: "https://www.raffstw.my.id",
     },
     {
       kind: "course",
