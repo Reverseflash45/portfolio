@@ -158,6 +158,10 @@ export const projects = {
     course: { id: "Proyek Kuliah", en: "Coursework" } as T,
   },
   apkLabel: { id: "Unduh APK", en: "Download APK" } as T,
+  showAll: { id: "Lihat semua proyek", en: "View all projects" } as T,
+  showLess: { id: "Tampilkan lebih sedikit", en: "Show fewer" } as T,
+  readMore: { id: "Selengkapnya", en: "Read more" } as T,
+  readLess: { id: "Ringkas", en: "Show less" } as T,
   items: [
     {
       kind: "solo",
@@ -172,6 +176,19 @@ export const projects = {
       repo: "https://github.com/Reverseflash45/Tracking",
       demo: "",
       apk: "https://github.com/Reverseflash45/Tracking/releases/latest",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Pendekin",
+      image: "/projects/pendekin.webp",
+      desc: {
+        id: "Pemendek URL massal: tempel hingga 20 tautan sekaligus (atau impor CSV) dan dapatkan tautan pendek, QR code, serta statistik klik per tautan — grafik harian, negara, perujuk, dan perangkat, tanpa menghitung bot pratinjau WhatsApp. Semua penulisan lewat fungsi Postgres yang memvalidasi di basis data, redirect memakai 302 supaya setiap klik tercatat dan tautan bisa kedaluwarsa, dan alamat IP tidak pernah disimpan.",
+        en: "A bulk URL shortener: paste up to 20 links at once (or import a CSV) and get a short link, QR code, and click statistics for each — daily chart, country, referrer, and device, with link-preview bots excluded. All writes go through Postgres functions that validate in the database, redirects use 302 so every click is counted and links can expire, and IP addresses are never stored.",
+      },
+      tags: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
+      repo: "https://github.com/Reverseflash45/pendekin",
+      demo: "https://pendekin-nu.vercel.app",
     },
     {
       kind: "solo",

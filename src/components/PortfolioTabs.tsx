@@ -11,6 +11,12 @@ import BrandIcon from "./BrandIcon";
 
 type Tab = "projects" | "certificates" | "awards" | "stack";
 
+/* Jumlah proyek yang tampil sebelum tombol "lihat semua". Tiga = satu baris
+   di layar lebar, dan menahan section ini tetap pendek di ponsel. */
+const BATAS_PROYEK = 3;
+// deskripsi di atas panjang ini dipotong jadi 3 baris dengan tombol baca
+const DESKRIPSI_PANJANG = 180;
+
 const TABS: { key: Tab; icon: string }[] = [
   { key: "projects", icon: "</>" },
   { key: "certificates", icon: "✦" },
@@ -22,6 +28,29 @@ export default function PortfolioTabs() {
   const { t } = useLang();
   const [tab, setTab] = useState<Tab>("projects");
   const [open, setOpen] = useState<number | null>(null);
+  const [semuaProyek, setSemuaProyek] = useState(false);
+  const [terbuka, setTerbuka] = useState<Set<number>>(new Set());
+
+  const proyekTampil = semuaProyek ? projects.items : projects.items.slice(0, BATAS_PROYEK);
+  const sisaProyek = projects.items.length - BATAS_PROYEK;
+
+  function aturDeskripsi(i: number) {
+    setTerbuka((lama) => {
+      const baru = new Set(lama);
+      if (baru.has(i)) baru.delete(i);
+      else baru.add(i);
+      return baru;
+    });
+  }
+
+  function aturSemuaProyek() {
+    // Saat diciutkan, pengunjung bisa tertinggal jauh di bawah daftar yang
+    // sudah hilang — kembalikan ke awal section.
+    if (semuaProyek) {
+      document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setSemuaProyek((v) => !v);
+  }
 
   const sorted = useMemo(
     () =>
@@ -69,9 +98,10 @@ export default function PortfolioTabs() {
       </Reveal>
 
       {tab === "projects" && (
-        <div className="grid gap-5 sm:grid-cols-2">
-          {projects.items.map((p, i) => (
-            <Reveal key={i} delay={(i % 2) * 70}>
+        <>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {proyekTampil.map((p, i) => (
+            <Reveal key={i} delay={(i % 3) * 70}>
               <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/70 backdrop-blur transition-colors hover:border-accent/40">
                 {p.image ? (
                   <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border bg-bg">
@@ -118,7 +148,25 @@ export default function PortfolioTabs() {
                 </span>
 
                 <h3 className="text-base font-medium tracking-tight">{t(p.title)}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{t(p.desc)}</p>
+                <div className="mt-2 flex-1">
+                  <p
+                    className={`text-sm leading-relaxed text-muted ${
+                      terbuka.has(i) ? "" : "line-clamp-3"
+                    }`}
+                  >
+                    {t(p.desc)}
+                  </p>
+                  {t(p.desc).length > DESKRIPSI_PANJANG && (
+                    <button
+                      type="button"
+                      onClick={() => aturDeskripsi(i)}
+                      aria-expanded={terbuka.has(i)}
+                      className="mt-1.5 font-mono text-[11px] text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+                    >
+                      {terbuka.has(i) ? t(projects.readLess) : t(projects.readMore)}
+                    </button>
+                  )}
+                </div>
 
                 <ul className="mt-4 flex flex-wrap gap-1.5">
                   {p.tags.map((tag) => (
@@ -152,6 +200,25 @@ export default function PortfolioTabs() {
             </Reveal>
           ))}
         </div>
+
+        {sisaProyek > 0 && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={aturSemuaProyek}
+              aria-expanded={semuaProyek}
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface/70 px-5 py-2.5 text-sm font-medium text-fg backdrop-blur transition-colors hover:border-accent/50 hover:text-accent"
+            >
+              {semuaProyek
+                ? t(projects.showLess)
+                : `${t(projects.showAll)} (+${sisaProyek})`}
+              <span aria-hidden className={`transition-transform ${semuaProyek ? "rotate-180" : ""}`}>
+                ↓
+              </span>
+            </button>
+          </div>
+        )}
+        </>
       )}
 
       {(tab === "certificates" || tab === "awards") && (
