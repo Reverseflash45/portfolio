@@ -16,6 +16,8 @@ type Tab = "projects" | "certificates" | "awards" | "stack";
 const BATAS_PROYEK = 3;
 // deskripsi di atas panjang ini dipotong jadi 3 baris dengan tombol baca
 const DESKRIPSI_PANJANG = 180;
+// arah masuk kartu per kolom: kiri dari kiri, tengah dari bawah, kanan dari kanan
+const ARAH = ["kiri", "bawah", "kanan"] as const;
 
 const TABS: { key: Tab; icon: string }[] = [
   { key: "projects", icon: "</>" },
@@ -147,7 +149,7 @@ export default function PortfolioTabs() {
         >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {proyekTampil.map((p, i) => (
-            <Reveal key={i} delay={(i % 3) * 70}>
+            <Reveal key={i} delay={(i % 3) * 70} from={ARAH[i % 3]}>
               <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/70 backdrop-blur transition-colors hover:border-accent/40">
                 {p.image ? (
                   <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border bg-bg">
@@ -272,7 +274,7 @@ export default function PortfolioTabs() {
       {(tab === "certificates" || tab === "awards") && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {shown.map((c, i) => (
-            <Reveal key={`${tab}-${i}`} delay={(i % 3) * 60}>
+            <Reveal key={`${tab}-${i}`} delay={(i % 3) * 60} from={ARAH[i % 3]}>
               <CertCard cert={c} onOpen={() => setOpen(sorted.indexOf(c))} />
             </Reveal>
           ))}

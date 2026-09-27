@@ -5,10 +5,13 @@ import { useEffect, useRef } from "react";
 export default function Reveal({
   children,
   delay = 0,
+  from = "bawah",
   className = "",
 }: {
   children: React.ReactNode;
   delay?: number;
+  /** arah elemen meluncur masuk saat digulir ke layar */
+  from?: "bawah" | "kiri" | "kanan";
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,7 +33,7 @@ export default function Reveal({
   }, []);
 
   return (
-    <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div ref={ref} data-from={from} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>
       {children}
     </div>
   );

@@ -20,14 +20,14 @@ export default function EduExp() {
       <div className="grid gap-10 md:grid-cols-2 md:gap-8">
         {/* Pendidikan */}
         <div>
-          <Reveal>
+          <Reveal from="kiri">
             <h3 className="mb-6 text-2xl font-semibold tracking-tight">
               {t(education.eduLabel)}
             </h3>
           </Reveal>
           <div className="space-y-4">
             {education.schools.map((s, i) => (
-              <Reveal key={s.school} delay={i * 60}>
+              <Reveal key={s.school} delay={i * 60} from="kiri">
                 <div className="rounded-2xl border border-border bg-surface/70 p-5 backdrop-blur transition-colors hover:border-accent/40">
                   <div className="flex items-start gap-4">
                     <Logo src={(s as { logo?: string }).logo} name={s.school} />
@@ -56,7 +56,7 @@ export default function EduExp() {
 
         {/* Pengalaman */}
         <div>
-          <Reveal>
+          <Reveal from="kanan">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <h3 className="text-2xl font-semibold tracking-tight">{t(experience.title)}</h3>
               <div className="flex gap-1.5">
@@ -79,7 +79,7 @@ export default function EduExp() {
 
           <div className="max-h-[30rem] space-y-4 overflow-y-auto pr-1.5">
             {items.map((e, i) => (
-              <Reveal key={`${e.org}-${i}`} delay={i * 55}>
+              <Reveal key={`${e.org}-${i}`} delay={i * 55} from="kanan">
                 <div className="rounded-2xl border border-border bg-surface/70 p-5 backdrop-blur transition-colors hover:border-accent/40">
                   <div className="flex items-start gap-4">
                     <Logo src={e.logo} name={e.org} />

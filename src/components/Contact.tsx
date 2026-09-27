@@ -79,7 +79,7 @@ export default function Contact() {
       <Section id="contact" title={contact.title} wide>
         <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr]">
           {/* form */}
-          <Reveal>
+          <Reveal from="kiri">
             <div className="rounded-2xl border border-border bg-surface/70 p-6 backdrop-blur md:p-7">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <h3 className="text-xl font-semibold tracking-tight">{t(contactForm.formTitle)}</h3>
@@ -183,7 +183,7 @@ export default function Contact() {
           </Reveal>
 
           {/* find me */}
-          <Reveal delay={70}>
+          <Reveal delay={70} from="kanan">
             <div className="rounded-2xl border border-border bg-surface/70 p-6 backdrop-blur md:p-7">
               <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
                 {t(contactForm.findMe)}

@@ -13,7 +13,7 @@ export default function About() {
     <Section id="about" title={about.title} wide>
       <div className="grid items-center gap-7 md:grid-cols-[0.9fr_1.1fr_0.9fr] md:gap-4">
         {/* kiri: nama besar + tombol */}
-        <Reveal>
+        <Reveal from="kiri">
           <div className="text-center md:text-left">
             <p className="text-2xl font-semibold leading-tight tracking-tight text-accent sm:text-3xl md:text-4xl">
               {t(about.heading)}
@@ -54,7 +54,7 @@ export default function About() {
         </Reveal>
 
         {/* kanan: paragraf */}
-        <Reveal delay={120}>
+        <Reveal delay={120} from="kanan">
           <div className="space-y-4 text-sm leading-relaxed text-muted md:text-base">
             {about.body[lang].map((p, i) => (
               <p key={i}>{p}</p>

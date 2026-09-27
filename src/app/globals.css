@@ -16,6 +16,12 @@ html {
   background: var(--color-bg);
 }
 
+/* elemen yang meluncur dari samping tidak boleh memicu gulir horizontal di ponsel */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* latar dipindah ke <html> supaya canvas bintang (z-index negatif) terlihat */
 body {
   background: transparent;
@@ -28,27 +34,26 @@ body {
   color: #08090b;
 }
 
-/* Muncul saat digulir: naik, sedikit membesar, dan menajam dari blur.
-   Kurva expo-out — cepat di awal lalu mendarat pelan, tidak memantul. */
+/* Muncul saat digulir: meluncur masuk dari luar ke posisinya — dari bawah,
+   kiri, atau kanan (lihat prop `from` di Reveal.tsx). Kurva expo-out: cepat
+   di awal lalu mendarat pelan, tidak memantul. */
 .reveal {
   opacity: 0;
-  transform: translate3d(0, 28px, 0) scale(0.985);
-  filter: blur(6px);
+  transform: translate3d(0, 48px, 0);
   transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.reveal[data-from="kiri"] { transform: translate3d(-80px, 0, 0); }
+.reveal[data-from="kanan"] { transform: translate3d(80px, 0, 0); }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
-  /* `none`, bukan blur(0): filter apa pun di leluhur mematikan backdrop-blur kartu */
-  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .reveal, .reveal[data-from] { opacity: 1; transform: none; transition: none; }
 }
 
 /* ============================================================
