@@ -23,7 +23,8 @@ export default function Loader() {
 
     document.body.style.overflow = "hidden";
     const start = performance.now();
-    const DUR = 1600;
+    // singkat: pengunjung (terutama recruiter) datang untuk isi, bukan intro
+    const DUR = 850;
 
     const tick = (now: number) => {
       const p = Math.min((now - start) / DUR, 1);
@@ -37,7 +38,7 @@ export default function Loader() {
         setTimeout(() => {
           setDone(true);
           document.body.style.overflow = "";
-        }, 260);
+        }, 700); // = durasi tirai naik di bawah
       }
     };
     const raf = requestAnimationFrame(tick);
@@ -51,8 +52,8 @@ export default function Loader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[200] flex flex-col items-center justify-center bg-bg transition-opacity duration-300 ${
-        pct >= 100 ? "opacity-0" : "opacity-100"
+      className={`fixed inset-0 z-[200] flex flex-col items-center justify-center bg-bg transition-[transform,border-radius] duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+        pct >= 100 ? "-translate-y-full rounded-b-[40%]" : "translate-y-0"
       }`}
     >
       <div
@@ -61,6 +62,11 @@ export default function Loader() {
         style={{ background: "radial-gradient(circle, #5eead4 0%, transparent 70%)" }}
       />
 
+      <div
+        className={`flex flex-col items-center transition-[opacity,transform] duration-300 ${
+          pct >= 100 ? "-translate-y-4 opacity-0" : ""
+        }`}
+      >
       <p className="relative text-center text-2xl font-semibold tracking-tight md:text-4xl">
         {t(loader.line1)}
       </p>
@@ -79,6 +85,7 @@ export default function Loader() {
             style={{ width: `${pct}%` }}
           />
         </div>
+      </div>
       </div>
     </div>
   );

@@ -32,22 +32,33 @@ export default function RevealPhoto({
 
   /* Lingkaran tidak langsung ditempel ke pointer: posisi menyusul dengan
      sedikit lag, dan radius memakai pegas teredam sehingga mekar dengan
-     pantulan kecil saat dibuka dan mengecil di tempat saat ditutup. */
-  const anim = useRef({ x: 50, y: 50, r: 0, v: 0, tx: 50, ty: 50, tr: 0, raf: 0 });
+     pantulan kecil saat dibuka dan mengecil di tempat saat ditutup.
+     Semuanya dihitung per waktu (bukan per frame), jadi kehalusannya sama di
+     layar 60 Hz, 120 Hz, maupun ponsel yang frame-nya sesekali turun. */
+  const anim = useRef({ x: 50, y: 50, r: 0, v: 0, tx: 50, ty: 50, tr: 0, raf: 0, t: 0 });
 
   const jalan = useCallback(() => {
     const a = anim.current;
     if (a.raf) return;
-    const langkah = () => {
-      a.x += (a.tx - a.x) * 0.22;
-      a.y += (a.ty - a.y) * 0.22;
-      a.v = (a.v + (a.tr - a.r) * 0.16) * 0.6;
-      a.r = Math.max(0, a.r + a.v);
+    const IKUT_MS = 70; // makin kecil makin lengket ke pointer
+    const KAKU = 210; // kekakuan pegas radius
+    const REDAM = 24; // redaman; sedikit di bawah kritis (≈29) = pantulan halus
+    a.t = performance.now();
+    const langkah = (kini: number) => {
+      // dibatasi: saat tab kembali aktif, dt besar tidak boleh melontarkan pegas
+      const dt = Math.min(kini - a.t, 34);
+      a.t = kini;
+      const ikut = 1 - Math.exp(-dt / IKUT_MS);
+      a.x += (a.tx - a.x) * ikut;
+      a.y += (a.ty - a.y) * ikut;
+      const d = dt / 1000;
+      a.v += ((a.tr - a.r) * KAKU - a.v * REDAM) * d;
+      a.r = Math.max(0, a.r + a.v * d);
       const diam =
         Math.abs(a.tx - a.x) < 0.05 &&
         Math.abs(a.ty - a.y) < 0.05 &&
         Math.abs(a.tr - a.r) < 0.05 &&
-        Math.abs(a.v) < 0.05;
+        Math.abs(a.v) < 0.5; // v dalam %/detik
       if (diam) {
         a.x = a.tx;
         a.y = a.ty;
@@ -114,7 +125,7 @@ export default function RevealPhoto({
 
     const TAHAN_MS = 150;
     const AMBANG_GESER = 10; // px; bergerak lebih jauh sebelum TAHAN_MS = menggulir
-    const RADIUS_JARI = 32; // jari menutupi titiknya sendiri, jadi lingkarannya lebih besar
+    const RADIUS_JARI = 36; // jari menutupi titiknya sendiri, jadi lingkarannya lebih besar
     const LAMA_KETUK_MS = 1400; // ketukan singkat: tersingkap sebentar lalu menutup sendiri
 
     let timer: number | undefined;
@@ -201,7 +212,7 @@ export default function RevealPhoto({
         if (e.pointerType === "mouse") setOn(true);
       }}
       onPointerMove={(e) => {
-        if (e.pointerType === "mouse") ikuti(e.clientX, e.clientY, 24);
+        if (e.pointerType === "mouse") ikuti(e.clientX, e.clientY, 28);
       }}
       onPointerLeave={(e) => {
         if (e.pointerType === "mouse") padam();

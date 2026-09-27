@@ -6,6 +6,9 @@ import { LangProvider } from "@/lib/i18n";
 import { profile } from "@/content/data";
 
 export const metadata: Metadata = {
+  // dasar URL absolut untuk gambar pratinjau (opengraph-image) dan kanonik
+  metadataBase: new URL("https://www.raffstw.my.id"),
+  alternates: { canonical: "/" },
   title: `${profile.name} — Portfolio`,
   description: profile.role.en,
   openGraph: {

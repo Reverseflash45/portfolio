@@ -28,19 +28,27 @@ body {
   color: #08090b;
 }
 
+/* Muncul saat digulir: naik, sedikit membesar, dan menajam dari blur.
+   Kurva expo-out — cepat di awal lalu mendarat pelan, tidak memantul. */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate3d(0, 28px, 0) scale(0.985);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  /* `none`, bukan blur(0): filter apa pun di leluhur mematikan backdrop-blur kartu */
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
 }
 
 /* ============================================================
@@ -134,10 +142,10 @@ body {
   /* catatan: radius `circle` tidak menerima persen — pakai `ellipse` */
   mask-image:
     linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 58%, transparent 100%);
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 42%, transparent 100%);
   -webkit-mask-image:
     linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 58%, transparent 100%);
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 42%, transparent 100%);
 }
 
 /* Foto dasar dilubangi tepat di lingkaran yang sama (kebalikan mask di atas).
@@ -147,10 +155,10 @@ body {
 .figbase {
   mask-image:
     linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 58%, #000 100%);
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 42%, #000 100%);
   -webkit-mask-image:
     linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 58%, #000 100%);
+    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 42%, #000 100%);
   mask-composite: intersect;
   -webkit-mask-composite: source-in;
 }
@@ -210,4 +218,70 @@ body {
   .statline { animation: none; opacity: 0.45; }
   .statline.top { left: 0; width: 100%; }
   .statline.bottom { right: 0; width: 100%; }
+}
+
+/* ============================================================
+   Kotak daftar proyek (saat "lihat semua" dibuka)
+   ============================================================ */
+@property --fa { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fb { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+.proyek-bingkai {
+  position: relative;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 1.75rem;
+  background:
+    radial-gradient(120% 60% at 50% 0%, color-mix(in oklab, var(--color-accent) 7%, transparent), transparent 70%),
+    color-mix(in oklab, var(--color-surface) 45%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--color-fg) 6%, transparent);
+  animation: bingkai-muncul 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (min-width: 640px) {
+  .proyek-bingkai { padding: 18px; }
+}
+
+@keyframes bingkai-muncul {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to   { opacity: 1; transform: none; }
+}
+
+.proyek-gulir {
+  /* kira-kira satu setengah baris kartu: jelas terlihat masih ada isi di bawah */
+  max-height: min(76vh, 820px);
+  overflow-y: auto;
+  padding: 2px 6px 2px 2px;
+  margin-right: -6px;
+  scroll-behavior: smooth;
+  /* tepi memudar hanya ke arah yang masih bisa digulir (lihat PortfolioTabs) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fa), #000 calc(100% - var(--fb)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fa), #000 calc(100% - var(--fb)), transparent 100%);
+  transition: --fa 0.35s ease, --fb 0.35s ease;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--color-accent) 45%, transparent) transparent;
+}
+.proyek-gulir[data-atas] { --fa: 40px; }
+.proyek-gulir[data-bawah] { --fb: 72px; }
+
+.proyek-gulir::-webkit-scrollbar { width: 6px; }
+.proyek-gulir::-webkit-scrollbar-track { background: transparent; }
+.proyek-gulir::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--color-accent) 40%, transparent);
+}
+.proyek-gulir::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+.proyek-panah {
+  display: inline-block;
+  color: var(--color-accent);
+  animation: panah-ayun 1.6s ease-in-out infinite;
+}
+@keyframes panah-ayun {
+  0%, 100% { transform: translateY(-1px); opacity: 0.6; }
+  50%      { transform: translateY(3px); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proyek-bingkai, .proyek-panah { animation: none; }
+  .proyek-gulir { scroll-behavior: auto; transition: none; }
 }

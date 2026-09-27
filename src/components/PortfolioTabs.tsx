@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { portfolioSection, projects, education, techStack, misc } from "@/content/data";
 import Section from "./Section";
@@ -33,6 +33,33 @@ export default function PortfolioTabs() {
 
   const proyekTampil = semuaProyek ? projects.items : projects.items.slice(0, BATAS_PROYEK);
   const sisaProyek = projects.items.length - BATAS_PROYEK;
+
+  /* Saat semua proyek dibuka, daftarnya digulir di dalam kotak bertinggi
+     terbatas supaya halaman tidak memanjang jauh ke bawah. Tepi atas/bawah
+     kotak memudar hanya jika memang masih ada isi di arah itu. */
+  const kotak = useRef<HTMLDivElement>(null);
+  const [tepi, setTepi] = useState({ atas: false, bawah: false });
+
+  function ukurTepi() {
+    const el = kotak.current;
+    if (!el) return;
+    const atas = el.scrollTop > 4;
+    const bawah = el.scrollTop + el.clientHeight < el.scrollHeight - 4;
+    setTepi((l) => (l.atas === atas && l.bawah === bawah ? l : { atas, bawah }));
+  }
+
+  useEffect(() => {
+    if (!semuaProyek) return;
+    const el = kotak.current;
+    if (!el) return;
+    el.scrollTo({ top: 0 });
+    ukurTepi();
+    // tinggi isi berubah saat gambar lazy selesai dimuat atau deskripsi dibuka
+    const ro = new ResizeObserver(ukurTepi);
+    ro.observe(el);
+    if (el.firstElementChild) ro.observe(el.firstElementChild);
+    return () => ro.disconnect();
+  }, [semuaProyek]);
 
   function aturDeskripsi(i: number) {
     setTerbuka((lama) => {
@@ -99,6 +126,25 @@ export default function PortfolioTabs() {
 
       {tab === "projects" && (
         <>
+        <div className={semuaProyek ? "proyek-bingkai" : undefined}>
+        {semuaProyek && (
+          <div className="mb-3 flex items-center justify-between px-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+            <span>
+              <span className="text-accent">{projects.items.length}</span> {t(projects.title)}
+            </span>
+            <span className="flex items-center gap-1.5">
+              {t(projects.scrollHint)}
+              <span aria-hidden className="proyek-panah">↓</span>
+            </span>
+          </div>
+        )}
+        <div
+          ref={kotak}
+          onScroll={semuaProyek ? ukurTepi : undefined}
+          data-atas={semuaProyek && tepi.atas ? "" : undefined}
+          data-bawah={semuaProyek && tepi.bawah ? "" : undefined}
+          className={semuaProyek ? "proyek-gulir" : undefined}
+        >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {proyekTampil.map((p, i) => (
             <Reveal key={i} delay={(i % 3) * 70}>
@@ -199,6 +245,8 @@ export default function PortfolioTabs() {
               </article>
             </Reveal>
           ))}
+        </div>
+        </div>
         </div>
 
         {sisaProyek > 0 && (

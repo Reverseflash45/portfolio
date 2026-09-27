@@ -160,6 +160,7 @@ export const projects = {
   apkLabel: { id: "Unduh APK", en: "Download APK" } as T,
   showAll: { id: "Lihat semua proyek", en: "View all projects" } as T,
   showLess: { id: "Tampilkan lebih sedikit", en: "Show fewer" } as T,
+  scrollHint: { id: "Gulir di dalam kotak", en: "Scroll inside the box" } as T,
   readMore: { id: "Selengkapnya", en: "Read more" } as T,
   readLess: { id: "Ringkas", en: "Show less" } as T,
   items: [
