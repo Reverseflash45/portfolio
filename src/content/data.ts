@@ -203,7 +203,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "Python", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/UMR",
-      demo: "https://reverseflash45.github.io/UMR/",
+      demo: "https://umr.raffstw.my.id",
     },
     {
       kind: "solo",
