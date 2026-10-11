@@ -170,8 +170,8 @@ export const projects = {
       title: "Tracking",
       image: "/projects/tracking.webp",
       desc: {
-        id: "Aplikasi produktivitas pribadi yang menyatukan jadwal kuliah, tugas, workout, dan keuangan dalam satu app. Ada impor KRS/KHS lewat OCR, deteksi jadwal bentrok, penghitung repetisi latihan pakai kamera (ML Kit pose detection), pelacakan lari GPS, pembacaan struk otomatis, dan mode luring penuh. Saat ini 27 modul fitur, 31 tabel basis data, dan 950 test otomatis.",
-        en: "A personal productivity app that unifies class schedules, assignments, workouts, and finances. Includes OCR import of academic records, schedule-clash detection, camera-based rep counting (ML Kit pose detection), GPS run tracking, automatic receipt reading, and full offline support. Currently 27 feature modules, 31 database tables, and 950 automated tests.",
+        id: "Aplikasi produktivitas pribadi yang menyatukan jadwal kuliah, tugas, workout, dan keuangan dalam satu app. Ada impor KRS/KHS lewat OCR, deteksi jadwal bentrok, penghitung repetisi latihan pakai kamera (ML Kit pose detection), pelacakan lari GPS, pembacaan struk otomatis, dan mode luring penuh. Saat ini 29 modul fitur, 34 tabel basis data, dan 1.059 test otomatis.",
+        en: "A personal productivity app that unifies class schedules, assignments, workouts, and finances. Includes OCR import of academic records, schedule-clash detection, camera-based rep counting (ML Kit pose detection), GPS run tracking, automatic receipt reading, and full offline support. Currently 29 feature modules, 34 database tables, and 1,059 automated tests.",
       },
       tags: ["Flutter", "Dart", "Supabase", "ML Kit", "OCR", "Edge Functions"],
       repo: "https://github.com/Reverseflash45/Tracking",
@@ -184,12 +184,12 @@ export const projects = {
       title: "Postur",
       image: "/projects/postur.webp",
       desc: {
-        id: "Aplikasi Android yang menghitung repetisi squat dan push-up lewat kamera sekaligus menilai bentuk gerakannya per repetisi: kurang dalam, lutut masuk ke dalam, pinggul turun, dan sebagainya. Pose 33 titik dari ML Kit diolah menjadi deret waktu sudut sendi, lalu diklasifikasi di perangkat oleh empat pendekatan yang dibandingkan di skripsi: aturan ambang, Random Forest, 1D-CNN, dan LSTM (TFLite). Pipeline Python-nya mencakup ekstraksi fitur yang identik dengan versi Dart (diuji sampai 1e-8), evaluasi GroupKFold per subjek, uji McNemar, dan kurva belajar. Aplikasinya juga punya mode rekam dataset, tinjau dan label ulang di HP, putar ulang repetisi, serta umpan balik suara.",
-        en: "An Android app that counts squat and push-up reps through the camera and grades the form of each rep: not deep enough, knees caving in, hips sagging, and so on. ML Kit's 33-point pose is turned into a time series of joint angles, then classified on-device by the four approaches the thesis compares: threshold rules, Random Forest, 1D-CNN, and LSTM (TFLite). The Python pipeline covers feature extraction identical to the Dart version (tested to 1e-8), per-subject GroupKFold evaluation, McNemar tests, and learning curves. The app also has a dataset-recording mode, on-device review and relabelling, rep replay, and spoken feedback.",
+        id: "Aplikasi Android yang menghitung repetisi squat dan push-up lewat kamera sekaligus menilai bentuk gerakannya per repetisi: kurang dalam, lutut masuk ke dalam, pinggul turun, dan sebagainya. Pose 33 titik dari ML Kit diolah menjadi deret waktu sudut sendi, lalu diklasifikasi di perangkat oleh empat pendekatan yang dibandingkan di skripsi: aturan ambang, Random Forest, 1D-CNN, dan LSTM (TFLite). Pipeline Python-nya mencakup ekstraksi fitur yang identik dengan versi Dart (diuji sampai 1e-8), evaluasi GroupKFold per subjek, uji McNemar, dan kurva belajar. Aplikasinya juga punya mode rekam dataset, tinjau dan label ulang di HP, putar ulang repetisi, serta umpan balik suara. Versi webnya menjalankan pipeline yang sama dari webcam: MediaPipe di browser dan berkas TFLite yang sama lewat TensorFlow.js, dengan selisih keluaran terhadap Python sekitar 5×10⁻⁷.",
+        en: "An Android app that counts squat and push-up reps through the camera and grades the form of each rep: not deep enough, knees caving in, hips sagging, and so on. ML Kit's 33-point pose is turned into a time series of joint angles, then classified on-device by the four approaches the thesis compares: threshold rules, Random Forest, 1D-CNN, and LSTM (TFLite). The Python pipeline covers feature extraction identical to the Dart version (tested to 1e-8), per-subject GroupKFold evaluation, McNemar tests, and learning curves. The app also has a dataset-recording mode, on-device review and relabelling, rep replay, and spoken feedback. A web version runs the same pipeline from a webcam: MediaPipe in the browser and the very same TFLite files through TensorFlow.js, matching the Python outputs to about 5×10⁻⁷.",
       },
-      tags: ["Flutter", "Python", "TensorFlow Lite", "ML Kit", "scikit-learn", "Pose Estimation"],
+      tags: ["Flutter", "Python", "TensorFlow Lite", "ML Kit", "MediaPipe", "scikit-learn", "Pose Estimation"],
       repo: "https://github.com/Reverseflash45/postur",
-      demo: "",
+      demo: "https://postur-tau.vercel.app",
       apk: "https://github.com/Reverseflash45/postur/releases/latest",
     },
     {
