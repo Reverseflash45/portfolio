@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "@/lib/media";
 
 export default function Typing({
   words,
@@ -12,11 +13,7 @@ export default function Typing({
   const [i, setI] = useState(0);
   const [n, setN] = useState(0);
   const [del, setDel] = useState(false);
-  const [still, setStill] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setStill(true);
-  }, []);
+  const still = useReducedMotion();
 
   useEffect(() => {
     if (still || !words.length) return;

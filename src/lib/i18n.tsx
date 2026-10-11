@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useSyncExternalStore } from "react";
 import type { Lang, T } from "@/content/data";
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (v: T | string) => string };
@@ -11,20 +11,48 @@ const LangContext = createContext<Ctx>({
   t: (v) => (typeof v === "string" ? v : v.id),
 });
 
-export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>("id");
+// Bahasa disimpan di localStorage. Render server dan hidrasi selalu memakai
+// "id", lalu berpindah ke pilihan tersimpan begitu berjalan di peramban.
+const KUNCI = "lang";
+const pendengar = new Set<() => void>();
+// Cadangan bila localStorage tidak bisa dipakai (mode privat, diblokir).
+let pilihan: Lang | null = null;
 
-  useEffect(() => {
+function bacaLang(): Lang {
+  if (pilihan) return pilihan;
+  try {
+    const v = localStorage.getItem(KUNCI);
+    if (v === "id" || v === "en") return v;
+  } catch {}
+  return "id";
+}
+
+function langganan(cb: () => void) {
+  pendengar.add(cb);
+  const dariTabLain = (e: StorageEvent) => {
+    if (e.key !== KUNCI) return;
+    pilihan = null;
+    cb();
+  };
+  window.addEventListener("storage", dariTabLain);
+  return () => {
+    pendengar.delete(cb);
+    window.removeEventListener("storage", dariTabLain);
+  };
+}
+
+export function LangProvider({ children }: { children: React.ReactNode }) {
+  const lang = useSyncExternalStore(langganan, bacaLang, () => "id" as Lang);
+
+  const setLang = useCallback((l: Lang) => {
+    pilihan = l;
     try {
-      const saved = localStorage.getItem("lang");
-      if (saved === "id" || saved === "en") setLang(saved);
+      localStorage.setItem(KUNCI, l);
     } catch {}
+    pendengar.forEach((cb) => cb());
   }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem("lang", lang);
-    } catch {}
     document.documentElement.lang = lang;
   }, [lang]);
 

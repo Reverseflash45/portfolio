@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useMedia, useReducedMotion } from "@/lib/media";
 
 export default function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
-  const [on, setOn] = useState(false);
+  const fine = useMedia("(pointer: fine)");
+  const reduce = useReducedMotion();
+  const on = fine && !reduce;
 
   useEffect(() => {
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduce) return;
-    setOn(true);
+    if (!on) return;
 
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
@@ -48,7 +48,7 @@ export default function Cursor() {
       cancelAnimationFrame(raf);
       document.documentElement.classList.remove("has-custom-cursor");
     };
-  }, []);
+  }, [on]);
 
   if (!on) return null;
 

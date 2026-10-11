@@ -57,6 +57,16 @@ function IkonPublik() {
   );
 }
 
+async function ambilKomentar(): Promise<Baris[]> {
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("komentar")
+    .select("id,nama,isi,dibuat_pada")
+    .order("dibuat_pada", { ascending: false })
+    .limit(50);
+  return data ?? [];
+}
+
 export default function Komentar() {
   const { lang, t } = useLang();
   const [daftar, setDaftar] = useState<Baris[] | null>(null);
@@ -65,18 +75,18 @@ export default function Komentar() {
   const [isi, setIsi] = useState("");
 
   const muat = useCallback(async () => {
-    if (!supabase) return;
-    const { data } = await supabase
-      .from("komentar")
-      .select("id,nama,isi,dibuat_pada")
-      .order("dibuat_pada", { ascending: false })
-      .limit(50);
-    setDaftar(data ?? []);
+    setDaftar(await ambilKomentar());
   }, []);
 
   useEffect(() => {
-    void muat();
-  }, [muat]);
+    let batal = false;
+    ambilKomentar().then((d) => {
+      if (!batal) setDaftar(d);
+    });
+    return () => {
+      batal = true;
+    };
+  }, []);
 
   if (!supabase) return null;
 

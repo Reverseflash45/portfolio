@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMounted } from "@/lib/media";
 import { useLang } from "@/lib/i18n";
 import { loader } from "@/content/data";
 
@@ -8,18 +9,21 @@ export default function Loader() {
   const { t } = useLang();
   const [pct, setPct] = useState(0);
   const [done, setDone] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
+  // Dibaca sekali saat komponen dibuat; intro yang sedang berjalan tidak boleh
+  // hilang hanya karena "seen-intro" baru saja ditulis di akhir animasi.
+  const [skip] = useState(() => {
+    if (typeof window === "undefined") return false;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+    try {
+      return sessionStorage.getItem("seen-intro") === "1";
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
-    setMounted(true);
-    let skip = false;
-    try {
-      skip = sessionStorage.getItem("seen-intro") === "1";
-    } catch {}
-    if (skip || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDone(true);
-      return;
-    }
+    if (skip) return;
 
     document.body.style.overflow = "hidden";
     const start = performance.now();
@@ -46,9 +50,9 @@ export default function Loader() {
       cancelAnimationFrame(raf);
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [skip]);
 
-  if (!mounted || done) return null;
+  if (!mounted || skip || done) return null;
 
   return (
     <div

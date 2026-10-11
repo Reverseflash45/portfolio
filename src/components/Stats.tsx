@@ -1,20 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/lib/media";
 import { useLang } from "@/lib/i18n";
 import { stats, projects, education } from "@/content/data";
 
 function Counter({ to }: { to: number }) {
   const [n, setN] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setN(to);
-      return;
-    }
+    if (!el || reduce) return;
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
       io.disconnect();
@@ -28,9 +26,9 @@ function Counter({ to }: { to: number }) {
     }, { threshold: 0.4 });
     io.observe(el);
     return () => io.disconnect();
-  }, [to]);
+  }, [to, reduce]);
 
-  return <span ref={ref}>{n}</span>;
+  return <span ref={ref}>{reduce ? to : n}</span>;
 }
 
 export default function Stats() {
