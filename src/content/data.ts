@@ -179,6 +179,33 @@ export const projects = {
       apk: "https://github.com/Reverseflash45/Tracking/releases/latest",
     },
     {
+      kind: "course",
+      label: { id: "Skripsi", en: "Undergraduate Thesis" },
+      title: "Postur",
+      image: "/projects/postur.webp",
+      desc: {
+        id: "Aplikasi Android yang menghitung repetisi squat dan push-up lewat kamera sekaligus menilai bentuk gerakannya per repetisi: kurang dalam, lutut masuk ke dalam, pinggul turun, dan sebagainya. Pose 33 titik dari ML Kit diolah menjadi deret waktu sudut sendi, lalu diklasifikasi di perangkat oleh empat pendekatan yang dibandingkan di skripsi: aturan ambang, Random Forest, 1D-CNN, dan LSTM (TFLite). Pipeline Python-nya mencakup ekstraksi fitur yang identik dengan versi Dart (diuji sampai 1e-8), evaluasi GroupKFold per subjek, uji McNemar, dan kurva belajar. Aplikasinya juga punya mode rekam dataset, tinjau dan label ulang di HP, putar ulang repetisi, serta umpan balik suara.",
+        en: "An Android app that counts squat and push-up reps through the camera and grades the form of each rep: not deep enough, knees caving in, hips sagging, and so on. ML Kit's 33-point pose is turned into a time series of joint angles, then classified on-device by the four approaches the thesis compares: threshold rules, Random Forest, 1D-CNN, and LSTM (TFLite). The Python pipeline covers feature extraction identical to the Dart version (tested to 1e-8), per-subject GroupKFold evaluation, McNemar tests, and learning curves. The app also has a dataset-recording mode, on-device review and relabelling, rep replay, and spoken feedback.",
+      },
+      tags: ["Flutter", "Python", "TensorFlow Lite", "ML Kit", "scikit-learn", "Pose Estimation"],
+      repo: "https://github.com/Reverseflash45/postur",
+      demo: "",
+      apk: "https://github.com/Reverseflash45/postur/releases/latest",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "UMR",
+      image: "/projects/umr.webp",
+      desc: {
+        id: "Peta 514 kabupaten/kota yang membandingkan upah minimum 2026 dengan estimasi biaya hidup setempat. Bisa memakai UMK tiap daerah, gaji sendiri, atau upah kota asal yang dibawa ke daerah lain, dengan profil lajang, berdua, atau keluarga, dan gaji bersih setelah BPJS dan PPh 21. Ketuk satu daerah untuk melihat struk bulanannya, yang bisa dibagikan sebagai gambar. Datanya dikumpulkan sendiri: UMK dari SK gubernur 38 provinsi dan garis kemiskinan BPS yang diekstrak dari PDF sebagai indeks harga. Semua asumsinya dibuka di halaman metode, termasuk uji sensitivitasnya.",
+        en: "A map of Indonesia's 514 regencies and cities comparing the 2026 minimum wage with an estimated local cost of living. You can use each region's wage, your own salary, or carry your home city's wage elsewhere, with single, couple, or family profiles and take-home pay after social security and income tax. Tap a region to see its monthly receipt, which can be shared as an image. The data was compiled from scratch: minimum wages from 38 governors' decrees and BPS poverty lines extracted from PDF as a price index. Every assumption, including a sensitivity analysis, is laid out on the methodology page.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "Python", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/UMR",
+      demo: "https://reverseflash45.github.io/UMR/",
+    },
+    {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
