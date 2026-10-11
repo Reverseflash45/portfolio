@@ -271,16 +271,16 @@ export const projects = {
       demo: "",
     },
     {
-      kind: "course",
-      label: { id: "Proyek Kuliah", en: "Coursework" },
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: {
         id: "Analisis Sentimen Berita Emiten",
         en: "Stock News Sentiment Analysis",
       },
       image: "/projects/sentimen.webp",
       desc: {
-        id: "Sistem pemantauan sentimen berita 45 emiten LQ45: pengumpulan RSS yang patuh robots.txt, pemetaan berita ke emiten, verifikasi ke pengumuman resmi BEI, lalu penyandingan dengan pergerakan harga. Pengklasifikasi dirancang sebagai antarmuka yang bisa ditukar — baseline leksikon sekarang, IndoBERT saat skripsi. REST API + dasbor, 205 uji tanpa jaringan.",
-        en: "A sentiment monitoring system for the 45 LQ45 stock issuers: robots.txt-compliant RSS collection, news-to-issuer mapping, verification against official IDX disclosures, then correlation with price movements. The classifier is a swappable interface — a lexicon baseline now, IndoBERT at thesis stage. REST API + dashboard, 205 network-free tests.",
+        id: "Sistem pemantauan sentimen berita 45 emiten LQ45: pengumpulan RSS yang patuh robots.txt dari 7 portal, pemetaan berita ke emiten, verifikasi ke keterbukaan informasi BEI, lalu penyandingan skor sentimen harian dengan harga saham lewat korelasi Pearson/Spearman dan uji Granger. Pengklasifikasi dirancang sebagai antarmuka yang bisa ditukar: baseline leksikon berjalan sekarang, IndoBERT hasil fine-tuning tinggal dipasang. Dasbor web + REST API, lebih dari 7.000 berita terkumpul, 252 uji otomatis.",
+        en: "A news sentiment monitor for the 45 LQ45 stocks: robots.txt-compliant RSS collection from 7 portals, news-to-issuer mapping, verification against official IDX disclosures, then daily sentiment scores set against share prices with Pearson/Spearman correlation and Granger tests. The classifier is a swappable interface: a lexicon baseline runs today, and a fine-tuned IndoBERT model drops in without other changes. Web dashboard + REST API, over 7,000 articles collected, 252 automated tests.",
       },
       tags: ["Python", "FastAPI", "SQLAlchemy", "NLP", "IndoBERT"],
       repo: "https://github.com/Reverseflash45/sentimen-emiten",
