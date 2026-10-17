@@ -208,6 +208,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Dulu Segini",
+      image: "/projects/dulu-segini.webp",
+      desc: {
+        id: "Kalkulator daya beli rupiah 1967–2025: uang saku Rp1.000 tahun 1995 itu setara berapa sekarang? Dihitung dari Indeks Harga Konsumen, dua arah (dulu ke sekarang dan sebaliknya), lalu dibandingkan dengan tiga skenario kalau uang itu dulu disimpan tunai, ditukar dolar, atau dibelikan emas, semuanya dalam rupiah yang sudah disesuaikan inflasi. Data ditarik langsung dari API World Bank dan Pink Sheet lewat skrip Python, warna grafik divalidasi untuk buta warna, dan hasilnya bisa dibagikan sebagai kartu bergaya uang kertas lama dengan pola guilloche yang digambar sendiri.",
+        en: "A rupiah purchasing-power calculator for 1967–2025: what is a Rp1,000 allowance from 1995 worth today? It works both ways using the consumer price index, then compares three what-ifs (keeping the money as cash, swapping it for dollars, or buying gold), all in inflation-adjusted rupiah. Data is pulled straight from the World Bank API and Pink Sheet by a Python script, chart colors are validated for color blindness, and results can be shared as a card styled like an old banknote with a hand-generated guilloche pattern.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "Python", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/dulu-segini",
+      demo: "https://dulu-segini.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
