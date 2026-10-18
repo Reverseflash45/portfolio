@@ -321,6 +321,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
+      title: "Aksara",
+      image: "/projects/aksara.webp",
+      desc: {
+        id: "Alih aksara Latin ⇄ aksara Jawa (hanacaraka) yang menjelaskan dirinya sendiri: setiap suku kata diberi catatan, misalnya \"ka + layar (r mati)\" atau \"k mati, aksara berikutnya jadi pasangan\". Mesinnya menangani sandhangan, panyigeg, pasangan, cakra, keret, pengkal, pa cêrêk, aksara rekan, dan pilihan bacaan e, dengan kode Unicode yang diperiksa terhadap basis data Unicode dan diuji pada ejaan baku seperti Ngayogyakarta. Ada juga pembaca balik, tabel carakan beserta pasangannya menurut kisah Aji Saka, kuis, dan unduhan gambar.",
+        en: "A self-explaining Latin ⇄ Javanese script (hanacaraka) transliterator: every syllable comes with a note such as \"ka + layar (final r)\" or \"dead k, the next letter becomes a pasangan\". The engine handles vowel signs, final consonant signs, pasangan conjuncts, cakra, keret, pengkal, pa cêrêk, loan letters, and a choice of how to read e, with code points checked against the Unicode database and tests on standard spellings such as Ngayogyakarta. It also reads Javanese back into Latin, shows the carakan with their pasangan along the Aji Saka legend, and includes a quiz and image download.",
+      },
+      tags: ["TypeScript", "Unicode", "Vite", "Javanese Script", "Interactive"],
+      repo: "https://github.com/Reverseflash45/aksara",
+      demo: "https://aksara-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
