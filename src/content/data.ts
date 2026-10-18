@@ -335,6 +335,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
+      title: "Lidah",
+      image: "/projects/lidah.webp",
+      desc: {
+        id: "Peta 727 bahasa ibu yang dituturkan di Indonesia dari Glottolog 5.2.1: hanya 132 yang aman, sisanya rentan, terancam, atau sudah punah. Setiap bahasa diwarnai menurut status keterancaman atau rumpun (Austronesia lawan puluhan rumpun Papua), dengan komposisi per wilayah, delapan bahasa terdekat dari kabupaten/kotamu, dan kartu silsilah lengkap untuk tiap bahasa. Skrip Node mengunduh rilis CLDF Glottolog, menyaring bahasa ibu lisan di Indonesia, dan mencocokkannya dengan wilayah terdekat; palet warnanya divalidasi untuk buta warna.",
+        en: "A map of the 727 mother tongues spoken in Indonesia from Glottolog 5.2.1: only 132 are safe, the rest are vulnerable, endangered, or already extinct. Each language is colored by endangerment status or family (Austronesian versus dozens of Papuan families), with a breakdown by region, the eight nearest languages to any regency or city, and a full family-tree card for every language. A Node script downloads Glottolog's CLDF release, filters spoken L1 languages in Indonesia, and matches each to its nearest region; the palettes are validated for color blindness.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "Linguistics", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/lidah",
+      demo: "https://lidah.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
