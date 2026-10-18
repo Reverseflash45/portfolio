@@ -234,6 +234,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Getar",
+      image: "/projects/getar.webp",
+      desc: {
+        id: "Peta 13 ribu lebih gempa M5+ di Indonesia sejak 1900 dari katalog USGS. Pilih kabupaten/kota dan radius untuk melihat berapa kali daerahmu diguncang, gempa terkuat dan terakhirnya, serta peta kecil lima gempa terbesar di sekitarnya. Seluruh katalog digambar sebagai pita seismogram dan peta kanvas yang memperlihatkan batas lempeng, berwarna sesuai kedalaman. Ada juga hukum Gutenberg–Richter dengan nilai b yang dihitung dari data dan penjelasan kenapa jumlah gempa tercatat naik. Skrip Node mengunduh katalog, membuang gempa negara tetangga, dan mencocokkan tiap episentrum dengan daerah terdekat.",
+        en: "A map of 13,000+ magnitude 5+ earthquakes in Indonesia since 1900 from the USGS catalog. Pick a regency or city and a radius to see how often it has been shaken, its strongest and most recent quakes, and a small map of the five largest nearby. The whole catalog is drawn as a seismograph strip and a canvas map that traces the plate boundaries, colored by depth. It also covers the Gutenberg–Richter law with a b-value computed from the data and explains why recorded quake counts keep rising. A Node script downloads the catalog, drops quakes in neighboring countries, and matches every epicenter to its nearest region.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "GIS", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/getar",
+      demo: "https://getar.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
