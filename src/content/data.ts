@@ -247,6 +247,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Bara",
+      image: "/projects/bara.webp",
+      desc: {
+        id: "Semua letusan gunung api Indonesia sejak 1500 dari basis data Smithsonian Global Volcanism Program: 1.273 letusan dari 73 gunung, digambar sebagai garis waktu satu baris per gunung menyusuri busur vulkanik dari Aceh sampai Halmahera, dengan letusan panjang seperti Dukono (sejak 1933) sebagai garis durasi. Pilih kabupaten/kota untuk melihat gunung api terdekat beserta jarak, arah, dan riwayatnya; setiap gunung punya kartu dan peta sendiri, termasuk penanda gunung yang masih erupsi. Ada juga skala VEI dengan contoh nyata dan tiga letusan raksasa: Samalas, Tambora, dan Krakatau.",
+        en: "Every recorded eruption of an Indonesian volcano since 1500 from the Smithsonian Global Volcanism Program: 1,273 eruptions from 73 volcanoes, drawn as a timeline with one row per volcano following the arc from Aceh to Halmahera, and long eruptions such as Dukono's (ongoing since 1933) shown as duration lines. Pick a regency or city to see the nearest volcanoes with their distance, direction, and history; every volcano has its own card and map, with ongoing eruptions marked. It also explains the VEI scale with real examples and the three giants: Samalas, Tambora, and Krakatau.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "GIS", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/bara",
+      demo: "https://bara-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
