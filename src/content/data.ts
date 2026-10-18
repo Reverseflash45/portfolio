@@ -260,6 +260,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Bayang",
+      image: "/projects/bayang.webp",
+      desc: {
+        id: "Kapan matahari tepat di atas kepalamu? Bayang menghitung hari tanpa bayangan, dua kali setahun, untuk 514 kabupaten/kota langsung di peramban dengan algoritma posisi matahari NOAA/Meeus, tanpa data dari luar. Ada hitung mundur ke kejadian berikutnya, grafik panjang bayangan tengah hari sepanjang tahun, simulasi jam matahari tampak atas yang bisa diputar sehari penuh, peta tanggal dan jam terbit untuk seluruh Indonesia, serta penjelasan kenapa terjadi dua kali. Seluruh peta dihitung dalam sekitar 20 ms, dan hasilnya diuji terhadap nilai rujukan seperti kulminasi Pontianak di khatulistiwa.",
+        en: "When is the sun directly overhead where you live? Bayang computes the two shadowless days each year for 514 regencies and cities right in the browser, using the NOAA/Meeus solar position algorithm with no external data. It shows a countdown to the next one, a year-long chart of noon shadow length, a top-down sundial simulation you can play through a full day, maps of the dates and today's sunrise across Indonesia, and an explanation of why it happens twice. The whole map is computed in about 20 ms, and results are tested against reference values such as Pontianak's equatorial culmination.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "Astronomy", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/bayang",
+      demo: "https://bayang-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
