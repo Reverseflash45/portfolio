@@ -286,6 +286,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Gending",
+      image: "/projects/gending.webp",
+      desc: {
+        id: "Gamelan Jawa yang bisa dimainkan di peramban, tanpa satu pun rekaman: saron, demung, peking, kenong, kempul, kethuk, dan gong disintesis dengan Web Audio dari parsial bilah logam dan denyut \"ombak\". Tulis balungan dalam notasi kepatihan, pilih lancaran, ketawang, atau ladrang, dan ricikan kolotomik otomatis jatuh di ketukan yang benar sementara lingkaran siklus gongan berputar. Ada juga perbandingan laras slendro dan pelog dengan nada piano yang bisa diketuk, dan setiap susunan bisa dibagikan lewat tautan.",
+        en: "A playable Javanese gamelan in the browser with no recordings: saron, demung, peking, kenong, kempul, kethuk, and gong are synthesized in Web Audio from metal-bar partials and slow \"ombak\" beating. Write a balungan in kepatihan notation, choose lancaran, ketawang, or ladrang, and the colotomic instruments land on the right beats while a gongan cycle wheel turns. It also compares the slendro and pelog tunings with piano notes you can tap, and every arrangement can be shared as a link.",
+      },
+      tags: ["TypeScript", "Web Audio", "Vite", "Music", "Interactive"],
+      repo: "https://github.com/Reverseflash45/gending",
+      demo: "https://gending-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
