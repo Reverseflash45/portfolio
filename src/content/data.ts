@@ -273,6 +273,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Hilal",
+      image: "/projects/hilal.webp",
+      desc: {
+        id: "Hisab awal bulan hijriah untuk 514 kabupaten/kota: setelah setiap ijtimak, posisi bulan dan matahari saat magrib dihitung di peramban dengan Astronomy Engine, lalu dibandingkan dengan kriteria MABIMS (tinggi 3°, elongasi 6,4°) dan wujudul hilal. Ada perkiraan awal Ramadan, Idulfitri, dan Iduladha, peta tinggi hilal, diagram langit barat saat magrib di daerahmu, serta tabel dua belas bulan yang menunjukkan kapan kedua kriteria berbeda. Hitungannya diuji terhadap penetapan yang sudah terjadi, termasuk perbedaan Idulfitri 2023 dan awal puasa 2024.",
+        en: "Islamic month-start calculations for 514 Indonesian regencies and cities: after every new moon, the moon's and sun's positions at sunset are computed in the browser with Astronomy Engine and compared against the MABIMS criterion (3° altitude, 6.4° elongation) and the wujudul hilal criterion. It estimates the start of Ramadan, Eid al-Fitr, and Eid al-Adha, maps crescent altitude, draws the western sky at sunset for any region, and lists twelve months ahead showing when the two criteria disagree. The calculations are tested against past decisions, including the split Eid al-Fitr of 2023 and the split start of Ramadan in 2024.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "Astronomy", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/hilal",
+      demo: "https://hilal-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
