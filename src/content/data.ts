@@ -221,6 +221,19 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      title: "Tebak Daerah",
+      image: "/projects/tebak-daerah.webp",
+      desc: {
+        id: "Game tebak satu dari 514 kabupaten dan kota di Indonesia dari bentuk wilayahnya, ala Worldle. Setiap tebakan salah memberi jarak, arah, dan persentase kedekatan; petunjuk provinsi terbuka setelah tiga tebakan. Ada soal harian yang sama untuk semua orang (diacak sekali dengan benih tetap supaya tidak berulang), mode bebas per pulau, hasil emoji untuk dibagikan, serta statistik dan streak. Batas wilayah geoBoundaries disederhanakan per daerah, bukan global, supaya kota kecil tidak jadi segitiga, dan pengujian otomatis memastikan luas tiap bentuk tetap cocok dengan aslinya.",
+        en: "A Worldle-style game: guess one of Indonesia's 514 regencies and cities from its outline. Every wrong guess shows the distance, direction, and a proximity percentage, and a province hint unlocks after three guesses. There's a daily puzzle shared by everyone (shuffled once with a fixed seed so nothing repeats), a free-play mode filtered by island, a shareable emoji result, and stats with streaks. geoBoundaries outlines are simplified per region rather than globally so small cities don't collapse into triangles, and automated tests check every shape's area still matches the original.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "GIS", "Game"],
+      repo: "https://github.com/Reverseflash45/tebak-daerah",
+      demo: "https://tebak-daerah.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
