@@ -135,10 +135,13 @@ export const stats = {
   awardsNote: { id: "Kompetisi tingkat nasional", en: "National-level competitions" } as T,
 };
 
+export type KategoriProyek = "aplikasi" | "data" | "sains" | "web" | "kuliah";
+
 export type Project = {
   title: T | string;
   label: T;
   kind: "solo" | "course";
+  kategori: KategoriProyek;
   desc: T;
   tags: string[];
   repo?: string;
@@ -163,10 +166,20 @@ export const projects = {
   scrollHint: { id: "Gulir di dalam kotak", en: "Scroll inside the box" } as T,
   readMore: { id: "Selengkapnya", en: "Read more" } as T,
   readLess: { id: "Ringkas", en: "Show less" } as T,
+  semua: { id: "Semua", en: "All" } as T,
+  kategori: {
+    aplikasi: { id: "Aplikasi", en: "Apps" } as T,
+    data: { id: "Data & peta", en: "Data & maps" } as T,
+    sains: { id: "Sains & interaktif", en: "Science & interactive" } as T,
+    web: { id: "Web", en: "Web" } as T,
+    kuliah: { id: "Kuliah", en: "Coursework" } as T,
+  },
+  filterLabel: { id: "Saring berdasarkan kategori", en: "Filter by category" } as T,
   items: [
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "aplikasi",
       title: "Tracking",
       image: "/projects/tracking.webp",
       desc: {
@@ -181,6 +194,7 @@ export const projects = {
     {
       kind: "course",
       label: { id: "Skripsi", en: "Undergraduate Thesis" },
+      kategori: "aplikasi",
       title: "Postur",
       image: "/projects/postur.webp",
       desc: {
@@ -195,6 +209,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
       title: "UMR",
       image: "/projects/umr.webp",
       desc: {
@@ -208,6 +223,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
       title: "Dulu Segini",
       image: "/projects/dulu-segini.webp",
       desc: {
@@ -221,6 +237,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
       title: "Tebak Daerah",
       image: "/projects/tebak-daerah.webp",
       desc: {
@@ -234,6 +251,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
       title: "Getar",
       image: "/projects/getar.webp",
       desc: {
@@ -247,6 +265,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
       title: "Bara",
       image: "/projects/bara.webp",
       desc: {
@@ -260,6 +279,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
       title: "Bayang",
       image: "/projects/bayang.webp",
       desc: {
@@ -273,6 +293,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
       title: "Hilal",
       image: "/projects/hilal.webp",
       desc: {
@@ -286,6 +307,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
       title: "Gending",
       image: "/projects/gending.webp",
       desc: {
@@ -299,6 +321,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
@@ -312,6 +335,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
       title: "Superduperweb",
       image: "/projects/superduperweb.webp",
       desc: {
@@ -325,6 +349,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
       title: { id: "Portofolio Pribadi", en: "Personal Portfolio" },
       image: "/projects/portfolio.webp",
       desc: {
@@ -338,6 +363,7 @@ export const projects = {
     {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
+      kategori: "kuliah",
       title: "WTOOLS",
       image: "/projects/wtools.webp",
       desc: {
@@ -351,6 +377,7 @@ export const projects = {
     {
       kind: "course",
       label: { id: "Proyek Kuliah", en: "Coursework" },
+      kategori: "kuliah",
       title: "RSHP — Rumah Sakit Hewan Pendidikan",
       image: "/projects/rshp.webp",
       desc: {
@@ -364,6 +391,7 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
       title: {
         id: "Analisis Sentimen Berita Emiten",
         en: "Stock News Sentiment Analysis",

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
-import { portfolioSection, projects, education, techStack, misc } from "@/content/data";
+import { portfolioSection, projects, education, techStack, misc, type KategoriProyek } from "@/content/data";
 import Section from "./Section";
 import Reveal from "./Reveal";
 import CertCard from "./CertCard";
@@ -19,6 +19,8 @@ const DESKRIPSI_PANJANG = 180;
 // arah masuk kartu per kolom: kiri dari kiri, tengah dari bawah, kanan dari kanan
 const ARAH = ["kiri", "bawah", "kanan"] as const;
 
+const URUT_KATEGORI: KategoriProyek[] = ["aplikasi", "data", "sains", "web", "kuliah"];
+
 const TABS: { key: Tab; icon: string }[] = [
   { key: "projects", icon: "</>" },
   { key: "certificates", icon: "✦" },
@@ -31,10 +33,18 @@ export default function PortfolioTabs() {
   const [tab, setTab] = useState<Tab>("projects");
   const [open, setOpen] = useState<number | null>(null);
   const [semuaProyek, setSemuaProyek] = useState(false);
-  const [terbuka, setTerbuka] = useState<Set<number>>(new Set());
+  // Kunci "baca selengkapnya" memakai judul, bukan indeks, supaya tidak tertukar saat filter berganti.
+  const [terbuka, setTerbuka] = useState<Set<string>>(new Set());
+  const [kategori, setKategori] = useState<KategoriProyek | "semua">("semua");
 
-  const proyekTampil = semuaProyek ? projects.items : projects.items.slice(0, BATAS_PROYEK);
-  const sisaProyek = projects.items.length - BATAS_PROYEK;
+  /* Tanpa filter: tiga proyek pertama lalu tombol "lihat semua". Dengan filter,
+     semua proyek di kategori itu langsung tampil karena jumlahnya sedikit. */
+  const tersaring = kategori === "semua" ? projects.items : projects.items.filter((p) => p.kategori === kategori);
+  const pakaiBatas = kategori === "semua";
+  const proyekTampil = !pakaiBatas || semuaProyek ? tersaring : tersaring.slice(0, BATAS_PROYEK);
+  const sisaProyek = pakaiBatas ? tersaring.length - BATAS_PROYEK : 0;
+  const gulirAktif = pakaiBatas && semuaProyek;
+  const jumlahKategori = (k: KategoriProyek) => projects.items.filter((p) => p.kategori === k).length;
 
   /* Saat semua proyek dibuka, daftarnya digulir di dalam kotak bertinggi
      terbatas supaya halaman tidak memanjang jauh ke bawah. Tepi atas/bawah
@@ -51,7 +61,7 @@ export default function PortfolioTabs() {
   }
 
   useEffect(() => {
-    if (!semuaProyek) return;
+    if (!semuaProyek || kategori !== "semua") return;
     const el = kotak.current;
     if (!el) return;
     el.scrollTo({ top: 0 });
@@ -61,9 +71,9 @@ export default function PortfolioTabs() {
     ro.observe(el);
     if (el.firstElementChild) ro.observe(el.firstElementChild);
     return () => ro.disconnect();
-  }, [semuaProyek]);
+  }, [semuaProyek, kategori]);
 
-  function aturDeskripsi(i: number) {
+  function aturDeskripsi(i: string) {
     setTerbuka((lama) => {
       const baru = new Set(lama);
       if (baru.has(i)) baru.delete(i);
@@ -128,8 +138,30 @@ export default function PortfolioTabs() {
 
       {tab === "projects" && (
         <>
-        <div className={semuaProyek ? "proyek-bingkai" : undefined}>
-        {semuaProyek && (
+        <div role="group" aria-label={t(projects.filterLabel)} className="mb-6 flex flex-wrap gap-2">
+          {(["semua", ...URUT_KATEGORI] as const).map((k) => {
+            const aktif = kategori === k;
+            const n = k === "semua" ? projects.items.length : jumlahKategori(k);
+            return (
+              <button
+                key={k}
+                type="button"
+                aria-pressed={aktif}
+                onClick={() => setKategori(k)}
+                className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
+                  aktif
+                    ? "border-accent/60 bg-accent/12 text-accent"
+                    : "border-border text-muted hover:border-accent/40 hover:text-fg"
+                }`}
+              >
+                {k === "semua" ? t(projects.semua) : t(projects.kategori[k])}
+                <span className={`font-mono text-[11px] ${aktif ? "text-accent" : "text-muted/80"}`}>{n}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className={gulirAktif ? "proyek-bingkai" : undefined}>
+        {gulirAktif && (
           <div className="mb-3 flex items-center justify-between px-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
             <span>
               <span className="text-accent">{projects.items.length}</span> {t(projects.title)}
@@ -142,14 +174,16 @@ export default function PortfolioTabs() {
         )}
         <div
           ref={kotak}
-          onScroll={semuaProyek ? ukurTepi : undefined}
-          data-atas={semuaProyek && tepi.atas ? "" : undefined}
-          data-bawah={semuaProyek && tepi.bawah ? "" : undefined}
-          className={semuaProyek ? "proyek-gulir" : undefined}
+          onScroll={gulirAktif ? ukurTepi : undefined}
+          data-atas={gulirAktif && tepi.atas ? "" : undefined}
+          data-bawah={gulirAktif && tepi.bawah ? "" : undefined}
+          className={gulirAktif ? "proyek-gulir" : undefined}
         >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {proyekTampil.map((p, i) => (
-            <Reveal key={i} delay={(i % 3) * 70} from={ARAH[i % 3]}>
+          {proyekTampil.map((p, i) => {
+            const kunci = t(p.title);
+            return (
+            <Reveal key={`${kategori}-${kunci}`} delay={(i % 3) * 70} from={ARAH[i % 3]}>
               <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/70 backdrop-blur transition-colors hover:border-accent/40">
                 {p.image ? (
                   <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border bg-bg">
@@ -199,7 +233,7 @@ export default function PortfolioTabs() {
                 <div className="mt-2 flex-1">
                   <p
                     className={`text-sm leading-relaxed text-muted ${
-                      terbuka.has(i) ? "" : "line-clamp-3"
+                      terbuka.has(kunci) ? "" : "line-clamp-3"
                     }`}
                   >
                     {t(p.desc)}
@@ -207,11 +241,11 @@ export default function PortfolioTabs() {
                   {t(p.desc).length > DESKRIPSI_PANJANG && (
                     <button
                       type="button"
-                      onClick={() => aturDeskripsi(i)}
-                      aria-expanded={terbuka.has(i)}
+                      onClick={() => aturDeskripsi(kunci)}
+                      aria-expanded={terbuka.has(kunci)}
                       className="mt-1.5 font-mono text-[11px] text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
                     >
-                      {terbuka.has(i) ? t(projects.readLess) : t(projects.readMore)}
+                      {terbuka.has(kunci) ? t(projects.readLess) : t(projects.readMore)}
                     </button>
                   )}
                 </div>
@@ -246,7 +280,8 @@ export default function PortfolioTabs() {
                 </div>
               </article>
             </Reveal>
-          ))}
+            );
+          })}
         </div>
         </div>
         </div>
