@@ -363,6 +363,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
+      title: "Gerah",
+      image: "/projects/gerah.webp",
+      desc: {
+        id: "Garis hangat Indonesia 1950–2024 dari reanalisis ERA5 lewat API World Bank Climate Change Knowledge Portal: satu garis per tahun, biru lebih sejuk dan merah lebih panas daripada rata-rata 1961–1990. Isi tahun lahir untuk melihat berapa derajat Indonesia memanas sejak itu, lengkap dengan hari di atas 30 °C dan malam tropis. Ada grafik anomali tahunan dengan garis tren (+0,23 °C per dekade) dan kalender panas 900 bulan yang dibandingkan dengan bulan yang sama, jadi musim tidak ikut terhitung. Semua angka di halaman dihitung langsung dari data.",
+        en: "Warming stripes for Indonesia, 1950–2024, from ERA5 reanalysis via the World Bank Climate Change Knowledge Portal API: one stripe per year, blue cooler and red warmer than the 1961–1990 average. Enter your birth year to see how much Indonesia has warmed since, along with days above 30 °C and tropical nights. It also has an annual anomaly chart with a trend line (+0.23 °C per decade) and a 900-month heat calendar where each month is compared with the same month in the baseline, so seasons don't skew it. Every number on the page is computed from the data.",
+      },
+      tags: ["TypeScript", "D3", "Vite", "Climate", "Data Visualization"],
+      repo: "https://github.com/Reverseflash45/gerah",
+      demo: "https://gerah.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
