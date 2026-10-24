@@ -349,6 +349,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
+      title: "Lintas",
+      image: "/projects/lintas.webp",
+      desc: {
+        id: "Teka-teki geografi harian ala Travle untuk 514 kabupaten/kota: diberi dua daerah di satu pulau, tebak wilayah di antaranya sampai jalurnya tersambung lewat perbatasan darat. Graf ketetanggaan dibangun langsung dari topologi peta, rute terpendek dihitung dengan BFS dari kedua ujung, dan tiap tebakan dinilai menurut penyimpangannya dari rute. Teka-teki harian dibuat dari benih nomor hari sehingga sama untuk semua orang, lengkap dengan petunjuk, hasil emoji untuk dibagikan, mode latihan, dan statistik di peramban.",
+        en: "A Travle-style daily geography puzzle for Indonesia's 514 regencies and cities: given two regions on the same island, guess the ones in between until the land-border path connects. The adjacency graph is built straight from the map topology, shortest routes come from a BFS from both ends, and each guess is scored by how far it detours from a shortest route. Daily puzzles are generated from a day-number seed so everyone gets the same one, with hints, a shareable emoji result, a practice mode, and in-browser stats.",
+      },
+      tags: ["TypeScript", "Graph", "Vite", "GIS", "Game"],
+      repo: "https://github.com/Reverseflash45/lintas",
+      demo: "https://lintas-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
