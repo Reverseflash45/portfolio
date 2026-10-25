@@ -181,6 +181,7 @@ export const ringkas: Record<string, T> = {
   Gerhana: { id: "semua gerhana matahari 1900–2100 per daerah", en: "every solar eclipse 1900–2100, per region" },
   Cicil: { id: "bunga cicilan yang sebenernya", en: "the real interest behind installments" },
   Cekrek: { id: "photobooth di browser, 3 2 1 cekrek", en: "a photobooth in your browser, 3 2 1 snap" },
+  Tembus: { id: "latihan TOEFL ITP, jawabannya diarsir kayak LJK", en: "TOEFL ITP practice, answers shaded like an exam sheet" },
   Pendekin: { id: "pemendek banyak link sekaligus + QR", en: "shorten many links at once, with QR codes" },
   Superduperweb: { id: "web jasa bikin aplikasi, bayar pakai QRIS", en: "an app-building service site with QRIS payments" },
   "Portofolio Pribadi": { id: "web yang lagi kamu buka ini", en: "the site you're on" },
