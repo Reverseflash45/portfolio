@@ -1,22 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LangProvider } from "@/lib/i18n";
 import { profile } from "@/content/data";
 
-/* Satu keluarga huruf untuk seluruh halaman. Sumbu lebar (wdth) dipakai sebagai
-   suara: lebar untuk judul seperti judul lembar atlas, sempit untuk nama tempat. */
-const archivo = Archivo({
+/* Satu keluarga huruf yang punya karakter; ukuran optik (opsz) membuat judul besar dan teks chat
+   kecil sama-sama enak dibaca. */
+const huruf = Bricolage_Grotesque({
   subsets: ["latin", "latin-ext"],
-  axes: ["wdth"],
-  style: ["normal", "italic"],
+  axes: ["opsz", "wdth"],
   variable: "--huruf",
 });
 
-const deskripsi =
-  "Mahasiswa Teknik Informatika Universitas Airlangga dari Kediri yang membuat aplikasi dan alat kecil tentang Indonesia.";
+const deskripsi = "Ngobrol sama Rafi: anak TI Unair dari Kediri yang bikin aplikasi dan alat-alat kecil soal Indonesia.";
 
 export const metadata: Metadata = {
   // dasar URL absolut untuk gambar pratinjau (opengraph-image) dan kanonik
@@ -33,14 +31,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#dce9ec" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e2130" },
+    { media: "(prefers-color-scheme: light)", color: "#e9e5f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1626" },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={archivo.variable}>
+    <html lang="id" className={huruf.variable}>
       <body>
         <LangProvider>{children}</LangProvider>
         <Analytics />

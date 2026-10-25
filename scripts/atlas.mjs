@@ -1,12 +1,13 @@
-// Menyatukan satu fakta per proyek untuk setiap kabupaten/kota, untuk peta di halaman depan.
-// Membaca data dari repo proyek di sebelah repo ini (../umr, ../getar, ...), lalu menulis
-// public/data/atlas.json dan menyalin peta kabupaten/kota ke public/data/peta.json.
+// Menyatukan satu fakta per proyek untuk setiap kabupaten/kota, untuk jawaban "cek kotaku dong"
+// di halaman depan. Membaca data dari repo proyek di sebelah repo ini (../umr, ../getar, ...),
+// lalu menulis public/data/atlas.json. Jalankan ulang tiap tahun: tanggal hari tanpa bayangan dan
+// gerhana yang tersimpan dihitung dari tanggal saat skrip dijalankan.
 //
 //   node scripts/atlas.mjs
 //
 // Hari tanpa bayangan dihitung dengan modul astronomi Bayang yang sama (Node 22.18+ menjalankan
 // TypeScript langsung), jadi tanggalnya identik dengan yang tampil di bayang.raffstw.my.id.
-import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { hariTanpaBayangan } from "../../bayang/src/matahari.ts";
 
 const AKAR = new URL("../../", import.meta.url);
@@ -91,7 +92,6 @@ writeFileSync(
   new URL("../public/data/atlas.json", import.meta.url),
   JSON.stringify({ dibangun: DIBANGUN.toISOString().slice(0, 10), radiusGempa: RADIUS_GEMPA, daerah: hasil }),
 );
-copyFileSync(new URL("bayang/public/data/peta.json", AKAR), new URL("../public/data/peta.json", import.meta.url));
 console.log(`${hasil.length} daerah`);
 const k = hasil.find((d) => d.id === "kota-kediri");
 console.log(JSON.stringify(k));
