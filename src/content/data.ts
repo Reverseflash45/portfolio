@@ -461,6 +461,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "data",
+      title: "Napas",
+      image: "/projects/napas.webp",
+      desc: {
+        id: "Peta kualitas udara 514 kabupaten/kota Indonesia, 1998–2024: rata-rata partikel halus PM2.5 dari data satelit ACAG (Washington University) yang dikalibrasi alat ukur darat, dirata-rata per wilayah dengan bobot luas irisan petak 0,1°. Temuannya: pada 2024 tidak ada satu pun daerah yang memenuhi pedoman WHO, dan separuh melewati baku mutu nasional. Tiap daerah punya kartu berisi perbandingan dengan WHO dan baku mutu, peringkat, perkiraan tambahan harapan hidup (AQLI), grafik tren, dan kalender bulanan 27 tahun yang memperlihatkan musim asap karhutla. Ada juga peta per tahun dengan tombol putar dan tabel lengkap. Skala warnanya divalidasi, dan keutuhan datanya diperiksa tes otomatis.",
+        en: "An air-quality map of Indonesia's 514 regencies and cities, 1998–2024: fine-particle PM2.5 from ACAG's satellite-derived, ground-calibrated estimates (Washington University), averaged per region by area-weighted overlap of 0.1° grid cells. The finding: in 2024 not a single region met the WHO guideline, and half exceeded the national standard. Each region gets a card comparing it with the WHO guideline and the national standard, its rank, an estimated life-expectancy gain (AQLI), a trend chart, and a 27-year monthly calendar that exposes the forest-fire haze seasons. There is also a year-by-year map with playback and a full table. The colour scale is validated, and automated tests check the data's integrity.",
+      },
+      tags: ["TypeScript", "Python", "D3", "Remote Sensing"],
+      repo: "https://github.com/Reverseflash45/napas",
+      demo: "https://napas-mauve.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
