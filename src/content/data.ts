@@ -406,6 +406,20 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
+      title: "Cekrek",
+      image: "/projects/cekrek.webp",
+      desc: {
+        id: "Photobooth di peramban: nyalakan kamera, tekan jepret, dan ikuti hitung mundur 3, 2, 1 sampai empat foto terambil. Setelah itu strip fotonya keluar dari slot dan warnanya muncul pelan-pelan seperti cetakan. Tersedia empat susunan (strip 4, strip 3, 4 kotak, polaroid), lima filter, dan lima bingkai termasuk struk belanja dan karcis. Foto yang kurang pas bisa diulang satu per satu, dan foto dari galeri juga bisa dipakai. Filter pratinjau dan hasil cetak memakai definisi matriks warna yang sama. Semua diproses di perangkat tanpa unggahan, dengan hasil 1200×3600 piksel yang siap dicetak.",
+        en: "A photobooth in the browser: turn on the camera, hit the shutter, and follow the 3, 2, 1 countdown for four shots. The strip then slides out of a slot and its colors develop like a fresh print. It offers four layouts (4-strip, 3-strip, 2×2 grid, polaroid), five filters, and five frames including a shop receipt and a ticket stub. Any shot can be retaken on its own, and gallery photos work too. The live preview and the print share one color-matrix definition for each filter. Everything is processed on the device with no uploads, and the output is a print-ready 1200×3600 image.",
+      },
+      tags: ["TypeScript", "Canvas", "WebRTC", "Vite"],
+      repo: "https://github.com/Reverseflash45/cekrek",
+      demo: "https://cekrek-three.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
