@@ -470,7 +470,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Python", "D3", "Remote Sensing"],
       repo: "https://github.com/Reverseflash45/napas",
-      demo: "https://napas-mauve.vercel.app",
+      demo: "https://napas.raffstw.my.id",
     },
     {
       kind: "solo",
