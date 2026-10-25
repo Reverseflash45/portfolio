@@ -203,7 +203,7 @@ export const projects = {
       },
       tags: ["Flutter", "Python", "TensorFlow Lite", "ML Kit", "MediaPipe", "scikit-learn", "Pose Estimation"],
       repo: "https://github.com/Reverseflash45/postur",
-      demo: "https://postur-tau.vercel.app",
+      demo: "https://postur.raffstw.my.id",
       apk: "https://github.com/Reverseflash45/postur/releases/latest",
     },
     {
@@ -232,7 +232,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "Python", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/dulu-segini",
-      demo: "https://dulu-segini.vercel.app",
+      demo: "https://dulu.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -246,7 +246,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "GIS", "Game"],
       repo: "https://github.com/Reverseflash45/tebak-daerah",
-      demo: "https://tebak-daerah.vercel.app",
+      demo: "https://tebak.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -260,7 +260,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "GIS", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/getar",
-      demo: "https://getar.vercel.app",
+      demo: "https://getar.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -274,7 +274,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "GIS", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/bara",
-      demo: "https://bara-id.vercel.app",
+      demo: "https://bara.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -288,7 +288,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "Astronomy", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/bayang",
-      demo: "https://bayang-id.vercel.app",
+      demo: "https://bayang.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -302,7 +302,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "Astronomy", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/hilal",
-      demo: "https://hilal-id.vercel.app",
+      demo: "https://hilal.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -316,7 +316,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Web Audio", "Vite", "Music", "Interactive"],
       repo: "https://github.com/Reverseflash45/gending",
-      demo: "https://gending-id.vercel.app",
+      demo: "https://gending.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -330,7 +330,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Unicode", "Vite", "Javanese Script", "Interactive"],
       repo: "https://github.com/Reverseflash45/aksara",
-      demo: "https://aksara-id.vercel.app",
+      demo: "https://aksara.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -344,7 +344,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "Linguistics", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/lidah",
-      demo: "https://lidah.vercel.app",
+      demo: "https://lidah.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -358,7 +358,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Graph", "Vite", "GIS", "Game"],
       repo: "https://github.com/Reverseflash45/lintas",
-      demo: "https://lintas-id.vercel.app",
+      demo: "https://lintas.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -372,7 +372,7 @@ export const projects = {
       },
       tags: ["TypeScript", "D3", "Vite", "Climate", "Data Visualization"],
       repo: "https://github.com/Reverseflash45/gerah",
-      demo: "https://gerah.vercel.app",
+      demo: "https://gerah.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -386,7 +386,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Astronomy", "D3", "Vite", "GIS"],
       repo: "https://github.com/Reverseflash45/gerhana",
-      demo: "https://gerhana-id.vercel.app",
+      demo: "https://gerhana.raffstw.my.id",
     },
     {
       kind: "solo",
@@ -400,7 +400,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Finance", "D3", "Vite"],
       repo: "https://github.com/Reverseflash45/cicil",
-      demo: "https://cicil-id.vercel.app",
+      demo: "https://cicil.raffstw.my.id",
     },
     {
       kind: "solo",
