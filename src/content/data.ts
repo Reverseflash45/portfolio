@@ -377,6 +377,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "sains",
+      title: "Gerhana",
+      image: "/projects/gerhana.webp",
+      desc: {
+        id: "Semua gerhana matahari yang terlihat dari Indonesia dari 1900 sampai 2100, dihitung untuk 514 kabupaten/kota dengan Astronomy Engine: 121 gerhana, 17 di antaranya melintaskan jalur total. Pilih daerah untuk melihat jam mulai, puncak, dan selesai dalam WIB/WITA/WIT, lama fase total atau cincin, serta gambar Matahari dan Bulan dari sudut pandang pengamat yang bisa diputar. Peta per gerhana memakai ketertutupan terbesar yang benar-benar terlihat, jadi gerhana yang puncaknya terjadi setelah Matahari terbenam tidak dilebih-lebihkan. Data peta dihitung paralel dengan worker thread memakai modul TypeScript yang sama dengan halaman, dan diuji terhadap gerhana 1983, 2016, dan 2019.",
+        en: "Every solar eclipse visible from Indonesia between 1900 and 2100, computed for 514 regencies and cities with Astronomy Engine: 121 eclipses, 17 of them with a path of totality crossing the country. Pick a region to see local start, maximum, and end times, the length of totality or annularity, and a playable view of the Sun and Moon from the observer's point of view. Each eclipse map uses the largest obscuration that is actually visible, so eclipses that peak after sunset aren't overstated. Map data is computed in parallel with worker threads using the same TypeScript module as the page, and is tested against the 1983, 2016, and 2019 eclipses.",
+      },
+      tags: ["TypeScript", "Astronomy", "D3", "Vite", "GIS"],
+      repo: "https://github.com/Reverseflash45/gerhana",
+      demo: "https://gerhana-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
