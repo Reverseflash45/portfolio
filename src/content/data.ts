@@ -414,7 +414,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Canvas", "WebRTC", "Vite"],
       repo: "https://github.com/Reverseflash45/cekrek",
-      demo: "https://cekrek-three.vercel.app",
+      demo: "https://cekrek.raffstw.my.id",
     },
     {
       kind: "solo",
