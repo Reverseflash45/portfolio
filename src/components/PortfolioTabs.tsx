@@ -2,14 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
-import { portfolioSection, projects, education, techStack, misc, type KategoriProyek } from "@/content/data";
+import { portfolioSection, projects, education, techStack, misc, bintangTeks, type KategoriProyek, type Project, type T } from "@/content/data";
+import { type Bintang, slugProyek, useBintang } from "@/lib/bintang";
 import Section from "./Section";
 import Reveal from "./Reveal";
 import CertCard from "./CertCard";
 import CertLightbox from "./CertLightbox";
 import BrandIcon from "./BrandIcon";
 
-type Tab = "projects" | "certificates" | "awards" | "stack";
+type Tab = "projects" | "certificates" | "awards" | "stack" | "favorites";
 
 /* Jumlah proyek yang tampil sebelum tombol "lihat semua". Tiga = satu baris
    di layar lebar, dan menahan section ini tetap pendek di ponsel. */
@@ -26,7 +27,33 @@ const TABS: { key: Tab; icon: string }[] = [
   { key: "certificates", icon: "✦" },
   { key: "awards", icon: "★" },
   { key: "stack", icon: "◈" },
+  { key: "favorites", icon: "♥" },
 ];
+
+const slugDari = (p: Project) => slugProyek(typeof p.title === "string" ? p.title : p.title.id);
+
+function TombolBintang({ b, p, t }: { b: Bintang; p: Project; t: (v: T | string) => string }) {
+  const slug = slugDari(p);
+  const on = b.punyaku(slug);
+  const n = b.jumlah(slug);
+  return (
+    <button
+      type="button"
+      onClick={() => void b.ganti(slug)}
+      disabled={b.sibuk(slug)}
+      aria-pressed={on}
+      aria-label={`${t(on ? bintangTeks.cabut : bintangTeks.beri)} ${t(p.title)} (${n} ${t(bintangTeks.satuan)})`}
+      className={`bintang-tombol inline-flex min-h-8 shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs transition-colors disabled:cursor-wait ${
+        on
+          ? "border-amber-300/60 bg-amber-300/10 text-amber-300"
+          : "border-border text-muted hover:border-amber-300/50 hover:text-amber-200"
+      }`}
+    >
+      <span aria-hidden>{on ? "★" : "☆"}</span>
+      <span>{n}</span>
+    </button>
+  );
+}
 
 export default function PortfolioTabs() {
   const { t } = useLang();
@@ -36,6 +63,13 @@ export default function PortfolioTabs() {
   // Kunci "baca selengkapnya" memakai judul, bukan indeks, supaya tidak tertukar saat filter berganti.
   const [terbuka, setTerbuka] = useState<Set<string>>(new Set());
   const [kategori, setKategori] = useState<KategoriProyek | "semua">("semua");
+  const bintang = useBintang();
+  const [urutBanyak, setUrutBanyak] = useState(true);
+  const tabTampil = TABS.filter((tb) => tb.key !== "favorites" || bintang.aktif);
+  // urutan favorit: jumlah bintang, lalu urutan aslinya di data supaya stabil
+  const favorit = projects.items
+    .map((p, i) => ({ p, i, n: bintang.jumlah(slugDari(p)) }))
+    .sort((a, b) => (urutBanyak ? b.n - a.n : a.n - b.n) || a.i - b.i);
 
   /* Tanpa filter: tiga proyek pertama lalu tombol "lihat semua". Dengan filter,
      semua proyek di kategori itu langsung tampil karena jumlahnya sedikit. */
@@ -107,8 +141,12 @@ export default function PortfolioTabs() {
   return (
     <Section id="portfolio" title={portfolioSection.title} wide>
       <Reveal>
-        <div className="mb-10 grid grid-cols-2 gap-1 rounded-2xl border border-border bg-surface/60 p-1.5 backdrop-blur sm:grid-cols-4">
-          {TABS.map((tb) => {
+        <div
+          className={`mb-10 grid gap-1 rounded-2xl border border-border bg-surface/60 p-1.5 backdrop-blur ${
+            tabTampil.length > 4 ? "grid-cols-3 sm:grid-cols-5" : "grid-cols-2 sm:grid-cols-4"
+          }`}
+        >
+          {tabTampil.map((tb) => {
             const on = tab === tb.key;
             return (
               <button
@@ -135,6 +173,12 @@ export default function PortfolioTabs() {
           })}
         </div>
       </Reveal>
+
+      {bintang.galat && (
+        <p role="status" className="mb-6 rounded-xl border border-amber-300/40 bg-amber-300/10 px-4 py-2.5 text-sm text-amber-200">
+          {t(bintang.galat === "kebanyakan" ? bintangTeks.kebanyakan : bintangTeks.gagal)}
+        </p>
+      )}
 
       {tab === "projects" && (
         <>
@@ -213,8 +257,9 @@ export default function PortfolioTabs() {
                 )}
 
                 <div className="flex flex-1 flex-col p-5">
+                <div className="mb-3 flex items-center justify-between gap-2">
                 <span
-                  className={`mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] ${
+                  className={`inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] ${
                     p.kind === "solo"
                       ? "border-accent/40 text-accent"
                       : "border-border text-muted"
@@ -228,6 +273,8 @@ export default function PortfolioTabs() {
                   />
                   {t(p.label)}
                 </span>
+                {bintang.aktif && <TombolBintang b={bintang} p={p} t={t} />}
+                </div>
 
                 <h3 className="text-base font-medium tracking-tight">{t(p.title)}</h3>
                 <div className="mt-2 flex-1">
@@ -304,6 +351,63 @@ export default function PortfolioTabs() {
           </div>
         )}
         </>
+      )}
+
+      {tab === "favorites" && bintang.aktif && (
+        <div>
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <p className="max-w-xl text-sm leading-relaxed text-muted">{t(bintangTeks.intro)}</p>
+            <div role="group" aria-label={t(bintangTeks.urut)} className="flex gap-1 rounded-full border border-border bg-surface/60 p-1">
+              {[true, false].map((banyak) => (
+                <button
+                  key={String(banyak)}
+                  type="button"
+                  aria-pressed={urutBanyak === banyak}
+                  onClick={() => setUrutBanyak(banyak)}
+                  className={`rounded-full px-3.5 py-1 text-sm transition-colors ${
+                    urutBanyak === banyak ? "bg-amber-300/15 text-amber-300" : "text-muted hover:text-fg"
+                  }`}
+                >
+                  {banyak ? "★ " : "☆ "}
+                  {t(banyak ? bintangTeks.terbanyak : bintangTeks.tersedikit)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {favorit.every((f) => f.n === 0) && <p className="mb-4 text-sm text-amber-200">{t(bintangTeks.belumAda)}</p>}
+
+          <ol className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface/70 backdrop-blur">
+            {favorit.map(({ p, n }, i) => (
+              <li key={t(p.title)} className="flex items-center gap-3 px-3 py-3 sm:gap-4 sm:px-4">
+                <span
+                  className={`w-7 shrink-0 text-right font-mono text-sm ${urutBanyak && i < 3 && n > 0 ? "text-amber-300" : "text-muted"}`}
+                >
+                  {i + 1}
+                </span>
+                {p.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={p.image} alt="" loading="lazy" className="hidden h-11 w-[70px] shrink-0 rounded-md border border-border object-cover sm:block" />
+                ) : (
+                  <span aria-hidden className="hidden h-11 w-[70px] shrink-0 rounded-md border border-dashed border-border sm:block" />
+                )}
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">
+                    {p.demo ? (
+                      <a href={p.demo} target="_blank" rel="noreferrer" className="hover:text-accent hover:underline">
+                        {t(p.title)}
+                      </a>
+                    ) : (
+                      t(p.title)
+                    )}
+                  </p>
+                  <p className="font-mono text-[11px] text-muted">{t(projects.kategori[p.kategori])}</p>
+                </div>
+                <TombolBintang b={bintang} p={p} t={t} />
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
 
       {(tab === "certificates" || tab === "awards") && (

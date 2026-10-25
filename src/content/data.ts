@@ -123,7 +123,28 @@ export const portfolioSection = {
     certificates: { id: "Sertifikat", en: "Certificates" } as T,
     awards: { id: "Prestasi", en: "Awards" } as T,
     stack: { id: "Tech Stack", en: "Tech Stack" } as T,
+    favorites: { id: "Favorit", en: "Favorites" } as T,
   },
+};
+
+// Bintang dari pengunjung (lihat supabase-bintang.sql)
+export const bintangTeks = {
+  intro: {
+    id: "Proyek yang paling banyak diberi bintang oleh pengunjung. Suka salah satunya? Beri bintang juga.",
+    en: "The projects visitors starred the most. Like one of them? Give it a star too.",
+  } as T,
+  urut: { id: "Urutkan", en: "Sort" } as T,
+  terbanyak: { id: "Terbanyak", en: "Most" } as T,
+  tersedikit: { id: "Tersedikit", en: "Fewest" } as T,
+  beri: { id: "Beri bintang untuk", en: "Star" } as T,
+  cabut: { id: "Cabut bintang dari", en: "Unstar" } as T,
+  satuan: { id: "bintang", en: "stars" } as T,
+  belumAda: { id: "Belum ada bintang. Jadilah yang pertama.", en: "No stars yet. Be the first." } as T,
+  kebanyakan: {
+    id: "Terlalu banyak bintang dari jaringanmu hari ini. Coba lagi besok.",
+    en: "Too many stars from your network today. Try again tomorrow.",
+  } as T,
+  gagal: { id: "Bintangnya gagal tersimpan. Coba lagi sebentar lagi.", en: "The star couldn't be saved. Try again shortly." } as T,
 };
 
 export const stats = {

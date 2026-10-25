@@ -290,3 +290,8 @@ body {
   .proyek-bingkai, .proyek-panah { animation: none; }
   .proyek-gulir { scroll-behavior: auto; transition: none; }
 }
+
+/* ============================================================
+   Bintang proyek
+   ============================================================ */
+.bintang-tombol:active:not(:disabled) { transform: scale(0.92); }
