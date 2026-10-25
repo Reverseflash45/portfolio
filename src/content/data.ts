@@ -456,7 +456,7 @@ export const projects = {
       },
       tags: ["TypeScript", "Web Speech API", "Edtech", "Vite"],
       repo: "https://github.com/Reverseflash45/tembus",
-      demo: "https://tembus-five.vercel.app",
+      demo: "https://tembus.raffstw.my.id",
     },
     {
       kind: "solo",
