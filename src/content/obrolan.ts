@@ -183,6 +183,7 @@ export const ringkas: Record<string, T> = {
   Cekrek: { id: "photobooth di browser, 3 2 1 cekrek", en: "a photobooth in your browser, 3 2 1 snap" },
   Tembus: { id: "latihan TOEFL ITP, satu soal per layar, langsung dikoreksi", en: "TOEFL ITP practice, one question per screen, marked instantly" },
   Napas: { id: "seberapa kotor udara di daerahmu, 1998–2024", en: "how dirty the air is where you live, 1998–2024" },
+  Rawan: { id: "bencana apa aja yang pernah mampir ke daerahmu, 2010–2019", en: "which disasters have hit where you live, 2010–2019" },
   Pendekin: { id: "pemendek banyak link sekaligus + QR", en: "shorten many links at once, with QR codes" },
   Superduperweb: { id: "web jasa bikin aplikasi, bayar pakai QRIS", en: "an app-building service site with QRIS payments" },
   "Portofolio Pribadi": { id: "web yang lagi kamu buka ini", en: "the site you're on" },
