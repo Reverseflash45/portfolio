@@ -123,7 +123,7 @@ export const portfolioSection = {
     certificates: { id: "Sertifikat", en: "Certificates" } as T,
     awards: { id: "Prestasi", en: "Awards" } as T,
     stack: { id: "Tech Stack", en: "Tech Stack" } as T,
-    favorites: { id: "Favorit", en: "Favorites" } as T,
+    favorites: { id: "Terfavorit", en: "Most starred" } as T,
   },
 };
 
@@ -134,6 +134,13 @@ export const bintangTeks = {
     en: "The projects visitors starred the most. Like one of them? Give it a star too.",
   } as T,
   urut: { id: "Urutkan", en: "Sort" } as T,
+  bawaan: { id: "Bawaan", en: "Default" } as T,
+  favoritku: { id: "Favoritku", en: "My favorites" } as T,
+  kosongFavorit: {
+    id: "Kamu belum memberi bintang. Tekan ☆ di proyek yang kamu suka, nanti muncul di sini.",
+    en: "You haven't starred anything yet. Tap ☆ on a project you like and it will show up here.",
+  } as T,
+  tampilkanSemua: { id: "Tampilkan semua proyek", en: "Show all projects" } as T,
   terbanyak: { id: "Terbanyak", en: "Most" } as T,
   tersedikit: { id: "Tersedikit", en: "Fewest" } as T,
   beri: { id: "Beri bintang untuk", en: "Star" } as T,

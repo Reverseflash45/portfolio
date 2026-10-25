@@ -71,10 +71,19 @@ export default function PortfolioTabs() {
     .map((p, i) => ({ p, i, n: bintang.jumlah(slugDari(p)) }))
     .sort((a, b) => (urutBanyak ? b.n - a.n : a.n - b.n) || a.i - b.i);
 
+  // urutan kartu di tab Proyek & filter "favoritku"
+  const [urutKartu, setUrutKartu] = useState<"bawaan" | "banyak" | "sedikit">("bawaan");
+  const [hanyaFavorit, setHanyaFavorit] = useState(false);
+  const jumlahFavoritku = projects.items.filter((p) => bintang.punyaku(slugDari(p))).length;
+
   /* Tanpa filter: tiga proyek pertama lalu tombol "lihat semua". Dengan filter,
      semua proyek di kategori itu langsung tampil karena jumlahnya sedikit. */
-  const tersaring = kategori === "semua" ? projects.items : projects.items.filter((p) => p.kategori === kategori);
-  const pakaiBatas = kategori === "semua";
+  const tersaring = projects.items
+    .map((p, i) => ({ p, i, n: bintang.jumlah(slugDari(p)) }))
+    .filter(({ p }) => (kategori === "semua" || p.kategori === kategori) && (!hanyaFavorit || bintang.punyaku(slugDari(p))))
+    .sort((a, b) => (urutKartu === "banyak" ? b.n - a.n : urutKartu === "sedikit" ? a.n - b.n : 0) || a.i - b.i)
+    .map(({ p }) => p);
+  const pakaiBatas = kategori === "semua" && !hanyaFavorit;
   const proyekTampil = !pakaiBatas || semuaProyek ? tersaring : tersaring.slice(0, BATAS_PROYEK);
   const sisaProyek = pakaiBatas ? tersaring.length - BATAS_PROYEK : 0;
   const gulirAktif = pakaiBatas && semuaProyek;
@@ -203,7 +212,57 @@ export default function PortfolioTabs() {
               </button>
             );
           })}
+          {bintang.aktif && (
+            <button
+              type="button"
+              aria-pressed={hanyaFavorit}
+              onClick={() => setHanyaFavorit((v) => !v)}
+              className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
+                hanyaFavorit
+                  ? "border-amber-300/60 bg-amber-300/10 text-amber-300"
+                  : "border-border text-muted hover:border-amber-300/40 hover:text-fg"
+              }`}
+            >
+              <span aria-hidden>{hanyaFavorit ? "★" : "☆"}</span>
+              {t(bintangTeks.favoritku)}
+              <span className={`font-mono text-[11px] ${hanyaFavorit ? "text-amber-300" : "text-muted/80"}`}>{jumlahFavoritku}</span>
+            </button>
+          )}
         </div>
+        {bintang.aktif && (
+          <div role="group" aria-label={t(bintangTeks.urut)} className="-mt-2 mb-6 flex flex-wrap items-center gap-1 text-sm sm:gap-2">
+            <span className="hidden text-muted sm:inline">{t(bintangTeks.urut)}:</span>
+            {(["bawaan", "banyak", "sedikit"] as const).map((u) => (
+              <button
+                key={u}
+                type="button"
+                aria-pressed={urutKartu === u}
+                onClick={() => setUrutKartu(u)}
+                className={`rounded-full px-3 py-1 transition-colors ${
+                  urutKartu === u ? "bg-amber-300/15 text-amber-300" : "text-muted hover:text-fg"
+                }`}
+              >
+                {u === "bawaan"
+                  ? t(bintangTeks.bawaan)
+                  : u === "banyak"
+                    ? `★ ${t(bintangTeks.terbanyak)}`
+                    : `☆ ${t(bintangTeks.tersedikit)}`}
+              </button>
+            ))}
+          </div>
+        )}
+        {hanyaFavorit && tersaring.length === 0 && (
+          <div className="mb-6 rounded-2xl border border-dashed border-border px-5 py-8 text-center">
+            <p className="text-sm text-muted">{t(bintangTeks.kosongFavorit)}</p>
+            <button
+              type="button"
+              onClick={() => setHanyaFavorit(false)}
+              className="mt-3 font-mono text-xs text-accent hover:underline"
+            >
+              {t(bintangTeks.tampilkanSemua)}
+            </button>
+          </div>
+        )}
         <div className={gulirAktif ? "proyek-bingkai" : undefined}>
         {gulirAktif && (
           <div className="mb-3 flex items-center justify-between px-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
