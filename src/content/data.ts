@@ -392,6 +392,20 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
+      title: "Cicil",
+      image: "/projects/cicil.webp",
+      desc: {
+        id: "Kalkulator bunga sebenarnya: masukkan uang yang diterima dan cicilan yang harus dibayar, lalu Cicil menghitung bunga efektifnya (IRR) per periode, per bulan, dan per tahun. Mendukung cicilan harian, mingguan, dan bulanan, bunga flat, potongan biaya di awal, serta pinjaman harian yang dibandingkan dengan batas manfaat ekonomi OJK. Hasilnya tampil sebagai struk rincian, grafik pokok dan bunga per cicilan, dan tabel konversi bunga flat ke efektif. Semua hitungan berjalan di peramban, diuji terhadap fungsi RATE spreadsheet, dan isian tersimpan di alamat halaman supaya bisa dibagikan.",
+        en: "A true-interest calculator: enter the money you receive and the installments you pay, and Cicil works out the effective rate (IRR) per period, per month, and per year. It handles daily, weekly, and monthly installments, flat-rate loans, upfront fees, and daily loans checked against Indonesia's OJK cap on lending costs. Results show as an itemized receipt, a principal-versus-interest chart per installment, and a flat-to-effective conversion table. Everything runs in the browser, is tested against the spreadsheet RATE function, and keeps its inputs in the URL so results can be shared.",
+      },
+      tags: ["TypeScript", "Finance", "D3", "Vite"],
+      repo: "https://github.com/Reverseflash45/cicil",
+      demo: "https://cicil-id.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
