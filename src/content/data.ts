@@ -448,6 +448,20 @@ export const projects = {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "web",
+      title: "Tembus",
+      image: "/projects/tembus.webp",
+      desc: {
+        id: "Tempat latihan TOEFL ITP dengan pembahasan bahasa Indonesia, bertampilan lembar jawaban komputer: jawaban diarsir seperti pensil 2B lalu dikoreksi dengan coretan pulpen merah. Isinya materi 13 pola grammar dan 117 soal Structure & Written Expression, empat bacaan Reading dengan paragraf bukti yang disorot setelah menjawab, dialog Listening yang dibacakan suara bahasa Inggris dari browser (Web Speech API), kartu kosakata sinonim dengan sistem Leitner, serta simulasi mini 35 menit dengan perkiraan skor 310–677. Soal yang dulu salah lebih sering muncul. Semua soal ditulis sendiri, dan keutuhan bank soalnya diperiksa tes otomatis.",
+        en: "A TOEFL ITP practice site with explanations in Indonesian, styled like a scannable answer sheet: answers are shaded like a 2B pencil and marked with red-pen ticks and crosses. It covers 13 grammar patterns with 117 Structure & Written Expression questions, four Reading passages that highlight the supporting paragraph after each answer, Listening dialogues read aloud by the browser's English voices (Web Speech API), synonym flashcards on a Leitner schedule, and a 35-minute mini test with an estimated 310–677 score. Questions answered wrongly come back more often. Every question is original, and automated tests check the integrity of the question bank.",
+      },
+      tags: ["TypeScript", "Web Speech API", "Edtech", "Vite"],
+      repo: "https://github.com/Reverseflash45/tembus",
+      demo: "https://tembus-five.vercel.app",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
       title: "Pendekin",
       image: "/projects/pendekin.webp",
       desc: {
