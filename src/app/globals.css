@@ -1,292 +1,667 @@
-@import "tailwindcss";
-
-@theme {
-  --color-bg: #08090b;
-  --color-surface: #0e1014;
-  --color-border: #1c1f26;
-  --color-fg: #e9eaec;
-  --color-muted: #8b8f99;
-  --color-accent: #5eead4;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+/* Halaman portofolio bergaya lembar atlas sekolah: laut biru pucat sebagai kertas, daratan kuning,
+   tinta biru tua untuk teks, dan merah hanya untuk tempat yang sedang dipilih. */
+:root {
+  color-scheme: light;
+  --laut: #dce9ec;
+  --laut-dalam: #b5cfd6;
+  --laut-tulisan: #4f7b88;
+  --darat: #efe1a0;
+  --darat-sorot: #e2cf78;
+  --darat-batas: #c9b566;
+  --tinta: #13294b;
+  --tinta-2: #3c5272;
+  --merah: #c4372c;
+  --huruf-cadangan: system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --laut: #0e2130;
+    --laut-dalam: #24414f;
+    --laut-tulisan: #7fa3ae;
+    --darat: #5a5438;
+    --darat-sorot: #6f6844;
+    --darat-batas: #7a7350;
+    --tinta: #e4edef;
+    --tinta-2: #a9bcc4;
+    --merah: #ff6f5e;
+  }
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 html {
+  background: var(--laut);
   scroll-behavior: smooth;
-  background: var(--color-bg);
 }
-
-/* elemen yang meluncur dari samping tidak boleh memicu gulir horizontal di ponsel */
-html,
 body {
-  overflow-x: clip;
-}
-
-/* latar dipindah ke <html> supaya canvas bintang (z-index negatif) terlihat */
-body {
-  background: transparent;
-  color: var(--color-fg);
+  margin: 0;
+  background: var(--laut);
+  color: var(--tinta);
+  font-family: var(--huruf), var(--huruf-cadangan);
+  font-size: 17px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
-
+img {
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--merah);
+}
+:focus-visible {
+  outline: 2px solid var(--merah);
+  outline-offset: 2px;
+}
 ::selection {
-  background: var(--color-accent);
-  color: #08090b;
+  background: var(--darat);
+  color: #13294b;
 }
-
-/* Muncul saat digulir: meluncur masuk dari luar ke posisinya — dari bawah,
-   kiri, atau kanan (lihat prop `from` di Reveal.tsx). Kurva expo-out: cepat
-   di awal lalu mendarat pelan, tidak memantul. */
-.reveal {
-  opacity: 0;
-  transform: translate3d(0, 48px, 0);
-  transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal[data-from="kiri"] { transform: translate3d(-80px, 0, 0); }
-.reveal[data-from="kanan"] { transform: translate3d(80px, 0, 0); }
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .reveal, .reveal[data-from] { opacity: 1; transform: none; transition: none; }
-}
-
-/* ============================================================
-   Custom cursor
-   ============================================================ */
-.has-custom-cursor,
-.has-custom-cursor * {
-  cursor: none !important;
-}
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 300;
-  pointer-events: none;
-  border-radius: 9999px;
-  will-change: transform;
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  background: var(--color-accent);
-}
-
-.cursor-ring {
-  width: 30px;
-  height: 30px;
-  margin: -15px 0 0 -15px;
-  border: 1px solid color-mix(in oklab, var(--color-accent) 55%, transparent);
-  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease,
-    background-color 0.22s ease, border-color 0.22s ease;
-}
-
-.cursor-ring.is-hot {
-  width: 48px;
-  height: 48px;
-  margin: -24px 0 0 -24px;
-  background: color-mix(in oklab, var(--color-accent) 12%, transparent);
-  border-color: var(--color-accent);
-}
-
-/* ============================================================
-   Typing caret
-   ============================================================ */
-.caret {
-  display: inline-block;
-  width: 2px;
-  height: 1em;
-  margin-left: 2px;
-  vertical-align: -0.12em;
-  background: var(--color-accent);
-  animation: caret-blink 1s steps(1) infinite;
-}
-
-@keyframes caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-
-/* ============================================================
-   Hero figure — reveal mengikuti kursor
-   ============================================================ */
-.revealwrap {
-  --mx: 50%;
-  --my: 50%;
-  --mr: 0%;
-}
-
-.figbase,
-.figreveal {
-  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55));
-  /* bagian bawah memudar agar menyatu dengan latar */
-  mask-image: linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%);
-}
-
-/* lapisan reveal butuh dua mask: fade bawah + lingkaran kursor */
-.figreveal {
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
-}
-
-.figreveal {
-  /* lingkaran lembut di sekitar kursor; radius 0 = tersembunyi sepenuhnya.
-     Buka-tutupnya dianimasikan lewat --mr di RevealPhoto.tsx, bukan opacity. */
-  /* catatan: radius `circle` tidak menerima persen — pakai `ellipse` */
-  mask-image:
-    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 42%, transparent 100%);
-  -webkit-mask-image:
-    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), #000 0%, #000 42%, transparent 100%);
-}
-
-/* Foto dasar dilubangi tepat di lingkaran yang sama (kebalikan mask di atas).
-   Gambar alternatif transparan di sekeliling helm; tanpa lubang ini telinga
-   dan rambut dari foto dasar tetap terlihat di celahnya. Saat --mr = 0,
-   gradiennya berukuran nol sehingga foto dasar tampil utuh. */
-.figbase {
-  mask-image:
-    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 42%, #000 100%);
-  -webkit-mask-image:
-    linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.45) 84%, transparent 100%),
-    radial-gradient(ellipse var(--mr) var(--mr) at var(--mx) var(--my), transparent 0%, transparent 42%, #000 100%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
-}
-
-/* Layar sentuh: tahan lalu geser ke arah mana pun untuk menyingkap (lihat
-   RevealPhoto.tsx); sapuan cepat tetap menggulir. Tidak memakai touch-action
-   pan-y karena itu menyerahkan geser vertikal ke browser tanpa syarat. */
-.revealwrap {
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-
-
-/* ============================================================
-   Kartu statistik — dua garis cahaya mengelilingi tepi
-   ============================================================ */
-.statcard {
-  --sc: var(--color-accent);
-  --speed: 4.2s;
-}
-.statcard:hover { --speed: 1.1s; }
-
-.statline {
+.tersembunyi {
   position: absolute;
+  width: 1px;
   height: 1px;
-  width: 45%;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+p {
+  margin: 0;
+}
+
+/* Lebar huruf (wdth) adalah suara utama: lebar untuk judul, sempit untuk label kecil. */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-variation-settings: "wdth" 125;
+  letter-spacing: -0.015em;
+}
+h1 {
+  font-size: clamp(44px, 8.4vw, 108px);
+  font-weight: 800;
+  line-height: 0.9;
+  max-width: 12ch;
+}
+h2 {
+  font-size: clamp(36px, 5vw, 61px);
+  font-weight: 750;
+  line-height: 1;
+}
+h3 {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variation-settings: "wdth" 112;
+}
+
+.kepala,
+main > section {
+  width: min(1240px, 100% - 40px);
+  margin-inline: auto;
+}
+
+/* ---------- kepala ---------- */
+.kepala {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding: 20px 0;
+}
+.kepala-nama {
+  font-weight: 700;
+  font-variation-settings: "wdth" 112;
+  text-decoration: none;
+}
+.kepala nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  font-size: 16px;
+}
+.kepala nav a {
+  text-decoration: none;
+}
+.kepala nav a:hover {
+  text-decoration: underline;
+}
+.ganti-bahasa {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tinta-2);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---------- atlas ---------- */
+.atlas-pembuka {
+  padding-top: clamp(28px, 6vw, 72px);
+}
+.atlas-intro {
+  max-width: 52ch;
+  margin-top: 22px;
+  font-size: clamp(18px, 1.6vw, 21px);
+  line-height: 1.5;
+}
+.atlas-status {
+  margin-top: 10px;
+  color: var(--tinta-2);
+  font-size: 15px;
+}
+
+/* Bingkai garis tinta seperti tepi lembar atlas; peta di atas, legenda di bawahnya. */
+.lembar {
+  margin-top: clamp(28px, 4vw, 44px);
+  border: 1.5px solid var(--tinta);
+}
+.peta {
+  margin: 0;
+}
+.peta svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.peta-status {
+  margin: 0;
+  padding: 80px 20px;
+  text-align: center;
+  color: var(--tinta-2);
+}
+.wilayah {
+  fill: var(--darat);
+  cursor: pointer;
+  transition: fill 160ms ease-out;
+}
+.wilayah:hover {
+  fill: var(--darat-sorot);
+}
+.wilayah.terpilih {
+  fill: var(--merah);
+}
+.batas {
+  fill: none;
+  stroke: var(--darat-batas);
+  stroke-width: 0.5px;
+  vector-effect: non-scaling-stroke;
   pointer-events: none;
-  opacity: 0.9;
+}
+.perairan {
+  fill: var(--laut-tulisan);
+  font-size: 15px;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  font-variation-settings: "wdth" 112;
+  pointer-events: none;
+}
+.rumah rect {
+  fill: var(--tinta);
+}
+.rumah text {
+  fill: var(--tinta);
+  font-size: 13px;
+  font-weight: 650;
+  font-variation-settings: "wdth" 87;
+  paint-order: stroke;
+  stroke: var(--darat);
+  stroke-width: 3px;
+}
+.rumah {
+  pointer-events: none;
+}
+.penanda {
+  fill: none;
+  stroke: var(--merah);
+  stroke-width: 2.5px;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
 }
 
-.statline.top {
-  top: 0;
-  left: 0;
-  background: linear-gradient(to right, transparent, var(--sc), transparent);
-  animation: statline-right var(--speed) linear infinite;
+/* Pita legenda: nama daerah dan pencarian di kiri, lima fakta di kanan. */
+.legenda {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 3fr;
+  grid-template-areas:
+    "nama fakta"
+    "prov fakta"
+    "cari fakta"
+    "asal fakta"
+    "catatan catatan";
+  grid-template-rows: auto auto auto 1fr auto;
+  align-items: start;
+  border-top: 1.5px solid var(--tinta);
 }
-
-.statline.bottom {
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(to left, transparent, var(--sc), transparent);
-  animation: statline-left var(--speed) linear infinite;
+.legenda > h2,
+.legenda > .legenda-prov,
+.legenda > .cari,
+.legenda > .ke-asal {
+  margin-inline: 20px;
 }
-
-@keyframes statline-right {
-  from { transform: translateX(-110%); }
-  to   { transform: translateX(330%); }
+.legenda h2 {
+  grid-area: nama;
+  padding-top: 18px;
+  font-size: clamp(28px, 3vw, 39px);
+  font-weight: 800;
+  line-height: 1;
 }
-@keyframes statline-left {
-  from { transform: translateX(110%); }
-  to   { transform: translateX(-330%); }
+.legenda-prov {
+  grid-area: prov;
+  margin-top: 6px;
+  color: var(--tinta-2);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .statline { animation: none; opacity: 0.45; }
-  .statline.top { left: 0; width: 100%; }
-  .statline.bottom { right: 0; width: 100%; }
+.legenda dl {
+  grid-area: fakta;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  height: 100%;
+  border-left: 1.5px solid var(--tinta);
 }
-
-/* ============================================================
-   Kotak daftar proyek (saat "lihat semua" dibuka)
-   ============================================================ */
-@property --fa { syntax: "<length>"; inherits: false; initial-value: 0px; }
-@property --fb { syntax: "<length>"; inherits: false; initial-value: 0px; }
-
-.proyek-bingkai {
+.baris-fakta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 16px 20px;
+  border-left: 1px solid var(--laut-dalam);
+}
+.baris-fakta:first-child {
+  border-left: 0;
+}
+.baris-fakta dt {
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--tinta-2);
+  font-variation-settings: "wdth" 87;
+}
+.baris-fakta dd {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+}
+.nilai {
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+.baris-fakta a {
+  font-size: 14px;
+  font-weight: 600;
+}
+.cari {
   position: relative;
-  padding: 14px;
-  border: 1px solid var(--color-border);
-  border-radius: 1.75rem;
-  background:
-    radial-gradient(120% 60% at 50% 0%, color-mix(in oklab, var(--color-accent) 7%, transparent), transparent 70%),
-    color-mix(in oklab, var(--color-surface) 45%, transparent);
-  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--color-fg) 6%, transparent);
-  animation: bingkai-muncul 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  grid-area: cari;
+  margin-top: 18px;
 }
-@media (min-width: 640px) {
-  .proyek-bingkai { padding: 18px; }
+.cari input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1.5px solid var(--tinta);
+  border-radius: 0;
+  background: var(--laut);
+  color: var(--tinta);
+  font: inherit;
+  font-size: 16px;
+}
+.cari input::placeholder {
+  color: var(--tinta-2);
+}
+.saran {
+  position: absolute;
+  z-index: 5;
+  top: 100%;
+  right: 0;
+  left: 0;
+  margin: -1.5px 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1.5px solid var(--tinta);
+  background: var(--laut);
+}
+.saran li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.saran li span {
+  color: var(--tinta-2);
+  font-size: 14px;
+}
+.saran li[aria-selected="true"],
+.saran li:hover {
+  background: var(--darat);
+  color: #13294b;
+}
+.saran li[aria-selected="true"] span,
+.saran li:hover span {
+  color: #3c5272;
+}
+.ke-asal {
+  grid-area: asal;
+  justify-self: start;
+  margin-top: 12px;
+  margin-bottom: 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.legenda-catatan {
+  grid-area: catatan;
+  padding: 12px 20px 14px;
+  border-top: 1px solid var(--laut-dalam);
+  font-size: 14px;
+  color: var(--tinta-2);
 }
 
-@keyframes bingkai-muncul {
-  from { opacity: 0; transform: translateY(10px) scale(0.99); }
-  to   { opacity: 1; transform: none; }
+/* ---------- bagian umum ---------- */
+.karya,
+.tentang,
+.kontak {
+  padding-top: clamp(80px, 11vw, 140px);
+}
+.pengantar {
+  max-width: 60ch;
+  margin-top: 14px;
+  color: var(--tinta-2);
 }
 
-.proyek-gulir {
-  /* kira-kira satu setengah baris kartu: jelas terlihat masih ada isi di bawah */
-  max-height: min(76vh, 820px);
-  overflow-y: auto;
-  padding: 2px 6px 2px 2px;
-  margin-right: -6px;
-  scroll-behavior: smooth;
-  /* tepi memudar hanya ke arah yang masih bisa digulir (lihat PortfolioTabs) */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fa), #000 calc(100% - var(--fb)), transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fa), #000 calc(100% - var(--fb)), transparent 100%);
-  transition: --fa 0.35s ease, --fb 0.35s ease;
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in oklab, var(--color-accent) 45%, transparent) transparent;
+/* ---------- karya ---------- */
+.unggulan {
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
 }
-.proyek-gulir[data-atas] { --fa: 40px; }
-.proyek-gulir[data-bawah] { --fb: 72px; }
-
-.proyek-gulir::-webkit-scrollbar { width: 6px; }
-.proyek-gulir::-webkit-scrollbar-track { background: transparent; }
-.proyek-gulir::-webkit-scrollbar-thumb {
-  border-radius: 9999px;
-  background: color-mix(in oklab, var(--color-accent) 40%, transparent);
+.karya-besar {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 32px;
+  padding: 32px 0;
+  border-top: 1.5px solid var(--tinta);
 }
-.proyek-gulir::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+.karya-besar img {
+  display: block;
+  width: 100%;
+  border: 1.5px solid var(--tinta);
+}
+.karya-besar-teks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.karya-besar h3 {
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 800;
+  font-variation-settings: "wdth" 125;
+}
+.jenis-karya {
+  margin-top: -6px;
+  color: var(--tinta-2);
+  font-size: 15px;
+}
+.alat {
+  color: var(--tinta-2);
+  font-size: 15px;
+}
+.tautan-karya {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-weight: 600;
+}
+.judul-indeks {
+  margin-top: 56px;
+  font-size: clamp(26px, 2.6vw, 31px);
+  font-weight: 750;
+  font-variation-settings: "wdth" 125;
+}
+.kelompok {
+  margin-top: 28px;
+}
+.kelompok h4 {
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--tinta);
+  font-size: 16px;
+  font-weight: 650;
+  font-variation-settings: "wdth" 87;
+  letter-spacing: 0;
+}
+.indeks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.indeks li {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--laut-dalam);
+}
+.indeks img,
+.tanpa-gambar {
+  display: block;
+  width: 112px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--tinta);
+  background: var(--darat);
+}
+.nama-karya {
+  font-weight: 700;
+  font-variation-settings: "wdth" 112;
+}
+.catatan-kuliah {
+  font-weight: 400;
+  color: var(--tinta-2);
+  font-variation-settings: "wdth" 100;
+}
+.indeks .tautan-karya {
+  justify-content: flex-end;
+  font-size: 15px;
+}
 
-.proyek-panah {
+/* ---------- tentang ---------- */
+.tentang-isi {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 60ch);
+  gap: 40px;
+  align-items: end;
+  margin-top: 36px;
+}
+.foto {
+  display: block;
+  width: 100%;
+  border-bottom: 1.5px solid var(--tinta);
+}
+.tentang-teks {
+  display: grid;
+  gap: 14px;
+  padding-bottom: 6px;
+  font-size: 18px;
+}
+.tentang h3 {
+  margin-top: 56px;
+}
+.riwayat,
+.sertifikat {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.riwayat li {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 64ch);
+  gap: 20px;
+  padding: 14px 0;
+  border-top: 1px solid var(--laut-dalam);
+}
+.periode {
+  color: var(--tinta-2);
+  font-variation-settings: "wdth" 87;
+}
+.riwayat-judul {
+  font-weight: 650;
+}
+.riwayat-tempat,
+.riwayat-catatan {
+  color: var(--tinta-2);
+  font-size: 15px;
+}
+.sertifikat li {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) auto;
+  gap: 20px;
+  padding: 10px 0;
+  border-top: 1px solid var(--laut-dalam);
+}
+.penerbit {
+  display: block;
+  color: var(--tinta-2);
+  font-size: 15px;
+}
+.sertifikat a {
+  font-size: 15px;
+}
+
+/* ---------- kontak ---------- */
+.surel {
   display: inline-block;
-  color: var(--color-accent);
-  animation: panah-ayun 1.6s ease-in-out infinite;
+  margin-top: 28px;
+  font-size: clamp(26px, 4.6vw, 58px);
+  font-weight: 750;
+  line-height: 1.05;
+  font-variation-settings: "wdth" 125;
+  letter-spacing: -0.02em;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+  overflow-wrap: anywhere;
 }
-@keyframes panah-ayun {
-  0%, 100% { transform: translateY(-1px); opacity: 0.6; }
-  50%      { transform: translateY(3px); opacity: 1; }
+.jejaring {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 600;
+}
+.kaki {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: clamp(80px, 10vw, 120px);
+  padding: 20px 0 32px;
+  border-top: 1.5px solid var(--tinta);
+  font-size: 14px;
+  color: var(--tinta-2);
 }
 
+/* ---------- layar kecil ---------- */
+@media (max-width: 980px) {
+  .legenda {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "nama" "prov" "cari" "asal" "fakta" "catatan";
+    grid-template-rows: none;
+  }
+  .legenda dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 18px;
+    border-left: 0;
+    border-top: 1.5px solid var(--tinta);
+  }
+  .baris-fakta {
+    border-left: 0;
+    border-bottom: 1px solid var(--laut-dalam);
+  }
+  .baris-fakta:nth-child(even) {
+    border-left: 1px solid var(--laut-dalam);
+  }
+  .ke-asal {
+    margin-bottom: 0;
+  }
+  .karya-besar {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+  .perairan {
+    display: none;
+  }
+  .legenda dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .baris-fakta:nth-child(even) {
+    border-left: 0;
+  }
+  .indeks li {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+  .indeks img,
+  .tanpa-gambar {
+    width: 84px;
+  }
+  .indeks .tautan-karya {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+  .tentang-isi {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .foto {
+    max-width: 240px;
+  }
+  .riwayat li,
+  .sertifikat li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  .proyek-bingkai, .proyek-panah { animation: none; }
-  .proyek-gulir { scroll-behavior: auto; transition: none; }
+  html {
+    scroll-behavior: auto;
+  }
+  .wilayah {
+    transition: none;
+  }
+}
+.bukti {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 15px;
+}
+@media (max-width: 980px) {
+  .baris-fakta:last-child {
+    border-bottom: 0;
+  }
 }

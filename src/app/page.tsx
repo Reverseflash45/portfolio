@@ -1,34 +1,20 @@
-import Nav from "@/components/Nav";
-import Loader from "@/components/Loader";
-import Starfield from "@/components/Starfield";
-import Cursor from "@/components/Cursor";
-import ScrollProgress from "@/components/ScrollProgress";
-import Hero from "@/components/Hero";
-import Stats from "@/components/Stats";
-import About from "@/components/About";
-import PortfolioTabs from "@/components/PortfolioTabs";
-import EduExp from "@/components/EduExp";
-import Gallery from "@/components/Gallery";
-import Contact from "@/components/Contact";
+import Kepala from "@/components/atlas/Kepala";
+import Atlas from "@/components/atlas/Atlas";
+import Karya from "@/components/atlas/Karya";
+import Tentang from "@/components/atlas/Tentang";
+import Kontak from "@/components/atlas/Kontak";
 
 export default function Home() {
   return (
-    <main>
-      <Loader />
-      <Starfield />
-      <Cursor />
-      <ScrollProgress />
-      <Nav />
-      {/* Urutan bagian harus sama dengan urutan tautan di Nav.tsx.
-          Karya ditaruh sebelum pendidikan: itu yang paling ingin dilihat
-          pengunjung, dan pendidikan menjadi pendukungnya. */}
-      <Hero />
-      <About />
-      <Stats />
-      <PortfolioTabs />
-      <EduExp />
-      <Gallery />
-      <Contact />
-    </main>
+    <>
+      <Kepala />
+      <main>
+        {/* Peta lebih dulu: karyanya sendiri yang memperkenalkan, bukan kalimat tentang karya. */}
+        <Atlas />
+        <Karya />
+        <Tentang />
+        <Kontak />
+      </main>
+    </>
   );
 }
