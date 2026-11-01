@@ -212,7 +212,7 @@ export default function Komentar() {
             >
               {pesan}
             </p>
-            <span className="font-mono text-[11px] text-muted/70">
+            <span className="font-mono text-[11px] text-muted">
               {isi.length}/{MAKS_ISI}
             </span>
             <button

@@ -98,7 +98,7 @@ export default function CertCard({
             <p className="mt-1 text-xs leading-snug text-muted">{c.issuer}</p>
           </>
         )}
-        <p className={`${design ? "" : "mt-2 "}text-[11px] leading-relaxed text-muted/80`}>
+        <p className={`${design ? "" : "mt-2 "}text-[11px] leading-relaxed text-muted`}>
           {t(c.detail)}
         </p>
 

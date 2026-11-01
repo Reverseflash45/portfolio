@@ -77,7 +77,12 @@ export default function EduExp() {
             </div>
           </Reveal>
 
-          <div className="max-h-[30rem] space-y-4 overflow-y-auto pr-1.5">
+          <div
+            className="max-h-[30rem] space-y-4 overflow-y-auto rounded-lg pr-1.5 focus-visible:outline-2 focus-visible:outline-accent"
+            tabIndex={0}
+            role="region"
+            aria-label={t(experience.title)}
+          >
             {items.map((e, i) => (
               <Reveal key={`${e.org}-${i}`} delay={i * 55} from="kanan">
                 <div className="rounded-2xl border border-border bg-surface/70 p-5 backdrop-blur transition-colors hover:border-accent/40">

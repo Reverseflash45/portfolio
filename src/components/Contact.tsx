@@ -89,7 +89,7 @@ export default function Contact() {
                 </span>
               </div>
               <p className="mt-2 text-sm text-muted">{t(contact.body)}</p>
-              <p className="mt-1.5 text-xs leading-relaxed text-muted/80">
+              <p className="mt-1.5 text-xs leading-relaxed text-muted">
                 {t(contactForm.privateNote)}
               </p>
 
@@ -158,7 +158,7 @@ export default function Contact() {
                       ? "text-accent"
                       : status === "gagal" || status === "kurang"
                         ? "text-red-400"
-                        : "text-muted/80"
+                        : "text-muted"
                   }`}
                 >
                   {!live
