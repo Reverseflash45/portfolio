@@ -10,6 +10,9 @@ import CertCard from "./CertCard";
 import CertLightbox from "./CertLightbox";
 import BrandIcon from "./BrandIcon";
 
+/** Versi 800px gambar proyek (public/projects/800/), dibuat dari gambar 1600px yang sama. */
+const kecil = (src: string) => src.replace(/^\/projects\//, "/projects/800/");
+
 type Tab = "projects" | "certificates" | "awards" | "stack" | "favorites";
 
 /* Jumlah proyek yang tampil sebelum tombol "lihat semua". Tiga = satu baris
@@ -293,8 +296,11 @@ export default function PortfolioTabs() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={p.image}
+                      srcSet={`${kecil(p.image)} 800w, ${p.image} 1600w`}
+                      sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
                       alt={t(p.title)}
                       loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   </div>
@@ -446,7 +452,7 @@ export default function PortfolioTabs() {
                 </span>
                 {p.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={p.image} alt="" loading="lazy" className="hidden h-11 w-[70px] shrink-0 rounded-md border border-border object-cover sm:block" />
+                  <img src={kecil(p.image)} alt="" loading="lazy" decoding="async" className="hidden h-11 w-[70px] shrink-0 rounded-md border border-border object-cover sm:block" />
                 ) : (
                   <span aria-hidden className="hidden h-11 w-[70px] shrink-0 rounded-md border border-dashed border-border sm:block" />
                 )}

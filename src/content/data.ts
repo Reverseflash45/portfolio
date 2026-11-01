@@ -957,6 +957,9 @@ export const music = {
   // ID playlist Spotify — kosongkan untuk menyembunyikan kartu
   playlistId: "7kEKyigwb24IphyH9ZN2MV",
   openLabel: { id: "Buka di Spotify", en: "Open in Spotify" } as T,
+  // Pemutar Spotify baru dimuat setelah diklik: hemat ~700 KB dan tanpa cookie pihak ketiga sebelum itu.
+  muat: { id: "Putar di sini", en: "Play here" } as T,
+  muatNote: { id: "Pemutar Spotify dimuat setelah tombol ditekan.", en: "The Spotify player loads after you press play." } as T,
 };
 
 export const nav = {

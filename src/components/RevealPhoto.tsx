@@ -21,6 +21,19 @@ export default function RevealPhoto({
 }) {
   const wrap = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
+  // Foto kedua baru diminta setelah halaman selesai dimuat, supaya tidak berebut jaringan dengan foto utama.
+  const [muatAlt, setMuatAlt] = useState(false);
+  useEffect(() => {
+    if (!altSrc) return;
+    const mulai = () => {
+      const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+      if (w.requestIdleCallback) w.requestIdleCallback(() => setMuatAlt(true), { timeout: 3000 });
+      else setTimeout(() => setMuatAlt(true), 1500);
+    };
+    if (document.readyState === "complete") mulai();
+    else window.addEventListener("load", mulai, { once: true });
+    return () => window.removeEventListener("load", mulai);
+  }, [altSrc]);
 
   const setVars = useCallback((x: number, y: number, r: number) => {
     const el = wrap.current;
@@ -231,12 +244,12 @@ export default function RevealPhoto({
       />
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={base} alt={name} draggable={false} className="figbase relative w-full object-contain" />
+      <img src={base} alt={name} draggable={false} fetchPriority="high" className="figbase relative w-full object-contain" />
 
       {altSrc && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={altSrc}
+          src={muatAlt ? altSrc : undefined}
           alt=""
           aria-hidden
           draggable={false}

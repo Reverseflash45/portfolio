@@ -23,6 +23,9 @@ export default function Starfield() {
     let shots: Shot[] = [];
     let raf = 0;
     let t = 0;
+    const TINGKAT = 8;
+    const WARNA = Array.from({ length: TINGKAT }, (_, i) => `rgba(226,232,240,${(0.12 + ((i + 0.5) / TINGKAT) * 0.63).toFixed(3)})`);
+    const kelompok: Star[][] = Array.from({ length: TINGKAT }, () => []);
 
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -59,18 +62,27 @@ export default function Starfield() {
       t += 1;
       ctx.clearRect(0, 0, w, h);
 
+      // Bintang dikelompokkan per tingkat kecerahan: satu path dan satu fill per kelompok,
+      // bukan satu per bintang. Jauh lebih ringan di HP, tampilannya sama.
+      for (const k of kelompok) k.length = 0;
       for (const s of stars) {
         s.a += s.tw;
         if (s.a > 0.75 || s.a < 0.12) s.tw *= -1;
         s.x += s.vx;
         if (s.x < -2) s.x = w + 2;
         if (s.x > w + 2) s.x = -2;
-
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(226,232,240,${s.a})`;
-        ctx.fill();
+        kelompok[Math.min(TINGKAT - 1, Math.floor(((s.a - 0.12) / 0.63) * TINGKAT))].push(s);
       }
+      kelompok.forEach((isi, i) => {
+        if (!isi.length) return;
+        ctx.beginPath();
+        for (const s of isi) {
+          ctx.moveTo(s.x + s.r, s.y);
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        }
+        ctx.fillStyle = WARNA[i];
+        ctx.fill();
+      });
 
       if (t % 150 === 0 && shots.length < 3 && Math.random() > 0.35) spawnShot();
 
