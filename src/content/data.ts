@@ -461,6 +461,20 @@ export const projects = {
     {
       kind: "solo",
       label: { id: "Proyek Mandiri", en: "Personal Project" },
+      kategori: "web",
+      title: "Obrolan",
+      image: "/projects/obrolan.webp",
+      desc: {
+        id: "Kartu obrolan deep talk di peramban, terinspirasi dari kartu fisik untuk pasangan: pilih mode (berpasangan, teman, keluarga, atau sendiri), pilih topik, lalu tarik kartu satu per satu dan jawab bergantian. Isinya 10.309 pertanyaan yang ditulis sendiri dalam 41 topik dan tiga level (santai, sedang, dalam), dari masa lalu dan keuangan bareng sampai zombie dan would you rather. Ada tiga topik 18+ yang tersembunyi sampai umur dikonfirmasi. Kartu dibalik dan digeser seperti kartu sungguhan, dan ada giliran pemain, timer, favorit, riwayat, kartu hari ini, enam tema, serta ekspor kartu jadi gambar story. Semua tersimpan di perangkat tanpa akun, bisa dipasang sebagai PWA dan dipakai offline. Skrip validasi memeriksa duplikat dan kalimat yang maknanya mirip di seluruh data, dan axe-core mencatat nol pelanggaran WCAG AA di semua tema.",
+        en: "Deep-talk conversation cards in the browser, inspired by physical card decks for couples: pick a mode (couples, friends, family, or solo), pick topics, then draw cards one at a time and take turns answering. It holds 10,309 original questions across 41 topics and three levels (light, medium, deep), from shared pasts and money to zombies and would-you-rather. Three 18+ topics stay hidden until age is confirmed. Cards flip and slide like real ones, and there are player turns, a timer, favourites, history, a card of the day, six themes, and export of any card as a story image. Everything is stored on the device with no account, installable as a PWA and usable offline. A validation script checks the whole dataset for duplicates and near-identical meanings, and axe-core reports zero WCAG AA violations across every theme.",
+      },
+      tags: ["React", "TypeScript", "Framer Motion", "PWA", "Tailwind CSS"],
+      repo: "https://github.com/Reverseflash45/obrolan",
+      demo: "https://obrolan.raffstw.my.id",
+    },
+    {
+      kind: "solo",
+      label: { id: "Proyek Mandiri", en: "Personal Project" },
       kategori: "data",
       title: "Napas",
       image: "/projects/napas.webp",
